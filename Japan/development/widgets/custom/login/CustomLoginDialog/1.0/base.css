@@ -1,0 +1,25 @@
+/**
+ * base.css: Base CSS for CustomLoginDialog
+ */
+.rn_CustomLoginDialog {
+
+}
+
+.rn_LoginDialogContent .rn_ScreenReaderOnly {
+    position: inherit;
+   
+}
+
+.rn_LoginDialogContent .rn_ScreenReaderOnly span {
+position : absolute;
+}
+
+.rn_LoginDialogContent .rn_ScreenReaderOnly input[type=text]{
+display : block;
+}
+
+div#rnDialog1_c div#rnDialog1 .yui3-widget-hd{
+color: #feb600 !important;
+background-color: #0d0d0d !important;
+background: #0d0d0d!important;
+}
