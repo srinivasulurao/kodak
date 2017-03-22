@@ -1,0 +1,89 @@
+@import 'widget-includes';
+
+.rn_Facet {
+    .rn_ClearContainer {
+        margin-left: 3px;
+    }
+
+    .rn_ClearFacets {
+        font-weight: normal;
+        color: #00C;
+
+        &:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    }
+
+    .rn_Content {
+        ul li {
+            list-style-type: none;
+            padding-left: 13px;
+            font-weight: bold;
+        }
+
+        table {
+            border-spacing: 0;
+            margin-left: 10px;
+        }
+    }
+
+    .rn_FacetsTitle {
+        background: lighten($hero-background, 10%);
+        color: $hero-color;
+        font-weight: normal;
+        border: 1px solid #CCC;
+        border-bottom: 0;
+        padding: 7px;
+
+        a {
+            color: $hero-color;
+        }
+    }
+
+    .rn_FacetsList {
+        border: 1px solid #BEBEBE;
+        padding: 10px;
+        overflow: auto;
+    }
+
+    .rn_ActiveFacet {
+        background: #EBEFF5;
+        border: 1px solid #CCC;
+        padding: 10px;
+        font-size: $form-font-size;
+        font-family: $form-font-family;
+        font-weight: bold;
+        @include icon($fa-var-times-circle, after);
+
+        &:after {
+            float: right;
+        }
+    }
+
+    .rn_FacetLink {
+        padding: 3px;
+        cursor: pointer;
+        display: block;
+        font-weight: lighter;
+        text-decoration: none;
+    }
+}
+
+.rn_CategoryExplorerExpanded {
+    @include icon($fa-var-minus-square);
+    font-family: 'FontAwesome';
+    display: inline-block;
+    margin-right: 3px;
+}
+
+.rn_CategoryExplorerCollapsed {
+    @include icon($fa-var-plus-square);
+    font-family: 'FontAwesome';
+    display: inline-block;
+    margin-right: 3px;
+}
+
+.rn_FacetTreeIndent {
+    padding-left: 8px;
+}

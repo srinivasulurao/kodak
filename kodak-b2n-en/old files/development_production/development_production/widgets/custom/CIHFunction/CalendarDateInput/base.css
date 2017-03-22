@@ -1,0 +1,11 @@
+        #cal1Container {
+            position: absolute;
+            display: none;
+        }
+
+        #cal1Container {
+            z-index: 500;
+        }
+        .dp-highlighter {
+            z-index: 1;
+        }

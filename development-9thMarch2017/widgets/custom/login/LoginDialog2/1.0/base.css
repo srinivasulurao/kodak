@@ -1,0 +1,90 @@
+/**
+ * base.css: Base CSS for LoginDialog2
+ */
+.rn_LoginDialog2.rn_LoginDialog {
+
+}
+
+#rnDialog1_c,#rnDialog2_c{
+    background: #f2f2f2 none repeat scroll 0 0 !important;
+    border: 1px solid #808080 !important;
+    left: 40% !important;
+    padding: 0 !important;
+    position: fixed !important;
+    top: 163px !important;
+    width: 300px !important;
+    z-index: 9999 !important;
+   }
+    
+
+.rn_OpenLoginAlternative,.rn_FormContent{
+width:46%;
+vertical-align: top;
+display: inline-block; 
+clear: both;
+}
+
+#rnDialog1_c input{
+    width:100%;
+    display:block;
+    margin:4px;
+}
+
+.yui3-widget-buttons{
+bottom: 10px;
+    float: right;
+    position: relative;
+}
+
+.yui3-widget-mask{
+    background: black;
+    opacity: 0.7 !important;
+}
+
+#rnDialog3_c{
+    
+
+        position: relative;
+    left: 0;
+    top: 0;
+    border-style: solid;
+    border-width: 1px 0;
+    border-color: #808080;
+    z-index: 1;
+}
+
+.yui3-button-close{
+    float:right;
+}
+
+.rn_OpenLoginAlternative{
+    display: none !important;
+}
+
+.rn_DialogTitle{
+    padding:0 10px;
+    font-size: 93%;
+    line-height: 2;
+    font-weight: bold;
+    color: #000;
+    display: block;
+    background: url(/rnt/rnw/yui_2.7/assets/skins/sam/sprite.png) repeat-x 0 -200px;
+}
+
+.yui3-widget-bd{
+	padding:10px;
+	background: #f2f2f2 none repeat scroll 0 0 !important; 
+}
+
+.rn_OpenLoginAlternative, .rn_FormContent{
+	width:95%;
+}
+
+.yui3-widget-hd .yui3-button-close{
+	display: none;
+}
+
+.rn_LoginDialog2{
+width:100% !important;
+
+}

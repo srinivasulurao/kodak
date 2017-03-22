@@ -1,0 +1,31 @@
+.rn_SmartAssistantDialog .rn_Heading {
+    font-size:1.333em;
+    font-weight:bold;
+    line-height:1.4em;
+}
+.rn_SmartAssistantDialog .rn_List {
+    background: #F0F0F0 none repeat scroll 0 0;
+    border: 1px solid #B0B3B8;
+    margin-top: 6px;
+    padding: 4px;
+}
+.rn_SmartAssistantDialog .rn_List li {
+    list-style:disc outside none;
+    margin: 4px 4px 4px 16px;
+}
+.rn_SmartAssistantDialog .rn_Prompt {
+    color:#404040;
+    font-size:1em;
+    font-weight:bold;
+    line-height:1.3em;
+}
+.rn_SmartAssistantDialog .rn_Summary {
+    font-size:1.3em;
+    font-weight:bold;
+    letter-spacing:-0.01em;
+    line-height:1em;
+    padding:7px 0 0;
+}
+.rn_SmartAssistantDialog .rn_Solution {
+    padding:6px 0 10px;
+}

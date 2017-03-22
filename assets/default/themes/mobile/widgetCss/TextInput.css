@@ -1,0 +1,80 @@
+.rn_TextInput {
+    clear:both;
+    overflow:visible;
+    padding-bottom:1.6em;
+    position:relative;
+}
+.rn_TextInput .rn_Label {
+    display:inline-block;
+    font-weight:bold;
+    margin-bottom:2px;
+}
+.rn_TextInput .rn_HintText {
+    color:#222;
+    display:block;
+    font-size:.963em;
+    font-style:italic;
+    max-width:500px;
+    position:absolute;
+    width:99%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+.rn_TextInput .rn_Mask {
+    color:#555;
+    font-style:italic;
+    margin:4px 12px;
+}
+.rn_TextInput .rn_MaskBuffer {
+    margin-top:1.1em;
+}
+.rn_TextInput .rn_MaskOverlay {
+    background-color:#EEE;
+    border:1px solid #CCC;
+    color:#222;
+    margin-top:4px;
+    opacity:.9;
+    padding:11px;
+    position:absolute;
+    z-index:2;
+    -moz-border-radius:11px;
+    -webkit-border-radius:11px;
+    -moz-box-shadow:2px 2px 2px #888;
+    -webkit-box-shadow:2px 2px 2px #888;
+}
+.rn_TextInput .rn_TextInputValidate {
+    margin-top: 8px;
+}
+
+/* Password validation */
+.rn_TextInput .rn_PasswordOverlay {
+    margin-left: 10px;
+    background: #CCC;
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(204, 204, 204, 0.28)), to(rgba(180, 184, 184, 0.46)));
+    background: -webkit-linear-gradient(top, rgba(204, 204, 204, 0.28), rgba(180, 184, 184, 0.46));
+    background: -moz-linear-gradient(top, rgba(204, 204, 204, 0.28), rgba(180, 184, 184, 0.46));
+    background: -ms-linear-gradient(top, rgba(204, 204, 204, 0.28), rgba(180, 184, 184, 0.46));
+    background: linear-gradient(top, rgba(204, 204, 204, 0.28), rgba(180, 184, 184, 0.46));
+    -webkit-border-bottom-right-radius: 6px;
+    -webkit-border-bottom-left-radius: 6px;
+    -moz-border-radius-bottomright: 6px;
+    -moz-border-radius-bottomleft: 6px;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border: 2px solid #FFF;
+    border-width: 0 1px 1px;
+    box-shadow:0 0 7px rgba(0, 0, 0, .3);
+    max-width: 260px;
+    padding: 1em;
+}
+.rn_TextInput .rn_Intro {
+    font-size: 1.3em;
+    text-shadow: 0 1px 0 #FFF;
+}
+.rn_TextInput .rn_Fail {
+    color: #FF0000;
+}
+.rn_TextInput .rn_Pass {
+    color: #008000;
+}

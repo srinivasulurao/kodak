@@ -1,0 +1,72 @@
+version: "1.0"
+requires:
+  jsModule:
+  - standard
+  - mobile
+attributes:
+  append_to_url:
+    name: rn:msg:PARAMETER_TO_APPEND_TO_URL_LBL
+    type: string
+    description: Parameter to append to the URL when redirected on successful login
+    default: PARAM_APPEND_URL_REDIRECTED_LBL
+    required: true
+  disable_password:
+    name: rn:msg:DISABLE_PASSWORD_INPUT_CMD
+    type: boolean
+    description: If set to true, the password input field is removed. However, if
+      the EU_CUST_PASSWD_ENABLED config is also enabled when this is set to true,
+      users with existing passwords will not be able to log in.  Note that if EU_CUST_PASSWD_ENABLED
+      is disabled, the password input field is removed (regardless of how this attribute
+      is set) and users with existing passwords can log in without having to enter
+      their password.
+    default: false
+    required: true
+  disable_password_autocomplete:
+    name: rn:msg:DISABLE_PASSWORD_AUTO_COMPLETE_CMD
+    type: boolean
+    description: Prevent browser autocompletion of the password field.
+    default: true
+    required: true
+  initial_focus:
+    name: initial_focus
+    type: boolean
+    description: If set to true, the field has focus when the page first loads.
+    default: false
+    required: true
+  label_login_button:
+    name: label_login_button
+    type: string
+    description: Label to display on submit button
+    default: Log In
+    required: true
+  label_password:
+    name: label_password
+    type: string
+    description: Label to display next to password box
+    default: Password
+    required: true
+  label_username:
+    name: label_username
+    type: string
+    description: Label to display next to username box
+    default: Username (eight digit KODAK Global ID)
+    required: true
+  login_ajax:
+    name: login_ajax
+    type: ajax
+    description: Ajax endpoint where login requests will be sent
+    default: /ci/ajaxRequest/doLogin
+    required: true
+  redirect_url:
+    name: redirect_url
+    type: string
+    description: Page to redirect to after successful login. If not set, current page
+      will be reloaded. If the "redirect" parameter is present in the page URL, the
+      parameter value will override this attribute.
+    default: ""
+    required: true
+extends:
+  widget: standard/login/LoginForm
+  components:
+  - php
+  - js

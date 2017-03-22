@@ -1,0 +1,1701 @@
+/**********************************
+Global Style
+
+Index:
+    01. Reset
+    02. Font multiplier table
+	
+    02. Font multiplier table
+    03. Global Settings for Common
+         HTML elements
+    04. Template Structure
+    05. Text Colors
+    06. Navigation Bar
+    07. Shared/General Components
+    08. Answer & Question Detail Pages
+    09. Home Page
+    10. Account Pages
+    11. General Accessiblity
+    12. Print Style
+    13. Chat Related
+**********************************/
+
+/********************
+    01. Reset
+********************/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}
+table{border-collapse:collapse;border-spacing:0;}
+fieldset,img{border:0;}
+address,caption,cite,code,dfn,th,var{font-style:normal;font-weight:normal;}
+ul, ol, li, dl, dt, dd{list-style:none;}
+caption,th{text-align:left;}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
+q:before,q:after{content:'';}
+abbr,acronym {border:0;font-variant:normal;}
+/* to preserve line-height and selector appearance */
+sup {vertical-align:text-top;}
+sub {vertical-align:text-bottom;}
+input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;margin:0;padding:0;}
+/*because legend doesn't inherit in IE */
+legend{color:#000; padding:0;}
+a img, iframe { border: none; }
+
+/*************************************
+    02. Font multiplier table
+**************************************
+Pixels  EMs   Percent    Points
+6px   0.500     50.00%     5pt
+7px     0.583     58.30%     5pt
+8px     0.667     66.70%     6pt
+9px     0.750     75.00%     7pt
+10px     0.833     83.30%     8pt
+11px     0.917     91.70%     8pt
+(12px is our body default)
+12px     1.000     100.0%     9pt
+13px     1.083     108.3%     10pt
+14px     1.167     116.7%     11pt
+15px     1.250     125.0%     11pt
+16px     1.333     133.3%     12pt
+17px     1.417     141.7%     13pt
+18px     1.500     150.0%     14pt
+19px     1.583     158.3%     14pt
+20px     1.667     166.7%     15pt
+21px     1.750     175.0%     16pt
+22px     1.833     183.3%     17pt
+23px     1.917     191.7%     17pt
+24px     2.000     200.0%     18pt
+***************************************/
+
+/*************************************
+    03. Global Settings for Common
+          HTML elements
+*************************************/
+/*
+html {
+    background:#FFF url(images/layout/royalGrayBackground.png) repeat-x;
+    font-family:Helvetica, Arial, sans-serif;
+}
+*/
+/*Japanese charset support*/
+html[lang="ja-JP"],
+html[lang="ja-JP"] input, html[lang="ja-JP"] textarea, html[lang="ja-JP"] select {
+    font-family:"Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", Meiryo, "メイリオ", "MS PGothic", "MS Pゴシック", Helvetica, Arial, sans-serif;
+}
+body {
+    font-size:.75em;
+    line-height:1.250em;
+    text-align:left;
+}
+
+h2, h3, h4, h5, h6 {
+    font-family:Arial, sans-serif;
+    font-weight:bold;
+}
+h1 { /* 25px */
+    font-size:2.083em;
+    font-weight:normal;
+    line-height:1.8em;
+}
+h2 { /* 16px */
+    font-size:1.333em;
+    line-height:1.4em;
+}
+h3 { /* 14px */
+    color:#2F2F2F;
+    font-size:1.167em;
+    line-height:1.3em;
+}
+h4 { /* 12px */
+    color:#404040;
+    font-size:1em;
+    line-height:1.3em;
+}
+h5 { /* 11px */
+    color:#505050;
+    font-size:0.917em;
+    line-height:1.0em;
+}
+h6 { /* 10px */
+    color:#505050;
+    font-size:0.833em;
+    line-height:.8em;
+}
+p {
+    line-height:1.4em;
+    margin-bottom:1em;
+}
+table {
+    border-collapse:separate;
+    border-spacing:0.3em;
+}
+hr {
+    margin:10px 0px;
+}
+strong {
+    font-weight: bolder;
+}
+caption {
+    color:#404040;
+    font-size:1em;
+    font-weight:bold;
+    line-height:1.3em;
+}
+blockquote {
+    margin:10px 30px;
+}
+a:visited
+{
+/*EKMOD changed color (originally #3c0d68;)*/
+color: #6d7d99;
+}
+input[type="text"], input[type="password"]  {
+    height:18px;
+}
+input, textarea, select {
+    border:solid 1px #B1B1B1;
+    /*font-family bears repeating for IE6/7*/
+    font-family:Helvetica, Arial, sans-serif;
+    padding:2px;
+}
+input[type="text"]:focus, input[type="password"]:focus, textarea:focus, select:focus {
+    border-color:#AAA;
+    background-color:#F8F8F8;
+}
+input[type="submit"],
+button {
+    /*  button gradient 1x60 sprite image */
+    background:#FFB700 url(images/buttonGradientCombo.png) 0px 0px repeat-x;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+    -moz-box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+    border:1px solid #FFB700;
+    color:#FFF;
+    cursor:pointer;
+    font:bold 12px Helvetica,Arial,sans-serif;
+    line-height:normal;
+    margin-right:6px;
+    padding:6px 8px;
+    text-decoration:none;
+    text-shadow:2px 2px 2px rgba(0,0,0,0.25);
+    /*Fix for IE6/7 button width bug*/
+    *width:auto;
+    *overflow:visible;
+}
+input[type="submit"]:hover,
+input[type="submit"]:focus,
+button:hover,
+button:focus {
+    background-position: 0px -30px;
+    border-color:#FFb700;
+    cursor:pointer;
+}
+input[type="submit"][disabled],
+button[disabled] {
+    background-color:#FFB700;
+    background-position: 0px -30px;
+    border-color:#333;
+    color:#DDD;
+}
+input[type="submit"]:focus,
+button:focus {
+    /*IE8 doesn't apply focus outline natively*/
+    outline /*\**/:#000 dotted 1px\9
+}
+
+/********************************
+    04. Template Structure:
+    rn_Container
+        rn_Header
+        rn_Navigation
+        rn_Body
+            rn_MainColumn
+            rn_SideBar
+        rn_Footer
+            rn_RightNowCredit
+********************************/
+#rn_Container {
+    height:100%;
+    margin:0px auto;
+    overflow:visible;
+    text-align:left;
+    width:942px;
+}
+#rn_Header {
+    color:#FFF;
+    height:72px;
+    min-height:72px;
+    overflow:visible;
+    padding:0 10px;
+}
+    #rn_Header a {
+        color:#FFF;
+    }
+    #rn_Logo {
+        cursor:pointer;
+        float:left;
+        font-family:"Lucida Sans Unicode","Lucida Grande",Garuda,sans-serif;
+        height:70px;
+        letter-spacing:-0.8px;
+        margin-top:4px;
+        position:relative;
+        width:32%;
+    }
+    #rn_Logo a {
+        bottom:0;
+        color:#FFF;
+        cursor:pointer;
+        font-size:2.083em;
+        font-weight:normal;
+        left:0;
+        line-height:1em;
+        text-decoration:none;
+    }
+    #rn_Logo a span.rn_LogoTitle {
+        cursor:pointer;
+        top:20px;
+        position:relative;
+    }
+    #rn_Logo a span.rn_LogoTitleMinor {
+        color:#DEDEDE;
+    }
+    #rn_Logo a img {
+        display:block;
+    }
+    #rn_LoginStatus{
+        font-size:0.917em;
+        text-align:right;
+    }
+    #rn_LoginStatus a{
+        text-decoration:none;
+    }
+	#rn_LoginStatus a:link {
+    	color:#3377bb;
+	}
+#rn_Navigation {
+    background:transparent none repeat scroll center top;
+    height:31px;
+    /*IE6*/
+    _height:28px;
+    margin-left:1px;
+    padding:3px 10px 0 0;
+}
+    #rn_NavigationBar {
+        float:left;
+        height:14px;
+    }
+    #rn_NavigationBar ul li {
+        float:left;
+    }
+#rn_Footer, #rn_Body {
+    background:#FFF;
+    border-right:1px solid #DDD;
+    border-left:1px solid #DDD;
+    overflow:hidden;
+    padding:0 0px 20px 10px;
+    text-align:left;
+    width:99%;
+    -moz-box-shadow:3px 3px 3px #888;
+    -webkit-box-shadow:3px 3px 3px #888;
+}
+    #rn_MainColumn {
+        background:#FFF;
+        float:left;
+        margin-right:8px;
+        min-height:650px;
+        height:auto !important;
+        height:650px;
+        overflow:visible;
+        padding:0px 0px 10px 6px;
+        width:74%;
+    }
+    #rn_SideBar {
+        float:right;
+        margin-right:12px;
+        width:23%;
+    }
+#rn_Footer {
+    border-bottom:1px solid #E2E2E2;
+}
+    #rn_RightNowCredit {
+        border-top:1px solid #DDD;
+        clear:both;
+        padding:10px 0px 10px 0px;
+        text-align:right;
+        margin:auto 20px;
+    }
+
+/*************************************
+    05. Text Colors
+*************************************/
+body,
+fieldset legend {
+    color:#000;
+}
+a:link {
+    color:#3377bb;
+	text-decoration: none; /*EKMOD to address default hyperlink presentation to NOT be underline */
+}
+a:active {
+	color:#3377bb;
+}
+a:visited
+{
+/*EKMOD changed color (originally #3c0d68;)*/
+	color: #6d7d99;
+	text-decoration: none; /*EKMOD to address default hyperlink presentation to NOT be underline */
+}
+a:hover {
+	color:#666666;
+	text-decoration:underline;
+}
+
+/*************************************
+    06. Sidebar Content
+*************************************/
+#rn_SideBar .rn_Padding {
+    padding:16px 4px 2px 10px;
+    overflow:auto;
+}
+    /**Sprite for help resources**/
+    .rn_HelpResources {
+        margin:0 4px 10px 4px;
+    }
+    .rn_HelpResources .rn_Questions,
+    .rn_HelpResources .rn_Community,
+    .rn_HelpResources .rn_Contact,
+    .rn_HelpResources .rn_Chat,
+    .rn_HelpResources .rn_Feedback{
+        margin-top:10px;
+    }
+    .rn_HelpResources a{
+        background:url(images/layout/contactDiscs.png) no-repeat;
+        color:#464646;
+        display:block;
+        font-size:1.25em;
+        font-weight:bold;
+        margin:4px;
+        min-height:22px;
+        /*min-height for IE6/7*/
+        height:auto !important;
+        height:22px;
+        padding:10px 0 0 40px;
+        text-decoration:none;
+    }
+    .rn_HelpResources a:hover {
+       text-decoration:underline;
+    }
+    .rn_HelpResources span{
+        display:block;
+        margin:0 0 0 44px;
+    }
+    
+    /* image is 32 x 220 : icons are 32 x 32 */
+    .rn_HelpResources .rn_Questions a{
+        background-position: 0px -4px;
+    }
+    .rn_HelpResources .rn_Contact a{
+        background-position: 0px -48px;
+    }
+    .rn_HelpResources .rn_Chat a{
+        background-position: 0px -96px;
+    }
+    .rn_HelpResources .rn_Feedback a{
+        background-position: 0px -140px;
+    }
+    .rn_HelpResources .rn_Community a{
+        background-position: 0px -184px;
+    }
+
+/***********************************************************
+    07. Shared / General Styling
+***********************************************************/
+/*************
+Main search form at the top of many pages
+(answers/list, questions/list, questions/detail, home)
+*************/
+#rn_SearchControls {
+    background:#EFEFF4 url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVQIHWP4DwABAQEANl9ngAAAAABJRU5ErkJggg==) repeat-x scroll 0 -1px;
+    *background:#EFEFF4; /* IE6/7 don't support data URI */
+    border:1px solid #BBB;
+    clear:left;
+    float:left;
+    overflow:visible;
+    padding:8px 0 8px 12px;
+    position:relative;
+    width:97.4%;
+}
+#rn_SearchControls form {
+    padding:0 0 6px;
+    _margin-bottom:20px;
+}
+#rn_SearchControls form input[type="submit"],
+#rn_SearchControls form input[type="image"] {
+    margin:1.3em 0 0 1.3em;
+    padding:.4em 1em;
+}
+/**IE6 doesn't use attr selectors*/
+#rn_SearchControls input {
+    _margin:1.3em 0 0 1.3em;
+    _padding:.4em 1em;
+}
+    #rn_SearchControls .rn_SearchInput {
+        float:left;
+        position:relative;
+        width:50%;
+    }
+    #rn_SearchControls .rn_SearchInput a {
+        color:#3377BB; 
+        display:block;
+        float:right;
+        font-size:.917em;
+        margin-right:-8px;
+        /*IE6/7*/
+        *margin-right:0;
+/*        *position:absolute; */
+        *right:-8px;
+        _right:0px;
+        text-decoration: none; 
+    }
+    #rn_SearchControls .rn_SearchInput a:hover {
+        color:#666666; 
+        text-decoration: underline; 
+    }
+    #rn_SearchControls .rn_SearchInput label {
+        bottom:50px;
+        position:relative;
+        /*IE6/7*/
+        *bottom:-50px !important;
+        *position:relative !important;
+    }
+    #rn_SearchControls .rn_SearchInput input {
+        font-weight:bold;
+        height:1.3em;
+        margin-bottom:20px;
+        /*IE6*/
+        _margin: 0;
+        padding:4px 4px 3px;
+        width:100%;
+    }
+/************************
+PageTitle -
+Appears at the top of each page
+************************/
+#rn_PageTitle {
+    border-bottom:1px solid #E2E2E0;
+    color:#25383C;
+    overflow:hidden;
+    padding:16px 0 0;
+}
+#rn_PageTitle.rn_Home,
+#rn_PageTitle.rn_QuestionList,
+#rn_PageTitle.rn_AnswerList {
+    border-bottom:0;
+    overflow:visible;
+}
+#rn_PageTitle.rn_Home {
+    margin-bottom:10px;
+}
+#rn_PageTitle h1,
+#rn_PageTitle h2,
+#rn_PageTitle h3,
+#rn_PageTitle h4,
+#rn_PageTitle h5,
+#rn_PageTitle h6 {
+    clear:left;
+    word-wrap:break-word;
+}
+#rn_PageTitle p {
+    clear:both;
+}
+/************************
+PageContent
+************************/
+#rn_PageContent {
+    clear:both;
+	/* ekchange changing from hidden to auto to allow for scroll bar 
+    overflow:hidden;  */
+    overflow:auto;  */
+}
+
+/*************************************
+Forms
+*************************************/
+#rn_PageContent form h2,
+.rn_HeadingBar {
+    background:#F9F9F9;
+    border:1px solid #CCC;
+    clear:both;
+    color:#414142;
+    letter-spacing:-0.03em;
+    padding:4px;
+    margin:20px 0 10px;
+}
+/**generic form legend only visible for screen readers (forms mode)*/
+form legend {
+    font-size:0em;
+    visibility:hidden;
+}
+form fieldset {
+    padding-left:8px;
+}
+form button {
+    margin-top:20px;
+}
+form .rn_Column {
+    margin-bottom:10px;
+}
+.rn_HintBox {
+    background-color:#F2F2F2;
+    border:1px solid #DBDBDB;
+    color:#222;
+    opacity:.7;
+    padding:4px 16px 2px;
+    -webkit-border-top-right-radius:10px;
+    -webkit-border-bottom-right-radius:10px;
+    -moz-border-radius-bottomright:10px;
+    -moz-border-radius-topright:10px;
+}
+.rn_Required, .rn_ErrorLabel {
+    color:#C10000;
+}
+.rn_ErrorField {
+    background-color:#FEFDA0 !important;
+}
+.rn_MessageBox {
+    background-color:#FFFFE0;
+    border:1px solid #808080;
+    color:#990000;
+    margin:10px 0;
+    padding:6px;
+}
+.rn_ErrorMessage {
+    background:#FFFFE0 url(images/layout/important.png) no-repeat;
+    padding:8px 6px 8px 40px !important;
+}
+    .rn_ErrorMessage a {
+        color:#990000;
+    }
+.rn_InfoMessage {
+    background:#FFFFE0 url(images/layout/info.png) no-repeat;
+    padding:6px 6px 4px 40px !important;
+}
+/***************
+Dialogs
+****************/
+.rn_Dialog {
+    overflow:visible;
+}
+.rn_Dialog ol,
+.rn_Dialog ul {
+    padding:0.4em 0 0 1.8em;
+}
+.rn_Dialog ol li {
+    list-style:decimal outside none;
+}
+.rn_Dialog ul li {
+    list-style:disc outside none;
+}
+/**************
+Module Box
+**************/
+.rn_Module {
+    background:#F7F7F7;
+    border:1px solid #CCC;
+    clear:both;
+    margin-bottom: 12px;
+    overflow:hidden;
+    padding-bottom:8px;
+}
+.rn_Module h3,
+.rn_Module h2 {
+    background:#EBEFF5 url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVQIHWP4DwABAQEANl9ngAAAAABJRU5ErkJggg==) repeat-x scroll 0 -1px;
+    *background:#EBEFF5; /* IE6/7 don't support data URI */
+    border-bottom:1px solid #CCC;
+    font-family:Arial, Helvetica, sans-serif; /* EKMOD to fix font in Most Popular Answers */
+    font-weight:normal;
+    margin-bottom:8px;
+    padding:4px;
+}
+/***********
+Misc Common rules
+**********/
+.rn_FloatRight {
+    float:right;
+}
+.rn_FloatLeft {
+    float:left;
+}
+.rn_Padding {
+    padding:8px 10px 2px 10px;
+}
+.rn_ClearBoth {
+    clear:both;
+}
+.rn_Highlight
+{
+font-style: normal;
+/* EKMOD: removed bold for search occurrences */
+/* font-weight: bold; */
+text-decoration: inherit;
+/* EKMOD: added background-color to highlight search occurrences */
+background-color: #e2e2e2;
+}
+/**********
+Columns
+**********/
+.rn_ColumnContainer {
+    width:100%;
+}
+.rn_Column {
+    width:48%;
+}
+.rn_LeftColumn {
+    float: left;
+    padding:0 4px 0 0;
+}
+.rn_RightColumn {
+    float:right;
+    padding: 0 0 0 4px;
+}
+
+/*******************************************
+    08. Answer & Question Detail
+*******************************************/
+#rn_Summary {
+    padding: 7px 0 0 0;
+    line-height:1em;
+    letter-spacing:-.01em;
+}
+#rn_AnswerInfo {
+    color:#888;
+    margin:6px 0 20px;
+}
+#rn_AnswerInfo div {
+    display:inline;
+}
+#rn_AnswerText {
+    clear:both;
+    line-height:1.4em;
+    padding:5px 0 15px;
+}
+#rn_FileAttach {
+    padding-bottom:1em;
+}
+/************
+List styles for answer content
+*************/
+.rn_QuestionDetail ol,
+.rn_QuestionDetail ul,
+.rn_AnswerDetail ol,
+.rn_AnswerDetail ul {
+    margin-bottom:1em;
+    padding-left:2em;
+    clear: both;
+}
+.rn_QuestionDetail li,
+.rn_AnswerDetail li {
+    line-height:1.6em;
+	margin:4px;
+}
+.rn_QuestionDetail ol ol,
+.rn_QuestionDetail ol ul,
+.rn_QuestionDetail ul ol,
+.rn_QuestionDetail ul ul,
+.rn_AnswerDetail ol ol,
+.rn_AnswerDetail ol ul,
+.rn_AnswerDetail ul ol,
+.rn_AnswerDetail ul ul {
+    margin-bottom:0;
+}
+.rn_QuestionDetail ol li,
+.rn_QuestionDetail ul li ol li,
+.rn_AnswerDetail ol li,
+.rn_AnswerDetail ul li ol li {
+    list-style:decimal;
+}
+.rn_QuestionDetail ol li ol li,
+.rn_AnswerDetail ol li ol li {
+    list-style:lower-alpha;
+}
+.rn_QuestionDetail ul li,
+.rn_AnswerDetail ul li {
+    list-style:disc;
+}
+.rn_QuestionDetail ul li ul li,
+.rn_QuestionDetail ol li ul li,
+.rn_AnswerDetail ul li ul li,
+.rn_AnswerDetail ol li ul li {
+    list-style:circle;
+}
+
+/* Incident thread */
+#rn_UpdateQuestion textarea {
+    width:98%;
+}
+#rn_QuestionThread {
+    margin:4px;
+}
+#rn_AdditionalInfo, #rn_DetailTools {
+    background:#EEE url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVQIHWP4DwABAQEANl9ngAAAAABJRU5ErkJggg==) repeat-x scroll 0 0;
+    *background:#EEE; /* IE6/7 don't support data URI */
+    border:1px solid #BBB;
+}
+/** Additional Details box **/
+#rn_AdditionalInfo {
+    margin:1em;
+    overflow:hidden;
+    padding:12px;
+    width:560px;
+}
+/** Print/Email/Notif/Share Container **/
+#rn_DetailTools {
+    line-height:1em;
+    margin-top:2em;
+    padding:8px 0;
+    text-align: right;
+}
+/*************************************
+    09. Home Page : Top Answers
+*************************************/
+#rn_PageContent.rn_Home ol {
+    margin:12px;
+    overflow:hidden;
+}
+#rn_PageContent.rn_Home ol li {
+    float:left;
+    margin:0px;
+    padding:4px;
+    width:48%;
+}
+#rn_PageContent.rn_Home ol li img {
+    display:none;
+}
+#rn_PageContent.rn_Home ol li a {
+    float:left;
+    font-size:.8em;
+    margin:4px;
+}
+#rn_PageContent.rn_Home .rn_AnswersLink {
+    display:inline-block;
+    font-size:120%;
+    font-weight:bold;
+    margin:10px 0 10px 16px;
+}
+/*************************************
+    10. Account Pages
+*************************************/
+/*********************
+Sprite for overview page
+*********************/
+.rn_Overview {
+    padding:12px 10px 2px;
+}
+.rn_Overview h2 {
+    background-color:#F9F9F9;
+    border:1px solid #DDD;
+    margin-top:10px;
+}
+/* image is 32 x 148 : icons are 32 x 32 */
+.rn_Overview h2 a,
+.rn_Overview h2 b {
+    background:url(images/layout/accountOverview.png) no-repeat;
+    color:#505050;
+    display:block;
+    height:26px;
+    margin:4px;
+    outline:none;
+    padding:8px 0 0 40px;
+    text-decoration:none;
+}
+.rn_Overview a:focus,
+.rn_Overview a:hover {
+    text-decoration:underline;
+}
+.rn_Overview a.rn_Questions {
+    background-position: 0px 2px;
+}
+.rn_Overview a.rn_Profile {
+    background-position: 2px -38px;
+}
+.rn_Overview a.rn_Notifs {
+    background-position: 0px -74px;
+}
+.rn_Overview b.rn_Contracts {
+    background-position: 0px -114px;
+}
+.rn_Overview div.rn_Questions,
+.rn_Overview div.rn_Notifs,
+.rn_Overview div.rn_Profile,
+.rn_Overview div.rn_Contracts {
+    margin:10px 0px 40px 40px;
+}
+.rn_QuestionList caption {
+    font-size:1.333em;
+    font-weight:bold;
+    line-height:1.4em;
+}
+/*********************
+Sprite for login page
+*********************/
+.rn_CreateAccountInfo {
+    background:#FAF9F5;
+    border:1px solid #ECECEC;
+    color:#454545;
+    padding:8px;
+}
+.rn_CreateAccountInfo h2 {
+    text-align: center;
+}
+.rn_CreateAccountInfo button {
+    display:block;
+    margin:auto;
+    width:60%;
+}
+.rn_CreateAccountInfo ul {
+    margin-top:10px;
+}
+.rn_CreateAccountInfo li {
+    background:url(images/layout/createAccount.png) no-repeat;
+    height:32px;
+    list-style-type: none;
+    margin:4px 0 16px;
+    padding:4px 0px 4px 40px;
+}
+.rn_CreateAccountInfo li.rn_Communicate {
+    background-position: 0px 0px;
+}
+.rn_CreateAccountInfo li.rn_Feedback {
+    background-position: 0px -46px;
+}
+.rn_CreateAccountInfo li.rn_Customize {
+    background-position: 0px -96px;
+}
+
+/********************************
+    11. General Accessibility
+*********************************/
+#rn_SkipNav a {
+    left:0px;
+    height:1px;
+    overflow:hidden;
+    position:absolute;
+    top:-500px;
+    width:1px;
+}
+#rn_SkipNav a:active, #rn_SkipNav a:focus {
+    background-color:#FFF;
+    height:auto;
+    left:auto;
+    top:auto;
+    width:auto;
+}
+
+/****************************
+    12. Print Style
+    (only display content)
+****************************/
+@media print
+{
+    body{
+        font-size:1em;
+    }
+    #rn_DetailTools,
+    #rn_Header,
+    #rn_Navigation,
+    #rn_SideBar,
+    #rn_Footer{
+        display:none;
+    }
+    #rn_Footer, #rn_Body, #rn_PageContent, #rn_PageTitle, #rn_AdditionalInfo{
+        overflow:visible;
+    }
+}
+
+/*******************************************
+    13. Chat Related
+*******************************************/
+
+#rn_ChatContainer {
+    height:100%;
+    margin:0px auto;
+    overflow:visible;
+    text-align:left;
+}
+
+#rn_ChatDialogContainer {
+    background-color:#EBEFF5;
+    border:1px solid #555555;
+    overflow:hidden;
+    /*IE6*/
+    _overflow-y:auto;
+    position:relative;
+    min-height:440px;
+    height:auto;
+    /*IE6*/
+    _height:445px;
+}
+
+/*FireFox2*/
+#rn_ChatDialogContainer[id=RN_CHATDIALOGCONTAINER] {
+    height:445px;
+    overflow-y:auto;
+}
+
+#rn_ChatDialogHeaderContainer {
+    height:30px;
+    overflow:visible;
+    padding:4px;
+    vertical-align:middle;
+}
+
+#rn_ChatDialogTitle {
+    margin-top: 8px;
+}
+
+#rn_ChatDialogHeaderButtonContainer button{
+    background: transparent none repeat scroll 0 0;
+    border-color: transparent;
+    color: #555555;
+    margin-right: .25em;
+    -moz-box-shadow: 0px 0px 0px transparent;
+    -webkit-box-shadow: 0px 0px 0px transparent;
+    padding: 2px;
+}
+
+#rn_ChatDialogHeaderButtonContainer button:hover,
+#rn_ChatDialogHeaderButtonContainer button:focus{
+    background-color: #F8F8F8;
+    border-color: #CCCCCC #555555 #555555 #CCCCCC;
+    color: #000000;
+}
+
+#rn_InChatButtonContainer {
+    overflow: visible;
+}
+
+#rn_PreChatButtonContainer{
+    overflow: visible;
+}
+
+#rn_ChatQueueSearchContainer {
+    bottom: 0px;
+    position: absolute;
+    width: 100%;
+}
+
+#rn_ChatLogo {
+    height:100px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width:135px;
+}
+
+@media print
+{
+    #rn_ChatDialogHeaderContainer,
+    #rn_InChatButtonContainer,
+    #rn_PreChatButtonContainer,
+    #rn_ChatQueueSearchContainer,
+    #rn_ChatLogo {
+        display:none;
+    }
+
+    #rn_ChatContainer {
+        border:0;
+    }
+}
+
+/* global */
+body{margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;background:#666 url(images/layout/bf_bg.jpg) 0 0 repeat-x;}
+#main{position:relative;padding:0;margin:0 auto;width:980px;}
+#content{position:relative;z-index:1;width:978px;margin:0 auto;padding:3px 0 20px 0;background:#f3f3f3;border-width:0 1px 1px 1px;border-style:solid;border-color:#444;}
+#headerTop .menuhover{top:19px;z-index:200;background:url(images/layout/drop_bg.png) 0 0 repeat !important;}
+#headerBot .menu .menuhover{top:32px;z-index:200;}
+#kodakHeader{z-index:2;}
+/*a{color:#3377bb;text-decoration:none;}
+a:hover{color:#666666;text-decoration:underline;} */
+
+
+
+/* header */
+#kodakHeader { position: relative; padding: 0; margin: 0 auto; width: 980px; color: #fff; }
+#headerTop { position: relative; height: 43px; margin-bottom: 11px; border-bottom: 3px solid #ffb700; background: url(images/layout/logo.gif) 10px 12px no-repeat; z-index: 110; }
+#vaultheaderTop { position: relative; height: 43px;  background: url(images/layout/logo.gif) 10px 12px no-repeat; z-index: 110; }
+#headerTop .logo, #vaultheaderTop.logo { position: relative; float: left; margin: 12px 0 0 10px; background: url(images/layout/logo.gif) 0 0 no-repeat; width: 82px; height: 22px; }
+.topHeadDiv { position: relative; float: right; font-size: 11px; color: #ccc; margin-top: 17px; }
+.chooseLang { padding-right: 10px; margin-right: 10px; }
+#headerMid { position: relative; height: 25px; background: none; z-index: 90; }
+.vaultconsumer { position: relative; float: left; margin: 0 0 0 0px; background: url(images/layout/serviceKnowledge980.gif) 0 0 no-repeat; width: 980px; height: 23px; }
+#vaultheaderMid { position: relative; height: 36px; background: none; z-index: 90; }
+.consumer { position: relative; float: left; margin: 0 0 0 10px; background: url(images/layout/portal.gif) 0 0 no-repeat; width: 257px; height: 17px; }
+#headerBot { position: relative; height: 33px; z-index: 100;/*border-bottom: 1px solid #444;*/ }
+
+/* top buttons */
+ul.menu { position: relative; float: left; overflow: visible; height: 100%; width: auto; margin: 1px 0 0 0; padding: 0; list-style-type: none; line-height: 12px; font-weight: bold; /*behavior: url('csshover3.htc');*/ }
+ul.menu li { position: relative; display: block; float: left; z-index: 100; width: auto; margin-right: 5px; }
+ul.menu li a { display: block; float: left; color: #ccc; text-decoration: none; background: url(images/layout/bBack.gif) 0 0 repeat-x; border: 1px solid #444; border-bottom: none; padding: 1px; text-decoration: none; cursor: pointer; }
+ul.menu li a.curOutside { background: #f3f3f3; }
+ul.menu li a span.menuText { display: block; float: left; border-top: 1px solid #444; border-left: 1px solid #444; height: 26px; padding: 2px 6px 0 7px; cursor: pointer; }
+ul.menu li a span.curInside { border: none; color: #000; padding: 3px 6px 0 8px; }
+ul.menu li a span.singleLine { padding-top: 10px; height: 18px; }
+
+/* code for arrows OR spacing */
+ul.menu li .menuArrow { position: relative; float: left; padding: 0 17px 0 0; width: 8px; height: 25px; border-top: 1px solid #444; }
+ul.menu li .menuSpacer { position: relative; float: left; width: 12px; height: 1px; border-top: 1px solid #444; }
+ul.menu li .mASelected { background: url(images/layout/topnav_arrow_current.gif) 0 18px no-repeat; border: none !important; }
+ul.menu li .mAUnSelected { background: url(images/layout/topnav_arrow.gif) 0 17px no-repeat; }
+
+/* special cases for top right menu */
+ul.menu li.noTab { float: none; font-size: 12px; padding-bottom: 7px; }
+ul.menu li.noTab span.allProds { display: block; float: none; border: none; padding: 0 13px 0 0; margin: 0; font-size: 11px; font-weight: normal; background: transparent url(images/layout/topnav_arrow.gif) right 4px no-repeat; cursor: pointer; }
+ul.menu li.noTab ul { right: 0; left: auto; border-top: 1px solid #444; }
+
+/* drops */
+ul.menu li ul { position: absolute; float: none; left: 0; top: -1000px; margin: 0; padding: 1px 0; border: 1px solid #444; border-top: none; background: url(images/layout/drop_bg.png) 0 0 repeat !important; background: #333; }
+ul.menu li ul li { float: none; display: inline; margin: 0; padding: 0; border: none; white-space: nowrap; clear: left; background: none; }
+ul.menu li ul li a { position: relative; float: none; display: block; margin: 0; padding: 4px 8px 4px 8px; border: none; background: none; color: #fff; }
+ul.menu li ul li.menuBreak { display: block; border: none; border-top: 1px solid #ccc; font-size: 0; line-height: 0; margin: 2px 0; padding: 0; }
+
+/* actions */
+ul.menu li:hover ul { top: 32px; }
+ul.menu li:hover .mAUnSelected { background: url(images/layout/topnav_arrow_roll.gif) 0 18px no-repeat; border: none; }
+ul.menu li:hover .menuSpacer { border: none; }
+ul.menu li:hover a { background: #999; color: #000; text-decoration: none; }
+ul.menu li:hover a.curOutside { background: #f3f3f3; }
+ul.menu li:hover a span.menuText { border: none; padding: 3px 6px 0 8px; }
+ul.menu li:hover a span.singleLine { padding: 11px 6px 0 8px !important; }
+ul.menu li:hover ul li a { background: none; color: #fff; }
+ul.menu li ul li a:hover { background: #999 !important; color: #fff; }
+ul.menu li.noTab:hover ul { top: 19px; }
+
+/* footer */
+#footer { float: left; margin: 14px 0 0; padding: 10px 0 0; width: 980px; height: 21px; background: transparent url(images/layout/footer_bg.png) repeat-x scroll left top; text-align: left; }
+#footer span { float: left; padding: 0 13px; font-size: 90%; background: transparent url(images/layout/dGrey.gif) repeat-y scroll right top; }
+#footer span.first, #footer span.first a { margin-left: 0; padding-left: 0; border-left: 0 none; }
+#footer span a { float: left; color: #CCC; text-align: left; }
+#footer .hosted_by { float: right; color: #fff; }
+
+
+/*version 1.1 20101004*/
+
+
+.rn_Multiline2 ol li span.rn_Element1 a {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	font-style: normal;
+	line-height: 20px;
+/*	font-weight: bold; EKMOD to remove bolding of hyperlink in results pages  */
+	font-variant: normal;
+	text-align: left;
+	margin-bottom: 3px;
+	margin-top: 24px;
+}
+
+.rn_Multiline2 a, .rn_Multiline2 a:link {
+/*EKMOD changed color (originally #3c0d68;)*/
+	color:#3377bb;
+	text-decoration:none;
+}
+.rn_Multiline2 a:active {
+/*EKMOD changed color (originally #3c0d68;)*/
+	color:#3377bb;
+}
+.rn_Multiline2 a:visited {
+/*EKMOD changed color (originally #3c0d68;)*/
+	color: #6d7d99;
+}
+.rn_Multiline2 a:hover {
+	color:#666666;
+	text-decoration:underline;
+}
+
+
+@charset "UTF-8";
+/*version 1.4 20101012*/
+
+#rn_AnswerText * {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#rn_AnswerText h1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 24px;
+	font-style: normal;
+	line-height: 26px;
+	font-weight: bold;
+	font-variant: normal;
+	color: #666666;
+	text-align: left;
+	margin-top: 24px;
+	margin-bottom: 12px;
+}
+#rn_AnswerText h2 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	font-style: normal;
+	line-height: 20px;
+	font-weight: bold;
+	font-variant: normal;
+	color: #666666;
+	text-align: left;
+	margin-top: 24px;
+	margin-bottom: 12px;
+}
+#rn_AnswerText h3 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;/*originally 18px*/
+	font-style: normal;
+	line-height: 20px;
+	font-weight: bold;
+	font-variant: normal;
+	color: #666666;
+	text-align: left;
+	margin-bottom: 3px;
+	margin-top: 24px;
+}
+/*h4 is default font size in RNT editor*/
+#rn_AnswerText h4 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;/*originally 14px*/
+	font-weight: bold;
+	color: #333333;
+	text-align: left;
+	line-height: 18px;
+	margin-top: 24px;
+	margin-bottom: 12px;
+}
+#rn_AnswerText h5 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;/*originally 14px*/
+	line-height: 16px;
+	font-weight: bold;
+	color: #666666;
+	margin-top: 24px;
+	margin-bottom: 12px;
+}
+#rn_AnswerText h6 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 14px;
+	font-weight: bold;
+	text-align: left;
+	color: #333333;
+	margin-bottom: 3px;
+	margin-top: 24px;
+}
+#rn_AnswerText p {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: normal;
+	color: #333333;
+	line-height: 14px;
+	padding: 0px;
+	margin-top: 0px;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+}
+#rn_AnswerText a[href], #rn_AnswerText a[href]:link {
+	color:#3377bb;
+	text-decoration:none;
+}
+#rn_AnswerText a[href$='.pdf'], #rn_AnswerText a[href$='.PDF'] {
+display:inline-block;
+line-height:20px;
+padding-left:20px;
+background : url(images/icons/pdf.gif) no-repeat center left;
+} 
+#rn_AnswerText a[href$='.xls'], #rn_AnswerText a[href$='.xlsx'], #rn_AnswerText a[href$='.xlsm'], #rn_AnswerText a[href$='.xlam'], #rn_AnswerText a[href$='.xla'], #rn_AnswerText a[href$='.xlb'], #rn_AnswerText a[href$='.xlc'], #rn_AnswerText a[href$='.xld'], #rn_AnswerText a[href$='.xlk'], #rn_AnswerText a[href$='.xlm'], #rn_AnswerText a[href$='.xlt'], #rn_AnswerText a[href$='.xlv'], #rn_AnswerText a[href$='.xlw'], #rn_AnswerText a[href$='.xll'], #rn_AnswerText a[href$='.XLS'], #rn_AnswerText a[href$='.XLSX'], #rn_AnswerText a[href$='.XLSM'], #rn_AnswerText a[href$='.XLAM'], #rn_AnswerText a[href$='.XLA'], #rn_AnswerText a[href$='.XLB'], #rn_AnswerText a[href$='.XLC'], #rn_AnswerText a[href$='.XLD'], #rn_AnswerText a[href$='.XLK'], #rn_AnswerText a[href$='.XLM'], #rn_AnswerText a[href$='.XLT'], #rn_AnswerText a[href$='.XLV'], #rn_AnswerText a[href$='.XLW'], #rn_AnswerText a[href$='.XLL']
+{
+display:inline-block;
+line-height:20px;
+padding-left:20px;
+background : url(images/icons/excel.gif) no-repeat center left;
+} 
+#rn_AnswerText a[href$='.mdb'], #rn_AnswerText a[href$='.accdb'], #rn_AnswerText a[href$='.mde'], #rn_AnswerText a[href$='.accde'], #rn_AnswerText a[href$='.mdf'], #rn_AnswerText a[href$='.mdw'], #rn_AnswerText a[href$='.mdtm'], #rn_AnswerText a[href$='.mdn'], #rn_AnswerText a[href$='.mda'], #rn_AnswerText a[href$='.accdt'], #rn_AnswerText a[href$='.accdr'], #rn_AnswerText a[href$='.adn'], #rn_AnswerText a[href$='.adp'], #rn_AnswerText a[href$='.ade'] , #rn_AnswerText a[href$='.MDB'], #rn_AnswerText a[href$='.ACCDB'], #rn_AnswerText a[href$='.MDE'], #rn_AnswerText a[href$='.ACCDE'], #rn_AnswerText a[href$='.MDF'], #rn_AnswerText a[href$='.MDW'], #rn_AnswerText a[href$='.MDTM'], #rn_AnswerText a[href$='.MDN'], #rn_AnswerText a[href$='.MDA'], #rn_AnswerText a[href$='.ACCDT'], #rn_AnswerText a[href$='.ACCDR'], #rn_AnswerText a[href$='.ADN'], #rn_AnswerText a[href$='.ADP'], #rn_AnswerText a[href$='.ADE'] 
+{
+display:inline-block;
+line-height:20px;
+padding-left:20px;
+background : url(images/icons/access.gif) no-repeat center left;
+} 
+#rn_AnswerText a[href$='.ppt'], #rn_AnswerText a[href$='.pptx'], #rn_AnswerText a[href$='.pps'], #rn_AnswerText a[href$='.ppsx'], #rn_AnswerText a[href$='.PPT'], #rn_AnswerText a[href$='.PPTX'], #rn_AnswerText a[href$='.PPS'], #rn_AnswerText a[href$='.PPSX']
+{
+display:inline-block;
+line-height:20px;
+padding-left:20px;
+background : url(images/icons/powerpoint.gif) no-repeat center left;
+} 
+#rn_AnswerText a[href$='.ps'], #rn_AnswerText a[href$='.PS']
+{
+display:inline-block;
+line-height:20px;
+padding-left:20px;
+background : url(images/icons/ps.gif) no-repeat center left;
+}
+#rn_AnswerText a[href$='.rtf'] , #rn_AnswerText a[href$='.RTF']
+{
+display:inline-block;
+line-height:20px;
+padding-left:20px;
+background : url(images/icons/rtf.gif) no-repeat center left;
+}
+#rn_AnswerText a[href$='.txt'], #rn_AnswerText a[href$='.TXT']
+{
+display:inline-block;
+line-height:20px;
+padding-left:20px;
+background : url(images/icons/text.gif) no-repeat center left;
+}
+#rn_AnswerText a[href$='.doc'], #rn_AnswerText a[href$='.docx'] , #rn_AnswerText a[href$='.DOC'], #rn_AnswerText a[href$='.DOCX']
+{
+display:inline-block;
+line-height:20px;
+padding-left:20px;
+background : url(images/icons/word.gif) no-repeat center left;
+}
+#rn_AnswerText a[href$='.xml'], #rn_AnswerText a[href$='.XML']
+{
+display:inline-block;
+line-height:20px;
+padding-left:20px;
+background : url(images/icons/xml.gif) no-repeat center left;
+}
+#rn_AnswerText a[href$='.zip'], #rn_AnswerText a[href$='.ZIP']
+{
+display:inline-block;
+line-height:20px;
+padding-left:20px;
+background : url(images/icons/zip.gif) no-repeat center left;
+}
+
+#rn_AnswerText a img {
+border:2px solid #3377bb;
+}
+#rn_AnswerText a:hover img {
+border:2px solid #666666;
+}
+#rn_AnswerText a[href]:active {
+/*EKMOD changed color (originally #3c0d68;)*/
+	color:#3377bb;
+}
+#rn_AnswerText a[href]:visited {
+/*EKMOD changed color (originally #3c0d68;)*/
+	color:#6d7d99;
+}
+#rn_AnswerText a[href]:hover {
+	color:#666666;
+	text-decoration:underline;
+}
+
+/*#rn_AnswerText ol
+{
+	list-style-position: outside;
+	list-style-type: decimal;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: normal;
+	color: #333333;
+	line-height: 14px;
+}
+#rn_AnswerText ol ol
+{
+	list-style-position: outside;
+	list-style-type: lower-alpha;
+}
+#rn_AnswerText ol ol ol
+{
+	list-style-position: outside;
+	list-style-type: decimal;
+}
+#rn_AnswerText ol ol ol ol
+{
+	list-style-position: outside;
+	list-style-type: lower-alpha;
+}
+*/
+/* EKMOD to have third level ordered list be decimal for answers, not alpha */
+.rn_AnswerDetail ol li ol li ol li {
+	list-style-type: decimal;
+	list-style-image: none;
+	list-style-position; outside;
+}
+.rn_AnswerDetail ol li ol li ol li ol li, .rn_AnswerDetail ol li ul li ol li, .rn_AnswerDetail ul li ul li ol li {
+	list-style-type: lower-alpha;
+	list-style-image: none;
+	list-style-position; outside;
+}
+.rn_AnswerDetail ol li ol li ol li ol li ol li {
+	list-style-type: decimal;
+	list-style-image: none;
+	list-style-position; outside;
+}
+#rn_AnswerText ul {
+	list-style-position: outside;
+	list-style-type: square;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: normal;
+	color: #333333;
+	line-height: 14px;
+}
+
+/* Table CSS based on RNT editor markup, not custom classes or styles */
+
+#rn_AnswerText hr {
+	border-top-width: 0px;
+	border-right-width: 0px;
+	border-bottom-width: 1px;
+	border-left-width: 0px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFB700;
+	border-right-color: #FFB700;
+	border-bottom-color: #FFB700;
+	border-left-color: #FFB700;
+	color: #FFB700;
+	background-color: #FFB700;
+	height:1px;
+}
+
+#rn_AnswerText table {
+	border: 1px solid #666666;
+	border-collapse:collapse;
+	border-spacing:1px;
+	padding:10px;
+	margin-bottom:10px;
+}
+#rn_AnswerText table tr td {
+	border: 1px solid #666666;
+	padding: 10px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #333333;
+	line-height: 14px;
+}
+
+#rn_AnswerText table tbody tr:first-child td h4 {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+/* EKMOD added for select elements */
+#rn_AnswerText pre, #rn_AnswerText code, #rn_AnswerText samp.codeph
+{
+font-family: "Courier New", Courier, monospace;
+color:  #660000;
+}
+
+/* removed due to migration issue: K-Now tables used for layout, not all have header 
+#rn_AnswerText tbody tr:first-child td {
+	border: 1px solid #666666;
+	padding: 10px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	color: #333333;
+	background-color: #CCCCCC;
+	line-height: 16px;
+}*/
+
+.ygtvfocus {background-color:#fff !important; }
+
+/* **********************************************************************
+	UWSPS Specific Styles from Astoria generated content and 
+	TechPlanet legacy system.
+	
+	Created: 4/20/2011
+	Created by: Richard Simms
+	
+	Last Modified: 4/20/2011
+
+
+ ************************************************************************ */
+
+ /*  Astoria Kodak.css Styles */
+/*heading 1*/ H1.topictitle1 
+	{font-size:16px; font-weight:bold; padding: 2px 0 6px 0; margin:0; }
+/*heading 2*/ H2.sectiontitle, H2.topictitle2 
+	{font-size:13px; font-weight:bold; padding:2px 0 1px 0; margin:0;}
+/*heading 3*/ H3.sectiontitle
+	{font-size:11px; font-weight:bold; padding: 0; margin:0;}
+/*step wt elements*/ ol li.stepexpand, ol li.substepexpand
+	{padding-top:6px; padding-bottom:0px; margin-top:0; margin-bottom:0;}
+/* number in numbered lists*/ ol.decimal
+  { list-style: decimal; }		
+/*part number output class*/ p.PartNumber 
+	{font-size: 8pt; color: gray; text-align: right;}	
+/*codeblock phrase element*/ /* pre
+  { background-color: #c9c9c9; margin-top: .2em; margin-bottom: .2em; padding-top: .2em; padding-bottom: .25em;} */
+/*code
+  code{color:#993300;font-family:Courier New,Courier,monospace;}
+*/    
+/*filepath phrase element*/ 
+#rn_AnswerText .filepath {font-family: Courier, "Courier New", monospace;font-weight: normal;} 
+
+/* Chapter map: links to topics */
+ul.ullinks {margin:0; padding:0;}
+li.ulchildlink {margin: 2px 0; padding:0;}
+li.ulchildlink a {font-weight: normal;} /*to remove <strong>*/
+/* Topics: links to chapter map */
+div.familylinks {background-color:#fbf3dd; font-size:8pt; padding:4px 2px; margin:12px 0 0 0; }
+div.parentlink {margin: 0; padding:0; }
+
+/* Notes (draft version)*/
+p.Note {
+	padding-left: 40px; padding-bottom: 10px;}
+/* p.Danger {background: url(warningTriangle.gif) no-repeat; 
+	padding-left: 40px; padding-bottom: 10px;} */
+div.cautiontitle { margin-top: 1em; 
+		font-weight: bold }
+div.caution, div.tip, div.note, div.important, div.notice { font-family:Verdana; 
+		font-style:normal; 
+		font-variant:normal; 
+		font-weight:normal; }
+		
+/* .caution {	background: url(warningTriangle.gif) no-repeat; 
+		padding-left: 40px; 
+		padding-bottom: 10px; } */
+
+div.tablenoborder {margin-top: 1em;}
+
+/* div with class=p is used for paragraphs that contain blocks, to keep the XHTML valid */
+.p {margin-top: 6px;}
+
+/*  Astoria LTR Styles */
+.unresolved { background-color: skyblue; }
+.noTemplate { background-color: yellow; }
+
+.base { background-color: #ffffff; }
+
+/* Add space for top level topics */
+.nested0 { margin-top : 1em;}
+
+/* Default of italics to set apart figure captions */
+.figcap { font-style: italic }
+.figdesc { font-style: normal }
+
+/* Use @frame to create frames on figures */
+.figborder { border-style: solid; padding-left : 3px; border-width : 2px; padding-right : 3px; margin-top: 1em; border-color : Silver;}
+.figsides { border-left : 2px solid; padding-left : 3px; border-right : 2px solid; padding-right : 3px; margin-top: 1em; border-color : Silver;}
+.figtop { border-top : 2px solid; margin-top: 1em; border-color : Silver;}
+.figbottom { border-bottom : 2px solid; border-color : Silver;}
+.figtopbot { border-top : 2px solid; border-bottom : 2px solid; margin-top: 1em; border-color : Silver;}
+
+/* Most link groups are created with <div>. Ensure they have space before and after. */
+.olchildlink { margin-top: 1em; margin-bottom: 1em }
+.linklist { margin-bottom: 1em }
+.linklistwithchild { margin-left: 1.5em; margin-bottom: 1em  }
+.sublinklist { margin-left: 1.5em; margin-bottom: 1em  }
+.relconcepts { margin-top: 1em; margin-bottom: 1em }
+.reltasks { margin-top: 1em; margin-bottom: 1em }
+.relref { margin-top: 1em; margin-bottom: 1em }
+.relinfo { margin-top: 1em; margin-bottom: 1em }
+.breadcrumb { font-size : smaller; margin-bottom: 1em }
+.prereq { margin-left : 20px;}
+
+/* Set heading sizes, getting smaller for deeper nesting */
+.topictitle1 { margin-top: 0pc; margin-bottom: .1em; font-size: 1.34em; }
+.topictitle3 { margin-top: 1pc; margin-bottom: .17em; font-size: 1.17em; font-weight: bold; }
+.topictitle4 { margin-top: .83em; font-size: 1.17em; font-weight: bold; }
+.topictitle5 { font-size: 1.17em; font-weight: bold; }
+.topictitle6 { font-size: 1.17em; font-style: italic; }
+.section { margin-top: 1em; margin-bottom: 1em }
+.example { margin-top: 1em; margin-bottom: 1em }
+
+/* All note formats have the same default presentation */
+.notetitle { font-weight: bold }
+.notelisttitle { font-weight: bold }
+.tiptitle { font-weight: bold }
+.fastpathtitle { font-weight: bold }
+.importanttitle { font-weight: bold }
+.remembertitle { font-weight: bold }
+.restrictiontitle { font-weight: bold }
+.attentiontitle { font-weight: bold }
+.dangertitle { font-weight: bold }
+
+/* Simple lists do not get a bullet */
+ul.simple { list-style-type: none }
+
+/* Used on the first column of a table, when rowheader="firstcol" is used */
+.firstcol { font-weight : bold;}
+
+/* Various basic phrase styles */
+.bold { font-weight: bold; }
+.boldItalic { font-weight: bold; font-style: italic; }
+.italic { font-style: italic; }
+.underlined { text-decoration: underline; }
+.uicontrol { font-weight: bold; }
+.parmname { font-weight: bold; }
+.kwd { font-weight: bold; }
+.defkwd { font-weight: bold; text-decoration: underline; }
+.var { font-style : italic;}
+.shortcut { text-decoration: underline; }
+
+/* Default of bold for definition list terms */
+.dlterm { font-weight: bold; }
+
+/* Use CSS to expand lists with @compact="no" */
+.dltermexpand { font-weight: bold; margin-top: 1em; }
+*[compact="yes"]>li { margin-top: 0em;}
+*[compact="no"]>li { margin-top: .53em;}	
+.liexpand { margin-top: 1em; margin-bottom: 1em }
+.sliexpand { margin-top: 1em; margin-bottom: 1em }
+.dlexpand { margin-top: 1em; margin-bottom: 1em }
+.ddexpand { margin-top: 1em; margin-bottom: 1em }
+
+/* Align images based on @align on topic/image */
+div.imageleft { text-align: left }
+div.imagecenter { text-align: center }
+div.imageright { text-align: right }
+div.imagejustify { text-align: justify }
+
+/* The cell border can be turned on with
+   {border-right:solid}
+   This value creates a very thick border in Firefox (does not match other tables)
+
+   Firefox works with 
+   {border-right:solid 1pt}
+   but this causes a barely visible line in IE */
+.cellrowborder { border-left:none; border-top:none; border-right:solid 1px; border-bottom:solid 1px }
+.row-nocellborder { border-left:none; border-right:none; border-top:none; border-right: hidden; border-bottom:solid 1px}
+.cell-norowborder { border-top:none; border-bottom:none; border-left:none; border-bottom: hidden; border-right:solid 1px}
+.nocellnorowborder { border:none; border-right: hidden;border-bottom: hidden }
+
+pre.screen { padding: 5px 5px 5px 5px; border: outset; background-color: #CCCCCC; margin-top: 2px; margin-bottom : 2px; white-space: pre}
+
+#rn_AnswerText .ek_number_rollover {
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+	text-decoration: none;
+	position:relative;
+}
+
+#rn_AnswerText .ek_number_rollover > span {
+	line-height: 14px;
+	font-size: 12px;
+	height: 23px;
+	width: 25px;
+	text-align: center;
+	background-image: url(images/layout/ek_rollover_gray_25x23.png);
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	margin: 0px;
+	padding-top: 4px;
+	position:absolute;
+}
+
+#rn_AnswerText .ek_number_rollover a {
+	text-decoration: none;
+}
+
+#rn_AnswerText .ek_number_rollover a:hover span {
+	line-height: 14px;
+	font-size: 12px;
+	height: 23px;
+	width: 25px;
+	text-align: center;
+	background-image: url(images/layout/ek_rollover_red_25x23.png);
+	background-repeat: no-repeat;
+	padding: 0px;
+	background-position: 0px 0px;
+	margin: 0px;
+	color: #ED0000;
+	text-decoration: underline;
+	padding-top: 4px;
+	cursor:pointer;
+	position:absolute;
+}
+
+#rn_AnswerText .ek_number_rollover a span {
+	line-height: 14px;
+	font-size: 12px;
+	height: 23px;
+	width: 25px;
+	text-align: center;
+	background-image: url(images/layout/ek_rollover_blue_25x23.png);
+	background-repeat: no-repeat;
+	padding: 0px;
+	background-position: 0px 0px;
+	margin: 0px;
+	color: #3366FF;
+	text-decoration: none;
+	padding-top: 4px;
+	cursor:pointer;
+	position:absolute;
+}
+
+
+a.rn_Collapsed {
+font-size: 14px;
+cursor:pointer;
+text-decoration:none;
+padding-right:11px;
+font-weight:bold;
+background: url(images/layout/arrowRight13x13.gif) top right no-repeat;
+}
+a.rn_Expanded {
+text-decoration:none;
+font-size: 14px;
+cursor:pointer;
+font-weight:bold;
+padding-right:11px;
+background: url(images/layout/arrowDown13x13.gif) top right no-repeat;
+}
+#toggleitem {
+height:2.5em;
+}
+.quicksearch {
+padding:6px 0 8px 0;
+font-weight:bold;
+font-size:24px;
+}
+#largeLogin   {
+font-size:1.167em;
+font-weight:bold;
+}
+
+/* custom css */
+.rn_ProductCategoryInput .rn_Hidden{
+    display:block;
+}
+
+.rn_ProductCategoryInput .rn_Panel{
+    display:none;
+}
+
+
+.rn_Home .rn_Module {
+	  margin-right:3px; 
+	  border: 3px solid #CCCCCC;
+	  padding-bottom:2px;
+}
+.rn_Home .rn_Paginator {
+	padding:1px 0;
+    border-color:#CBCBCB;
+    border-style:solid none none none;
+    border-width:1px medium medium medium;
+}
+.rn_Home .rn_Grid2 {
+    border-color:#CBCBCB;
+    border-style:solid none none none;
+    border-width:1px medium medium medium;
+	margin-bottom:0px;
+	padding-bottom:0px;
+	line-height:1.75em;
+}
+.rn_Home .rn_Module h2 {
+padding-top:8px;
+height:26px;
+font-size:16px;
+font-weight:bold;
+}
+.rn_Home #rn_SearchControls {
+    border: 3px solid #CCCCCC;
+    width: 97.0%;
+}

@@ -1,0 +1,37 @@
+.rn_CommunitySearchResults {
+    overflow:hidden;
+}
+.rn_CommunitySearchResults .rn_Loading
+{
+    background: url(../images/loading.gif) no-repeat center center;
+    height:auto !important;
+    height:66px;
+    min-height:66px;
+}
+
+.rn_CommunitySearchResults .rn_PostTitle{
+    font-size:1.333em;
+    line-height:1.3em;
+}
+
+.rn_CommunitySearchResults .rn_PostSubContent{
+    color:#777777;
+    font-size:0.8em;
+}
+.rn_CommunitySearchResults ol{
+    padding-top:3px;
+}
+.rn_CommunitySearchResults li{
+    margin-bottom:5px;
+    padding-left:5px;
+}
+.rn_CommunitySearchResults li a{
+    margin: 0px;
+}
+.rn_CommunitySearchResults li span{
+    display:block;
+}
+.rn_CommunitySearchResults .rn_AllResults{
+    font-weight: bold;
+    font-size: 120%;
+}

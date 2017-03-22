@@ -1,0 +1,56 @@
+.rn_SocialBookmarkLink a {
+    color:#222;
+    text-decoration:none;
+}
+.rn_SocialBookmarkLink a:hover {
+    white-space:normal;
+}
+.rn_SocialBookmarkLink a:hover span {
+    text-decoration:underline;
+}
+.rn_SocialBookmarkLink .rn_Panel {
+    background-color:#FFF;
+    padding:6px;
+}
+.rn_SocialBookmarkLink .rn_Panel .hd {
+    border:none !important;
+}
+.rn_SocialBookmarkLink .rn_Panel li {
+    /* 
+    16x96 sprite. Logos appear in the following order: 
+    Delicious, Digg, Facebook, Reddit, StumbleUpon, Twitter
+    */
+    background:url(../images/icons/socialBookmark.png) no-repeat;
+    height:16px;
+    line-height:1.4em;
+    margin:4px;
+    padding-left:20px;
+}
+/*
+Each link that appears in the overlay has a numerically increasing "rn_Link" class.
+Links appear in the order specified in the widget's `sites` attribute.
+ */
+/* Delicious */
+.rn_SocialBookmarkLink li.rn_Link1 {
+    background-position:0 0;
+}
+/* Digg */
+.rn_SocialBookmarkLink li.rn_Link2 {
+    background-position:0 -16px;
+}
+/* Facebook */
+.rn_SocialBookmarkLink li.rn_Link3 {
+    background-position:0 -32px;
+}
+/* Reddit */
+.rn_SocialBookmarkLink li.rn_Link4 {
+    background-position:0 -48px;
+}
+/* StumbleUpon */
+.rn_SocialBookmarkLink li.rn_Link5 {
+    background-position:0 -64px;
+}
+/* Twitter */
+.rn_SocialBookmarkLink li.rn_Link6 {
+    background-position:0 -80px;
+}

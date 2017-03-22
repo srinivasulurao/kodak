@@ -1,0 +1,26 @@
+.rn_SocialContentRating {
+  text-align: right; }
+  .rn_SocialContentRating button.rn_UpvoteButton {
+    color: #477DCA;
+    background: none;
+    border: 0;
+    box-shadow: none;
+    font-size: 3.5em;
+    padding: 0;
+    text-shadow: none;
+    font-weight: normal; }
+    .rn_SocialContentRating button.rn_UpvoteButton:before {
+      font-family: 'FontAwesome';
+      line-height: 1em;
+      margin-right: 6px;
+      content: "\f01b";
+      padding: 0 0.1em;
+      margin-right: 0; }
+    .rn_SocialContentRating button.rn_UpvoteButton:hover, .rn_SocialContentRating button.rn_UpvoteButton:focus, .rn_SocialContentRating button.rn_UpvoteButton:active, .rn_SocialContentRating button.rn_UpvoteButton:disabled {
+      border: 0;
+      box-shadow: none;
+      background: none; }
+    .rn_SocialContentRating button.rn_UpvoteButton:disabled {
+      color: #477DCA; }
+    .rn_SocialContentRating button.rn_UpvoteButton:not([disabled]):hover, .rn_SocialContentRating button.rn_UpvoteButton:not([disabled]):focus, .rn_SocialContentRating button.rn_UpvoteButton:not([disabled]):active {
+      color: #264e85; }

@@ -19,7 +19,7 @@ $lines_per_page=(int)$contact->CustomFields->c->lines_per_page;
 }
 </style>
 
-    <rn:container source_id="KFSearch,SocialSearch"   history_source_id="KFSearch,SocialSearch">
+    <rn:container source_id="KFSearch,SocialSearch" history_source_id="KFSearch,SocialSearch" per_page='15'>
 
 
 <table style="width:920px"><tr><td valign="top" style="width:260px"> 
@@ -40,8 +40,8 @@ $lines_per_page=(int)$contact->CustomFields->c->lines_per_page;
             <form method="post" action="" onsubmit="return false" >
 <div style="float:right; padding: 25px 80px 0px 0px;">                            <a class="rn_SearchLink"  href="javascript:void(0);" onclick="window.open('/app/utils/help_search', '', 'scrollbars,resizable,width=720,height=700'); return false;">#rn:msg:SEARCH_TIPS_LBL#</a></div>
                 <div class="rn_SearchInput">
-                    <rn:widget path="custom/search/CustomAdvancedSearchDialog" report_page_url="/app/answers/list/page/2" report_id="#rn:php:$templ_msg_base_array['portal_report_id']#" display_categories_filter="false" display_products_filter="false" additional_filters="search_nl,search_fnl,search_ex,search_cpx" />  
-                    <rn:widget default_value="#rn:php:$search_text#"  path="custom/search/KeywordTextModified" label_text="" initial_focus="true" report_id="#rn:php:$templ_msg_base_array['portal_report_id']#"/>
+                    <rn:widget path="custom/search/CustomAdvancedSearchDialog" report_page_url="/app/answers/list" report_id="#rn:php:$templ_msg_base_array['portal_report_id']#" display_categories_filter="false" display_products_filter="false" additional_filters="search_nl,search_fnl,search_ex,search_cpx" />  
+                    <rn:widget default_value="#rn:php:$search_text#"  label_placeholder="" path="custom/search/KeywordTextModified" label_text="" initial_focus="true" report_id="#rn:php:$templ_msg_base_array['portal_report_id']#"/>
                 </div>
                 <rn:widget path="custom/search/SearchButton2OnChange" initial_focus="true" report_id="#rn:php:$templ_msg_base_array['portal_report_id']#"/>
 
@@ -53,11 +53,11 @@ $lines_per_page=(int)$contact->CustomFields->c->lines_per_page;
 <div id="rn_PageContent" class="rn_AnswerList">
     <div class="rn_Padding">
         <h2 class="rn_ScreenReaderOnly">#rn:msg:SEARCH_RESULTS_CMD#</h2>
-        <rn:widget path="reports/ResultInfo" per_page="#rn:php:$lines_per_page#" report_id="#rn:php:$templ_msg_base_array['portal_report_id']#"/>
-        <rn:widget path="knowledgebase/TopicWords2" per_page="#rn:php:$lines_per_page#" />
-        <rn:widget path="reports/Multiline" per_page="#rn:php:$lines_per_page#" report_id="#rn:php:$templ_msg_base_array['portal_report_id']#" />  <!-- stupid comment to fix problem with some content like on page 39262  -->
+        <rn:widget path="custom/reports/ResultInfo2" per_page="#rn:php:$lines_per_page#" report_id="#rn:php:$templ_msg_base_array['portal_report_id']#"/>
+        <rn:widget path="knowledgebase/TopicWords" per_page="#rn:php:$lines_per_page#" />
+        <rn:widget path="custom/reports/Multiline2" per_page="#rn:php:$lines_per_page#" report_id="#rn:php:$templ_msg_base_array['portal_report_id']#" />  <!-- stupid comment to fix problem with some content like on page 39262  -->
         <!--<rn:widget path="reports/SearchTruncation2"  report_id="#rn:php:$templ_msg_base_array['portal_report_id']#" />     -->
-        <div class='pagination'><rn:widget path="reports/Paginator" per_page="#rn:php:$lines_per_page#" report_id="#rn:php:$templ_msg_base_array['portal_report_id']#"/></div>
+        <rn:widget path="custom/reports/Paginator2" per_page="#rn:php:$lines_per_page#" report_id="#rn:php:$templ_msg_base_array['portal_report_id']#"/>
 		
     </div>
 </div>
@@ -68,7 +68,21 @@ $lines_per_page=(int)$contact->CustomFields->c->lines_per_page;
      </rn:container>
 
 <script>
+        document.getElementsByClassName('rn_Content')[0].innerHTML="";
         var original_url=window.location.href;
         ph_url=original_url.split("list");
         window.history.pushState("","Find Answers",ph_url[0]+"list");
+
+        mul_id=document.getElementsByClassName('rn_Multiline')[0].id;
+        loading_id=mul_id.split("rn_Multiline2_")[1];
+        document.getElementById("rn_Multiline2_"+loading_id+"_Loading").classList.add("rn_Loading");
 </script> 
+
+<style>
+.rn_AnswerList .rn_Loading{
+    top:0px !important;
+}
+.rn_PreviousPage{
+    display: none !important;
+}
+</style>

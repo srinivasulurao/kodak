@@ -1,0 +1,20 @@
+.rn_LoginDialog2 {
+    width: 210px;
+}
+.rn_LoginDialog2.rn_ContentLoading{
+    background:url(../images/loading.gif) no-repeat center center;
+}
+.rn_LoginDialog2 input{
+    margin-bottom:5px;
+}
+.rn_LoginDialog2 input[type="text"],
+.rn_LoginDialog2 input[type="password"]{
+    width:200px;
+}
+.rn_LoginDialog2 label{
+    margin-bottom:5px;
+    display:block;
+}
+.rn_LoginDialog2 div{
+    margin-bottom: 5px;
+}

@@ -9,13 +9,13 @@
     <title><rn:page_title/></title>
     <rn:widget path="search/BrowserSearchPlugin" pages="home, answers/list, answers/detail" />
 
-    <!--
-    <rn:theme path="/euf/assets/themes/standard" css="site.css,
+    
+    <rn:theme path="/euf/assets/themes/Kodak" css="site.css,
     {YUI}/widget-stack/assets/skins/sam/widget-stack.css,
     {YUI}/widget-modality/assets/skins/sam/widget-modality.css,
     {YUI}/overlay/assets/overlay-core.css,
     {YUI}/panel/assets/skins/sam/panel.css" />
-    -->
+    
 
     <rn:theme path="/euf/assets/themes/Kodak" css="site.css,/rnt/rnw/yui_2.7/container/assets/skins/sam/container.css" />
     <link rel="shortcut icon" href="/euf/assets/themes/Kodak/images/favicon.ico" type="image/x-icon" />

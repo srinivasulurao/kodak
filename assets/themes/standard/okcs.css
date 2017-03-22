@@ -1,0 +1,146 @@
+.rn_StartOver {
+    display: inline-block;
+    float: right;
+    margin-right: 9%;
+    margin-top: 15px;
+    a {
+        color: #FFF;
+    }
+}
+
+.rn_OkcsLeftContainer {
+    display: inline-block;
+    width: 34%;
+    margin-top: 1em;
+}
+
+.rn_OkcsRightContainer {
+    clear: both;
+    display: inline-block;
+    float: right;
+    width: 64%;
+    margin-top: 1em;
+}
+
+.rn_StartOver a{
+    color: #FFF;
+}
+
+.rn_SourceSearchButton {
+    display: block;
+    float: left;
+}
+
+#rn_FileAttach, #rn_AnswerText {
+    clear: both;
+    font-size: 1.0em;
+    line-height: 1.4em;
+    padding: 15px 10px;
+}
+
+#rn_Summary {
+    letter-spacing: -0.01em;
+    line-height: 1em;
+    padding: 7px 0 0;
+    font-size: 1.286em;
+    font-weight: normal;
+}
+
+.rn_AnswerStatus .rn_AnswerInfo {
+    color: #666;
+    font-size: small;
+    margin: 6px 0 16px;
+}
+
+.rn_SectionTitle {
+    border-top: 2px dashed #b7cce7;
+    padding-top: 1.5em;
+}
+
+.rn_OkcsSubmit:before {
+    font-family: 'FontAwesome';
+    margin-right: 6px;
+    content: "\f110";/*FontAwesome icon fa-spinner*/
+    -webkit-animation: spin 2s infinite linear;
+    -moz-animation: spin 2s infinite linear;
+    animation: spin 2s infinite linear;
+    font-size: 1em;
+    position: relative;
+    text-align: center;
+}
+
+.rn_SearchControls .rn_SearchButton, .rn_SearchControls .rn_SourceSearchButton{
+    margin-right: 0;
+}
+
+.rn_Footer .rn_Misc {
+    text-align: left;
+}
+
+.rn_OracleLogo a {
+    float: left;
+}
+
+.rn_Home .rn_RecentKB .rn_Container{
+    border-bottom: 0;
+}
+
+.rn_PageContentChannel{
+    background: #40526b;
+    color: #FFF;
+    text-shadow: #000 0 1px;
+}
+
+.rn_PageContentChannelInner{
+    max-width: 68em;
+    color: #FFF;
+    margin-left: auto;
+    margin-right: auto;
+    margin: auto;
+}
+
+.rn_ContentType li a{
+    color: #FFF !important;
+}
+
+.rn_OkcsLeftContainer .rn_OkcsProductCategorySearchFilter {
+    float: left;
+    width: 101%;
+}
+
+.rn_AnswerHide {
+    display: none;
+}
+
+.rn_OkcsSmartAssistant .rn_ExpandAnswer, .rn_SmartAssistantDialog .rn_InlineAnswerLink {
+    font-size: 1em;
+}
+
+.rn_SmartAssistantDialog .rn_List > li {
+    font-size: 1.2em;
+}
+
+.rn_OkcsSmartAssistant .rn_InlineAnswersExplorer li a {
+    font-weight: normal;
+}
+
+.rn_RatingLabel {
+    display: inline;
+}
+
+.rn_ResultPadding {
+    display: inline-block !important;
+}
+
+.rn_ProductCategorySearchFilter .rn_PanelContainer{
+    width: 373px;
+}
+
+.rn_FloatRight {
+    text-align: right;
+    margin-top: 10px;
+}
+
+.rn_SourcePagination .rn_NextPage a:after, .rn_SourcePagination .rn_PreviousPage a:before{
+    content: "";
+}

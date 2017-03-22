@@ -1,0 +1,73 @@
+.rn_GuidedAssistant img {
+    display:inline-block;
+    max-width:500px;
+    max-height:500px;
+    padding:6px;
+}
+.rn_GuidedAssistant .rn_Node {
+    border-bottom:1px solid #DDD;
+    margin-bottom:26px;
+    padding-bottom:14px;
+}
+.rn_GuidedAssistant .rn_QuestionText {
+    margin:24px 0 10px;
+}
+.rn_GuidedAssistant .rn_Result {
+    margin:6px 0 10px;
+}
+.rn_GuidedAssistant .rn_ResultHeading {
+    line-height:1.6em;
+    margin-bottom:10px;
+}
+
+.rn_GuidedAssistant .rn_RadioQuestion div {
+    margin-top:6px;
+}
+.rn_GuidedAssistant .rn_RadioQuestion label {
+    margin-left:6px;
+}
+.rn_GuidedAssistant .rn_ImageQuestion input,
+.rn_GuidedAssistant .rn_RadioQuestion input {
+    border:none;
+}
+
+.rn_GuidedAssistant .rn_LinkQuestion div {
+    margin-bottom:8px;
+}
+.rn_GuidedAssistant .rn_LinkQuestion label {
+    color:#0000CC;
+    margin:4px 0;
+    text-decoration:underline;
+}
+.rn_GuidedAssistant .rn_LinkQuestion label.rn_HighlightResponse {
+    color:#FFF;
+    background-color:#0E53A7;
+}
+
+.rn_GuidedAssistant .rn_ButtonQuestion button{
+	margin-bottom:6px;
+	background-color:gray;
+	*width:auto;
+	*overflow:visible;} 
+.rn_GuidedAssistant .rn_ButtonQuestion .rn_HighlightResponse {
+    font-weight:bold;
+}
+.rn_GuidedAssistant .rn_ButtonQuestion .rn_HighlightResponse.rn_SelectedButton {
+    background-position: 0px -40px;
+    border:3px solid #333;
+    background-color:green;
+    color:#FCFCFC;
+}
+
+.rn_GuidedAssistant .rn_TextQuestion .rn_Label,
+.rn_GuidedAssistant .rn_TextQuestion button {
+    display:block;
+    margin-top:6px;
+}
+.rn_GuidedAssistant .rn_TextQuestion input {
+    width:200px;
+}
+
+.rn_GuidedAssistant .rn_ResultLink a {
+    display:block;
+}

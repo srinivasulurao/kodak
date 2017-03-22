@@ -1,0 +1,172 @@
+@charset "UTF-8";
+/*version 1.2 20100928*/
+
+#rn_AnswerText * {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#rn_AnswerText h1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 24px;
+	font-style: normal;
+	line-height: 26px;
+	font-weight: bold;
+	font-variant: normal;
+	color: #666666;
+	text-align: left;
+	margin-top: 24px;
+	margin-bottom: 12px;
+}
+#rn_AnswerText h2 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	font-style: normal;
+	line-height: 20px;
+	font-weight: bold;
+	font-variant: normal;
+	color: #666666;
+	text-align: left;
+	margin-top: 24px;
+	margin-bottom: 12px;
+}
+#rn_AnswerText h3 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;/*originally 18px*/
+	font-style: normal;
+	line-height: 20px;
+	font-weight: bold;
+	font-variant: normal;
+	color: #666666;
+	text-align: left;
+	margin-bottom: 3px;
+	margin-top: 24px;
+}
+/*h4 is default font size in RNT editor*/
+#rn_AnswerText h4 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;/*originally 14px*/
+	font-weight: bold;
+	color: #333333;
+	text-align: left;
+	line-height: 18px;
+	margin-top: 24px;
+	margin-bottom: 12px;
+}
+#rn_AnswerText h5 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;/*originally 14px*/
+	line-height: 16px;
+	font-weight: bold;
+	color: #666666;
+	margin-top: 24px;
+	margin-bottom: 12px;
+}
+#rn_AnswerText h6 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 14px;
+	font-weight: bold;
+	text-align: left;
+	color: #333333;
+	margin-bottom: 3px;
+	margin-top: 24px;
+}
+#rn_AnswerText p {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: normal;
+	color: #333333;
+	line-height: 14px;
+	padding: 0px;
+	margin-top: 0px;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+}
+#rn_AnswerText a, #rn_AnswerText a:link {
+	color:#3377BB;
+	text-decoration:none;
+}
+#rn_AnswerText a:active {
+	color:#3377BB;
+}
+#rn_AnswerText a:visited {
+	color:#3377BB;
+}
+#rn_AnswerText a:hover {
+	color:#666666;
+	text-decoration:underline;
+}
+
+#rn_AnswerText ol
+{
+	list-style-position: outside;
+	list-style-type: decimal;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: normal;
+	color: #333333;
+	line-height: 14px;
+}
+#rn_AnswerText ol ol
+{
+	list-style-position: outside;
+	list-style-type: lower-alpha;
+}
+#rn_AnswerText ol ol ol
+{
+		list-style-position: outside;
+	list-style-type: decimal;
+}
+#rn_AnswerText ol ol ol ol
+{
+	list-style-position: outside;
+	list-style-type: lower-alpha;
+}
+#rn_AnswerText ul {
+	list-style-position: outside;
+	list-style-type: square;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: normal;
+	color: #333333;
+	line-height: 14px;
+}
+
+/* Table CSS based on RNT editor markup, not custom classes or styles */
+
+#rn_AnswerText table {
+	border: 1px solid #666666;
+	border-collapse:collapse;
+	border-spacing:1px;
+	padding:10px;
+	margin-bottom:10px;
+}
+#rn_AnswerText table tr td {
+	border: 1px solid #666666;
+	padding: 10px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #333333;
+	line-height: 14px;
+}
+
+#rn_AnswerText table tbody tr:first-child td h4 {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+
+/* removed due to migration issue: K-Now tables used for layout, not all have header 
+#rn_AnswerText tbody tr:first-child td {
+	border: 1px solid #666666;
+	padding: 10px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	color: #333333;
+	background-color: #CCCCCC;
+	line-height: 16px;
+}*/
