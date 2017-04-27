@@ -1,7 +1,9 @@
 RightNow.namespace('Custom.Widgets.CIHFunction.MenuSelect');
-Custom.Widgets.CIHFunction.MenuSelect = RightNow.Widgets.extend({ 
-  
+Custom.Widgets.CIHFunction.MenuSelect = RightNow.SearchFilter.extend({ 
+   overrides:
+    {
     constructor: function(data, instanceID) {
+        this.parent();
         this.data = data;
         this.instanceID = instanceID;
         this._eo = new RightNow.Event.EventObject();
@@ -12,12 +14,18 @@ Custom.Widgets.CIHFunction.MenuSelect = RightNow.Widgets.extend({
         this._eo.data.form = this._parentForm;
         //this.Y.on( "change", this._test,this._inputField);
         this.Y.on("change", this._onSelectChange, this._inputField, this);
+		
+		if(this._inputField!=null){
+			
          if (this._inputField.disabled != true) {
-        this._enableEvents();
-    }
+           this._enableEvents();
+          }
+		  
+		}
 
     RightNow.Event.subscribe('evt_resetForm', this.onResetForm, this);
     RightNow.Event.subscribe('evt_formFieldValidateRequest', this._onValidate, this);
+    //this.searchSource().on("search",this._onValidate,this);
     RightNow.Event.subscribe('evt_fieldVisibilityChanged', this._visibilityChanged, this);
     RightNow.Event.subscribe('evt_toggleRequired', this._toggleRequired, this);
 
@@ -26,7 +34,7 @@ Custom.Widgets.CIHFunction.MenuSelect = RightNow.Widgets.extend({
 
 
         //this._test();
-    
+    }
     },
    _enableEvents: function () {
 
@@ -128,7 +136,7 @@ Custom.Widgets.CIHFunction.MenuSelect = RightNow.Widgets.extend({
         this._parentForm = this._parentForm || RightNow.UI.findParentForm("rn_" + this.instanceID + "_Options");
         if (args[0].data.form === this._parentForm) {
             this.Y.one(this._inputField).removeClass("rn_ErrorField");
-            if(document.getElementById("rn_"+ this.instanceID+"_Label")!=null)
+			if(document.getElementById('rn_'+ this.instanceID +"_Label")!=null)
                 this.Y.one("#rn_"+ this.instanceID +"_Label").removeClass("rn_ErrorLabel");
             this._inputField.selectedIndex = 0;
         }
@@ -162,7 +170,7 @@ Custom.Widgets.CIHFunction.MenuSelect = RightNow.Widgets.extend({
             "prev": this.data.js.prev,
             "form": this._parentForm
         };
-        if (RightNow.UI.Form.form === this._parentForm) {
+        if ("rn_ServiceRequestActivity_2_form" === this._parentForm) {
             this._formErrorLocation = args[0].data.error_location;
 
             if (this._validateRequirement()) {
@@ -177,16 +185,16 @@ Custom.Widgets.CIHFunction.MenuSelect = RightNow.Widgets.extend({
                     eo.data.custom = false;
                 }
                 eo.w_id = this.data.info.w_id;
-                RightNow.Event.fire("evt_formFieldValidateResponse", eo);
+                RightNow.Event.fire("evt_formFieldValidationPass", eo);
             }
             else {
                 RightNow.UI.Form.formError = true;
             }
         }
         else {
-            RightNow.Event.fire("evt_formFieldValidateResponse", eo);
+            RightNow.Event.fire("evt_formFieldValidationFailure", eo);
         }
-        RightNow.Event.fire("evt_formFieldCountRequest");
+        RightNow.Event.fire("evt_formFieldValidationPass", eo);
     },
 
     /**
@@ -195,7 +203,7 @@ Custom.Widgets.CIHFunction.MenuSelect = RightNow.Widgets.extend({
     */
     _validateRequirement: function () {
         if (this.data.attrs.required && this._inputField.disabled == false) {
-            if (this.data.js.type === RightNow.Interface.Constants.EUF_DT_RADIO) {
+            if (this.data.js.type === "Boolean") {
                 if ((this._inputField[0] && this._inputField[1]) && (!this._inputField[0].checked && !this._inputField[1].checked)) {
                     this._displayError(this.data.attrs.label_required);
                     return false;
@@ -211,7 +219,7 @@ Custom.Widgets.CIHFunction.MenuSelect = RightNow.Widgets.extend({
             }
         }
         this.Y.one(this._inputField).removeClass("rn_ErrorField");
-        this.Y.one("rn_"+this.instanceID+"_Label").removeClass("rn_ErrorLabel");
+        //this.Y.one("#rn_"+this.instanceID+"_Label").removeClass("rn_ErrorLabel");
         return true;
     },
 
@@ -250,7 +258,7 @@ Custom.Widgets.CIHFunction.MenuSelect = RightNow.Widgets.extend({
             }
         }
         this.Y.one(this._inputField).addClass("rn_ErrorField");
-        this.Y.one("rn_"+this.instanceID+"_Label").addClass("rn_ErrorLabel");
+        this.Y.one("#rn_"+this.instanceID+"_Label").addClass("rn_ErrorLabel");
     },
 
     /**
@@ -258,13 +266,13 @@ Custom.Widgets.CIHFunction.MenuSelect = RightNow.Widgets.extend({
     * @return String/Boolean that is the field value
     */
     _getValue: function () {
-        if (this.data.js.type === RightNow.Interface.Constants.EUF_DT_RADIO) {
+        if (this.data.js.type === "Boolean") {
             if (this._inputField[0].checked)
                 return this._inputField[0].value;
             if (this._inputField[1].checked)
                 return this._inputField[1].value;
         }
-        else if (this.data.js.type === RightNow.Interface.Constants.EUF_DT_CHECK) {
+        else if (this.data.js.type === "Checkbox") {
             if (this._inputField.type === "checkbox")
                 return this._inputField.checked;
             return this._inputField.value === "1";

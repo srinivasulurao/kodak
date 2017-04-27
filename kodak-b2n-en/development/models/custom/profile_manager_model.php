@@ -20,9 +20,30 @@ class Profile_manager_model extends \RightNow\Models\Base
         $ci=&get_instance();
         $profile = $ci->session->getProfile();
         $cid=$profile->c_id->value;
+		if($cid){
         $contact=RNCPHP\Contact::fetch($cid);
         return $contact;
+		}
+		else
+		return 0;
     }
+	
+	public function getProduct($prod_id){
+		if($prod_id){
+			return RNCPHP\ServiceProduct::fetch($prod_id);
+		}
+		else
+			return 0;
+	}
+	
+	public function getCategory($cat_id){
+		if($prod_id){
+			return RNCPHP\ServiceCategory::fetch($cat_id);
+		}
+		else
+			return 0;
+	}
+		
 
     public function saveProfileData($formData){
        $data=$this->processFields($formData);
@@ -30,7 +51,7 @@ class Profile_manager_model extends \RightNow\Models\Base
        $cid=$profile->c_id->value;
        //$org_id=$profile->org_id->value;
 
-      
+     
 
        try{
        $contact=RNCPHP\Contact::fetch($cid);
@@ -48,7 +69,7 @@ class Profile_manager_model extends \RightNow\Models\Base
        if($data['Contact.Name.First']->value)
            $contact->Name->First=$data['Contact.Name.First']->value;
        if($data['Contact.Name.Last']->value)
-           $contact->Name->First=$data['Contact.Name.Last']->value;
+           $contact->Name->Last=$data['Contact.Name.Last']->value;
        if($data['Contact.Emails.PRIMARY.Address']->value)
            $contact->Emails->Primary->Address=$data['Contact.Emails.PRIMARY.Address']->value;
        if($data['Contact.Address.Street']->value)
@@ -61,12 +82,31 @@ class Profile_manager_model extends \RightNow\Models\Base
            $contact->Address->StateOrProvince->ID=$data['Contact.Address.StateOrProvince']->value;
        if($data['Contact.Address.PostalCode']->value)
            $contact->Address->PostalCode=$data['Contact.Address.PostalCode']->value;
-       if($data['Contact.Phones.HOME.Number']->value)
-           $contact->Phones->HOME->Number=$data['Contact.Phones.HOME.Number']->value;
-       if($data['Contact.Phones.OFFICE.Number']->value)
-           $contact->Phones->OFFICE->Number=$data['Contact.Phones.OFFICE.Number']->value;
-       if($data['Contact.Phones.MOBILE.Number']->value)
-           $contact->Phones->MOBILE->Number=$data['Contact.Phones.MOBILE.Number']->value;
+       if($data['Contact.Phones.HOME.Number']->value){
+		   
+		    $contact->Phones[0] = new RNCPHP\Phone();
+            $contact->Phones[0]->PhoneType = new RNCPHP\NamedIDOptList();
+            $contact->Phones[0]->PhoneType->LookupName = 'Home Phone'; 
+            $contact->Phones[0]->Number = $data['Contact.Phones.HOME.Number']->value;
+			
+	   }
+           
+       if($data['Contact.Phones.OFFICE.Number']->value){
+		   
+		    $contact->Phones[1] = new RNCPHP\Phone();
+            $contact->Phones[1]->PhoneType = new RNCPHP\NamedIDOptList();
+            $contact->Phones[1]->PhoneType->LookupName = 'Office Phone';
+            $contact->Phones[1]->Number = $data['Contact.Phones.OFFICE.Number']->value;
+	   }
+           
+       if($data['Contact.Phones.MOBILE.Number']->value){
+
+		    $contact->Phones[2] = new RNCPHP\Phone();
+            $contact->Phones[2]->PhoneType = new RNCPHP\NamedIDOptList();
+            $contact->Phones[2]->PhoneType->LookupName = 'Mobile Phone';
+            $contact->Phones[2]->Number = $data['Contact.Phones.MOBILE.Number']->value;
+			
+	   }
          
        $contact->save();
        RNCPHP\ConnectAPI::commit();

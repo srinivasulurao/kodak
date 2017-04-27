@@ -1,0 +1,69 @@
+version: "1.0"
+requires:
+  jsModule:
+  - standard
+  - mobile
+attributes:
+  
+  name:
+    name: rn:msg:FIELD_NAME_LBL
+    type: STRING
+    description: rn:msg:COLUMN_NAME_OF_A_FORM_FIELD_LBL
+    default:
+  label_input:
+    name: Field Name
+    type: STRING
+    description: Friendly name of the field
+    default:
+  value:
+    name: Value
+    type: STRING
+    description: Value to be store in the field.
+    default:
+  width:
+    name: Width
+    type: STRING
+    description: Width of the input box.
+    default:
+  required:
+    name: rn:msg:REQUIRED_LBL
+    type: BOOL
+    description: rn:msg:SET_TRUE_FLD_CONT_VAL_CF_SET_REQD_MSG
+    default: false
+  label_required:
+    name: rn:msg:REQUIRED_LABEL_LBL
+    type: STRING
+    description: rn:msg:LABEL_DISPLAY_REQUIREMENT_MESSAGE_LBL
+    default: rn:msg:PCT_S_IS_REQUIRED_MSG
+  is_search_filter:
+    name: Search Filter
+    type: BOOL
+    description: Field is being used as a search filter.
+    default: false
+  search_filter_id:
+    name: Filter ID
+    type: INT
+    description: Search filter id.
+    default: null
+  search_report_id:
+    name: Report ID
+    type: INT
+    description: Search report id.
+    default: null
+  search_operator_id:
+    name: Operator ID.
+    type: INT
+    description: Search operator id.
+    default: null
+  readonly:
+    name: Read only
+    type: BOOL
+    description: Field is read only.
+    default: false
+info:
+  form: 
+    description: FORM
+  type: 
+    description: Mixed
+  description: Text input allows you to submit values that are not tied to the database to a submission controller.
+  

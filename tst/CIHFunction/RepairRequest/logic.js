@@ -2,7 +2,7 @@ RightNow.Widget.RepairRequest = function (data, instanceID) {
     //Data object contains all widget attributes, values, etc.
     this.data = data;
     this.instanceID = instanceID;
-    this._waitPanel = null;
+    //this._waitPanel = null;
     this._eo = new RightNow.Event.EventObject();
     this._form_name = "rn_" + this.instanceID + "_form";
     this._form = document.getElementById(this._form_name);
@@ -73,8 +73,7 @@ RightNow.Widget.RepairRequest.prototype = {
 
     _contactSelectChanged: function (evt, args) {
         if (this._form_name !== args[0].data.form)
-            return;
-
+            return;			
         var c_id = args[0].filters.data;
         this._disablePanel(this._contactForm, false);
         if (c_id > 0) {
@@ -83,17 +82,17 @@ RightNow.Widget.RepairRequest.prototype = {
             postData['c_id'] = c_id;
             if (evt == 'evt_contactSelectChanged')
                 this._overrideAjaxMethod('evt_cih_repair_customer');
-            this._waitPanel.show();
+            this._waitPanel('show');
             RightNow.Ajax.makeRequest("/cc/contact_custom/contact_get", postData, {
                 data: { eventName: "evt_contactRetrieveResponse" },
                 successHandler: function (response) {
                     var resp = RightNow.JSON.parse(response.responseText);
                     this._ajaxResponse(resp);
-                    this._waitPanel.hide();
+                    this._waitPanel('hide');
                     //console.dir(response);
                 },
                 failuerHandler: function (response) {
-                    this._waitPanel.hide();
+                    this._waitPanel('hide');
                 },
                 scope: this
             });
@@ -358,7 +357,7 @@ RightNow.Widget.RepairRequest.prototype = {
             //}
         }, this);
     },
-
+	_waitPanel: function (val) {			var loadingmessage=this.data.js.loadingmessage;			YUI().use('panel', 'dd-plugin', function(Y) { 							var wait_panel = new Y.Panel({								srcNode      : '#panelCsdsadasadsadsadsa',								headerContent: loadingmessage,								bodyContent: '<img src=\"/euf/assets/images/rel_interstitial_loading.gif\"/>"',								width        : 250,								zIndex       : 5,								centered     : true,								modal        : true,								visible      : false,								render       : true,								plugins      : [Y.Plugin.Drag]							});					 if(val=="show")							wait_panel.show();						if(val=="hide"){						   for(i=0;i<=document.getElementsByClassName('yui3-button-close').length;i++){							   if(document.getElementsByClassName('yui3-button-close')[i]!=null)								  document.getElementsByClassName('yui3-button-close')[i].click();							 }						}  			});		  },
 
     _createWaitPanel: function () {
         this._waitPanel =

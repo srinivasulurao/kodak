@@ -1,0 +1,13 @@
+version: "1.0"
+requires:
+  jsModule:
+  - standard
+  - mobile
+  yui:
+  - datatable-base
+  - datatable-sort
+  - datatable-message
+extends:
+  widget: standard/reports/Grid
+  components:
+  - js

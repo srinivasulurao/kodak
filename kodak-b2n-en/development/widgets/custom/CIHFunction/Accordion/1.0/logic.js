@@ -10,6 +10,9 @@ Custom.Widgets.CIHFunction.Accordion = RightNow.Widgets.Accordion.extend({
          * Overrides RightNow.Widgets.Accordion#constructor.
          */
         constructor: function() {
+			
+			this._header_label = document.getElementById("rn_" + this.instanceID + "_header_label");
+            this._eo = new RightNow.Event.EventObject();
 			RightNow.Event.subscribe('evt_managePanel', this._onManagePanel, this);
 			RightNow.Event.subscribe('evt_updatePanelHeaderLabel', this._onUpdatePanelHeader, this);
 
@@ -19,7 +22,8 @@ Custom.Widgets.CIHFunction.Accordion = RightNow.Widgets.Accordion.extend({
 
             // Call into parent's constructor
             this.parent();
-
+			
+		    if(document.getElementById(this.baseSelector + "_header")!=null)
 			this._parentContainer = this.Y.one(this.baseSelector + "_header").parentNode;
 			this._toggleParent(this.data.attrs.visible);
 
@@ -29,6 +33,12 @@ Custom.Widgets.CIHFunction.Accordion = RightNow.Widgets.Accordion.extend({
 			} else {
 				this._collapse();
 			}
+			
+			
+			this._toggle = document.getElementById("rn_" + this.instanceID + "_" + "trigger");
+
+			//this._itemToToggle = document.getElementById(this.data.attrs.item_to_toggle);
+			this._parentContainer = document.getElementById("rn_" + this.instanceID + "_" + "header").parentNode;
         },
 
         /**
@@ -63,13 +73,16 @@ Custom.Widgets.CIHFunction.Accordion = RightNow.Widgets.Accordion.extend({
     },
 
     _toggleParent: function (show) {
-        this._parentContainer=this.Y.one(".rn_Accordion_container");
-		if (show == true) {
-			this._parentContainer.removeClass('rn_Hidden');
-		} else {
-			this._parentContainer.addClass('rn_Hidden');
+        
+		if(this._parentContainer!=null){
+			if (show == true) {
+				this._parentContainer.classList.remove('rn_Hidden');
+			} else {
+				this._parentContainer.classList.add('rn_Hidden');
+			}
+			
+			//this._disablePanel(this._parentContainer, false);
 		}
-        this._disablePanel(this._parentContainer, false);
     },
 
     _onManagePanel: function (evt, args) {
@@ -90,6 +103,7 @@ Custom.Widgets.CIHFunction.Accordion = RightNow.Widgets.Accordion.extend({
         if (collapseList != undefined) {
             for (i = 0; i < collapseList.length; i++) {
                 if (collapseList[i].toLowerCase() == this.data.attrs.name.toLowerCase()) {
+					console.log(this);
                     this._toggleTrigger(false);
                 }
             }
@@ -127,22 +141,29 @@ Custom.Widgets.CIHFunction.Accordion = RightNow.Widgets.Accordion.extend({
     },
 
     _collapse: function () {
-        
-        document.getElementById(this.data.attrs.item_to_toggle).style.display = "none";
-        this._screenReaderMessageCarrier.alt = this.data.attrs.label_collapsed;
-        this.Y.one(this._toggle).addClass('rn_Accordion_panel_down');
-        this.Y.one(this._toggle).removeClass('rn_Accordion_panel_up');
-        this.Y.one(this._toggle).removeClass(this.data.attrs.expanded_css_class);
+        if(document.getElementById(this.data.attrs.item_to_toggle)!=null)
+            document.getElementById(this.data.attrs.item_to_toggle).style.display = "none";
+	    if(this._screenReaderMessageCarrier!=null)
+           this._screenReaderMessageCarrier.alt = this.data.attrs.label_collapsed;
+		if(this._toggle){
+			this.Y.one(this._toggle).addClass('rn_Accordion_panel_down');
+			this.Y.one(this._toggle).removeClass('rn_Accordion_panel_up');
+			this.Y.one(this._toggle).removeClass(this.data.attrs.expanded_css_class);
+		}
 
     },
 
     _expand: function () {
        
-        document.getElementById(this.data.attrs.item_to_toggle).style.display = "block";
-        this._screenReaderMessageCarrier.alt = this.data.attrs.label_expanded;
+	    if(document.getElementById(this.data.attrs.item_to_toggle)!=null)
+			document.getElementById(this.data.attrs.item_to_toggle).style.display = "block";
+	    if(this._screenReaderMessageCarrier!=null)
+			this._screenReaderMessageCarrier.alt = this.data.attrs.label_expanded;
+		if(this._toggle){
         this.Y.one(this._toggle).addClass('rn_Accordion_panel_up');
         this.Y.one(this._toggle).removeClass('rn_Accordion_panel_down');
         this.Y.one(this._toggle).addClass(this.data.attrs.expanded_css_class);
+		}
     },
 
     _disablePanel: function (el, disabled) {

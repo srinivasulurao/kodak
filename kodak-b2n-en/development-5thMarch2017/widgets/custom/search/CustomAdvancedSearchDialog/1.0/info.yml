@@ -1,0 +1,12 @@
+version: "1.0"
+requires:
+  jsModule:
+  - standard
+  - mobile
+extends:
+  widget: standard/search/AdvancedSearchDialog
+  components:
+  - view
+  - js
+  - php
+  - css

@@ -1,0 +1,19 @@
+version: "1.0"
+requires:
+  jsModule:
+  - standard
+  - mobile
+attributes:
+  
+   attribute:
+        name: rn:msg:FIELD_NAME_LBL
+        type: string
+        description: rn:msg:COLUMN_NAME_OF_A_FORM_FIELD_LBL
+        default:
+        required: false
+   value:
+        name: Value
+        type: STRING
+        description: Value to store in the hidden field.
+        default:
+        required: false

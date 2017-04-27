@@ -10,6 +10,8 @@ Custom.Widgets.CIHFunction.ManageContacts = RightNow.Widgets.extend({
 
 
     this._form_name = "rn_" + this.instanceID + "_form";
+	 
+	this._searchbyPanel=this.data.attrs.panel;
 
 
     this._form = document.getElementById(this._form_name);
@@ -30,10 +32,14 @@ Custom.Widgets.CIHFunction.ManageContacts = RightNow.Widgets.extend({
 
 
 
-    this._inputList = this._form.getElementsByTagName('input');
+    //this._inputList = this._form.getElementsByTagName('input');
+	
+	this._inputList=document.querySelectorAll("#"+this._form_name+" input");
 
 
-    this._selectList = this._form.getElementsByTagName('select');
+    //this._selectList = this._form.getElementsByTagName('select');
+	
+	this._selectList=document.querySelectorAll("#"+this._form_name+" select");
 
 
 
@@ -88,10 +94,7 @@ Custom.Widgets.CIHFunction.ManageContacts = RightNow.Widgets.extend({
 
     }
 
-
-
-
-if(this._roleField!=null)
+if(this._roleField!=null)    
     this.Y.one("#"+this._roleField.id).on("change", this._checkLoginRoleRequired,this);
 
 if(this._loginField!=null)
@@ -101,15 +104,9 @@ if(this._disabledField!=null)
     this.Y.one("#"+this._disabledField.id).on("click", this._checkDisabled,this);
 
 
-
-
-
     RightNow.Event.subscribe('evt_selectedOrgToManage', this._setSelectedOrg, this);
-
-
-
-
-
+	RightNow.Event.subscribe('evt_manageContactSelectChanged', this._contactSelectChanged, this); //Added by Srini for dynamic contact detail change.
+	
     this._loginRequiredLabel = document.getElementById("rn_" + this.instanceID + "_loginRequiredIndicator");
 
 
@@ -130,7 +127,7 @@ if(this._disabledField!=null)
 
 
 
-
+if(this._form !=null){
 
     if (this._form.isDisabled != true) {
 
@@ -143,7 +140,7 @@ if(this._disabledField!=null)
 
     }
 
-
+}
 
 
 
@@ -261,10 +258,6 @@ if(this._disabledField!=null)
 
     _setSelectedOrg: function (evt, args) {
 
-
-
-
-
         var eor = new RightNow.Event.EventObject();
 
 
@@ -272,20 +265,13 @@ if(this._disabledField!=null)
 
 
         eor.data.value = args[0].data.selectedOrg;
+		
 
 
         RightNow.Event.fire("evt_setHiddenField", eor);
 
 
     },
-
-
-
-
-
-
-
-
     _setLoginAndRoleRequired: function (required) {
 
         var login_field_id=(this._loginField!=null)?this._loginField.id:"xyz";
@@ -308,24 +294,17 @@ if(this._disabledField!=null)
 
     },
 
-
     _contactSelectChanged: function (evt, args) {
+		
+         
+         if (this._form_name !== args[0].data.form)
 
-        // if (this._form_name !== args[0].data.form)
-
-
-        //     return;
-
-
-
-
+             return;
 
         this._requestInProgress = true;
 
 
-        //var c_id = args[0].filters.data;
-        var c_id=51589;
-
+        var c_id = args[0].filters.data;		
 
         if (c_id > 0) {
 
@@ -416,10 +395,7 @@ if(this._disabledField!=null)
 
         var hideList, showList;
 
-
         hideList = args[0].data.hidelist;
-
-
         showList = args[0].data.showlist;
 
         if (hideList != undefined) {
@@ -637,20 +613,79 @@ if(this._disabledField!=null)
 
         this._unsubscribeOverrideAjaxMethod();
 
-
-
-
-
         RightNow.Event.subscribe('on_before_ajax_request', function (evt, eo) {
+			
+			
+			
+			
+
+           if(eo[0].hasOwnProperty('data')){
+				if (eo[0].data.eventName == "evt_contactRetrieveResponse") {
 
 
-            if (eo[0].data.eventName == "evt_contactRetrieveResponse") {
+					eo[0].url = '/cc/contact_custom/contact_get';
 
 
-                eo[0].url = '/cc/contact_custom/contact_get';
+				}
 
-
-            }
+		   }
+		   
+		   
+		   if(eo[0].url=="/cc/contact_custom/contact_update_submit"){
+			   
+			   //lets fire the validation request.
+			   
+			   var eor = new RightNow.Event.EventObject();
+				eor.data.name = 'selectedOrg';
+				eor.data.error_location="rn_"+this.instanceID+"_ErrorLocation";		
+				RightNow.Event.fire("evt_formFieldValidateRequestTextInput", eor);
+		
+			
+               //RightNow.Event.fire("evt_setHiddenField", eo);
+						
+						  //we have to do the validation as well here.
+							var fields=new Array('c_id','firstname','officephone','language1','optinglobal','country','rn_ListFailedOrgContacts','lastname','mobilephone','language2','optinincident','ek_phone_extension','emailaddress','faxnumber','language3','optincisurvey','role','disabled','login','selectedOrg','communication_optin_list','sesslang');
+							
+							var data=new Array();
+							
+							var ground=(this.data.attrs.panel_name=="accordionManageContacts2")?"#panelManageContacts2":"#panelManageContacts"
+							
+							for(i=0;i<fields.length;i++){
+											
+								if(fields[i]=='communication_optin_list'){
+									communication_option_value=new Array();
+									cov=0;
+									for(c=0;c<document.querySelectorAll(ground+" #rn_commoptin_CheckBox").length;c++){
+										if(document.querySelectorAll(ground+" #rn_commoptin_CheckBox")[c].checked){
+										   communication_option_value[cov]="A"+document.querySelectorAll(" #rn_commoptin_CheckBox")[c].value;
+										   cov++;
+										}
+									}
+									
+									val=communication_option_value.join(",");
+								}
+								else{
+									if(document.querySelectorAll(ground+' [name="'+fields[i]+'"]')[0].type=="checkbox")
+										{
+										  if(document.querySelectorAll(ground+' [name="'+fields[i]+'"]')[0].checked)
+										      val=document.querySelectorAll(ground+' [name="'+fields[i]+'"]')[0].value;
+									      else
+											  val=0;
+										}
+								    else
+									    val=document.querySelectorAll(ground+' [name="'+fields[i]+'"]')[0].value;
+							    }
+								
+								data[i]={"name":fields[i],"value":val};
+							}
+							//console.log(data);
+						    form_Data=JSON.stringify(data); //JSON string.
+							
+							 //eo[0].post.form='[{"name":"c_id","value":"51589"},{"name":"firstname","value":"Cedric","required":true,"custom":false},{"name":"lastname","value":"Walsh","required":true,"custom":false},{"name":"emailaddress","value":"rahul.chanda@oracle.com","required":true,"custom":false},{"name":"officephone","value":"901 523 1561 ext 147","required":true,"custom":false},{"name":"mobilephone","value":"901 791 1191","required":false,"custom":false},{"name":"faxnumber","value":"","required":false,"custom":false},{"name":"language1","value":"19","required":true,"custom":false},{"name":"language2","value":"","required":false,"custom":false},{"name":"language3","value":"","required":false,"custom":false},{"name":"optinglobal","value":false,"required":false,"custom":false},{"name":"optinincident","value":true,"required":false,"custom":false},{"name":"optincisurvey","value":true,"required":false,"custom":false},{"name":"country","value":"246","required":true,"custom":false},{"name":"selectedOrg","value":405606},{"name":"ek_phone_extension","value":"","required":false,"custom":false},{"name":"disabled","value":false,"required":false,"custom":false},{"name":"login","value":"jbuescher@memphisdailynews.com.invalid","required":true,"custom":false},{"name":"role","value":"2","custom":false},{"name":"communication_optin_list","value":""},{"name":"sesslang","value":""}]';
+							 eo[0].post.form=form_Data;
+							 
+					}
+		   
 
 
         }, this);
@@ -690,8 +725,7 @@ if(this._disabledField!=null)
 
 
     _processValues: function (result) {
-
-document.getElementsByClassName('rn_ManageContacts')[0].innerHTML=this._form.innerHTML;
+	
 
         this._setValues('firstname', result.firstname);
 
@@ -844,12 +878,12 @@ document.getElementsByClassName('rn_ManageContacts')[0].innerHTML=this._form.inn
     },
 
 
-_setValues:function(name,value){
+_setValues_New:function(name,value){
     if(document.getElementsByName(name)[0]!=null) 
        document.getElementsByName(name)[0].value=value;
 },
-    _setValues_old: function (name, value) {
-
+    _setValues: function (name, value) {
+		
         for (var obj in this._form) {
 
 
@@ -1001,7 +1035,7 @@ _setValues:function(name,value){
     YUI().use('panel', 'dd-plugin', function(Y) { 
 
                     var wait_panel = new Y.Panel({
-                        srcNode      : '#panelContent',
+                        srcNode      : '#panelContent_321321',
                         headerContent: loadingmessage,
                         bodyContent: '<img src=\"/euf/assets/images/rel_interstitial_loading.gif\"/>"',
                         width        : 250,

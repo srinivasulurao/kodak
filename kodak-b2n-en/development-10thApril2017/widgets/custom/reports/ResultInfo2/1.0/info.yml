@@ -1,0 +1,21 @@
+version: "1.0"
+requires:
+  jsModule:
+  - standard
+  - mobile
+attributes:
+  combined_results:
+    name: combined_results
+    type: option
+    description: Indicates whether the widget should report results for Social results;
+      intended to be used in conjunction with CombinedSearchResults
+    options:
+    - "null"
+    - all
+    - social
+    default: "null"
+    required: false
+extends:
+  widget: standard/reports/ResultInfo
+  components:
+  - js

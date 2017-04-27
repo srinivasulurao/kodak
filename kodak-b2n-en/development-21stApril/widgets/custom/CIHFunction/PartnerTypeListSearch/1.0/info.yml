@@ -1,0 +1,32 @@
+version: "1.0"
+requires:
+  jsModule:
+  - standard
+  - mobile
+attributes:
+  
+  label:
+    name:
+    type: STRING
+    description:
+    default:
+  name:
+    name: 
+    type: STRING
+    description:
+    default:
+  selected_value:
+    name: Selected Value
+    type: Int
+    description: The Selected value of the select box when the page loads.
+    default: 0
+  search_operator_id:
+    name: Operator ID
+    type: STRING
+    description: Search filter operator id
+    default: 1
+  search_report_id:
+    name: Report ID
+    type: STRING
+    description: Search report id
+    default: 1

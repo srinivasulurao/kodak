@@ -1,4 +1,4 @@
-<rn:meta title="#rn:msg:SHP_TITLE_HDG#" template="kodak_b2b_template.php" clickstream="home" login_required="true" />
+<rn:meta title="#rn:msg:SHP_TITLE_HDG#" template="newkodak_b2b_template.php" clickstream="home" login_required="true" />
 <?
 //		$CI =& get_instance();  
 //		$parmurllang = getURLParm("lang");
@@ -40,6 +40,20 @@
 }
 #rn_MainColumn{
 	width: 98.5% !important;
+}
+/* .rn_Hidden{
+  display: block !important;
+
+}
+#panelIbaseUpdate2 .rn_Hidden,#panelIbaseUpdate .rn_Hidden, #panelRepairRequest2 .rn_Hidden,#panelRepairRequest .rn_Hidden,#panelManageContacts2 .rn_Hidden, #panelManageContacts .rn_Hidden{
+	display:none !important;
+} */
+
+tr{
+	z-index:500 !important;
+}
+tr a{
+	z-index:1000 !important;
 }
 
 </style>

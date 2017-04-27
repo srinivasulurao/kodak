@@ -1,0 +1,45 @@
+version: "1.0"
+requires:
+  jsModule:
+  - standard
+  - mobile
+attributes:
+  item_to_toggle:
+    name: item_to_toggle
+    type: string
+    description: The ID of an HTML element that is hidden or shown when the toggle
+      element is pressed.
+    default: ""
+    required: false
+  label_header:
+    name: label_header
+    type: string
+    description: Accordion header label
+    default: ""
+    required: false
+  name:
+    name: name
+    type: string
+    description: Panel name
+    default: ""
+    required: false
+  visible:
+    name: visible
+    type: boolean
+    description: Is the panel visible
+    default: true
+    required: false
+  expanded:
+    name: expanded
+    type: boolean
+    description: Is the panel expanded
+    default: false
+    required: false
+info:
+  description: This widget handles the functionality of an expandable/collapsible
+    container element.
+extends:
+  widget: standard/navigation/Accordion
+  components:
+  - view
+  - js

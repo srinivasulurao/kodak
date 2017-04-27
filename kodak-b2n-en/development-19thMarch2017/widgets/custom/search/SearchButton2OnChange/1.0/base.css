@@ -1,0 +1,11 @@
+/**
+ * base.css: Base CSS for SearchButtonOnChange
+ */
+.rn_SearchButtonOnChange.rn_SearchButton {
+
+}
+.rn_SubmitButton
+{
+margin: 15px 15px 0px 15px; 
+line-height: 10px; 
+}

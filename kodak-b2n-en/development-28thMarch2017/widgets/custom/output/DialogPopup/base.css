@@ -1,0 +1,16 @@
+.rn_linkStyle
+{
+    text-decoration: underline;
+    color: #333333;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+.yui-skin-sam .yui-panel .bd ol li {
+    list-style-position: inside;
+    padding-bottom: 6px;
+}
+
+.yui-skin-sam .yui-panel .bd {
+  font-weight: normal;
+}

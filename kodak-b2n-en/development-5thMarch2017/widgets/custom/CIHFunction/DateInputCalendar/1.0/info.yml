@@ -1,0 +1,27 @@
+version: "1.0"
+requires:
+  jsModule:
+  - standard
+  - mobile
+attributes:
+  search_filter_id:
+    name: Filter ID
+    type: INT
+    description: Search filter id.
+    default: null
+  search_report_id:
+    name: Report ID
+    type: INT
+    description: Search report id.
+    default: null
+  search_operator_id:
+    name: Operator ID
+    type: INT
+    description: Search operator id.
+    default: null
+info:
+  description: rn:msg:WIDGET_SERVES_TEMPL_MODEL_OWN_CUST_MSG
+  url_parameter:
+    name: rn:msg:URL_PARAMETER_LBL
+    description: rn:msg:DEF_URL_PARAMETERS_AFFECT_WIDGET_LBL
+    example: parm/3

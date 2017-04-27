@@ -9,6 +9,7 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
         this.productDataTable = null;
         this.subcomponentsDataTable = null;
         this.contractsDataTable = null;
+		
         //this._waitPanel = null;
         this.partnerSelectInstance = null;
         this.partnerTypeValue = "";
@@ -64,14 +65,13 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
     methodName: function() {
 
     },
-    _setPartnerTypeSelector : function (evt, args) {
+  
+  _setPartnerTypeSelector : function (evt, args) {
      if(args[0].data.name == "partnerTypeSelect1")
 
        this.partnerSelectInstance = args[0].data.partnerTypeSelect;
 
    },
-
-
 
     /**
 
@@ -197,7 +197,7 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
             successHandler: function (myresponse) {
             
              var responseText=myresponse.responseText.replace('<rn:meta title="" template="kodak_b2b_template.php" />',"");
-             responseText=document.getElementById('sample_json').value;
+             //responseText=document.getElementById('get_product_json').value;
              var resp = RightNow.JSON.parse(responseText);
 
                 this._waitPanel('hide');
@@ -279,8 +279,6 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
             this._searchField.value = this.data.attrs.label_hint;
 
     },
-
-
 
 
 
@@ -377,21 +375,549 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
 
 
     },
+	
+	_ibaseUpdateByComponent:function(evt,eo,arr){
+		
+		          //var rows = this.subcomponentsDataTable.getRecordSet();
+
+                  //var record = this.subcomponentsDataTable.getRecord(evt.target);
+				  
+				  var mfProduct=new Array();
+				  
+				  mfProduct[0] = arr[0]['products'][0];
+				  
+				  row_id=parseInt(evt._currentTarget.attributes.row_id.value);
+		
+				  cells=eo.getRecord(row_id);
+				  record=cells._state.data;
+
+
+
+                  //alert(YAHOO.lang.dump(record.getData()));
+
+
+
+                  var eor = new RightNow.Event.EventObject();
+
+                  eor.data.knum = mfProduct[0].ID;
+
+                  eor.data.sn = mfProduct[0].SN;
+
+                  eor.data.equip_id = record.compID.value;  // mfProduct[0].compID;
+
+                  eor.data.sap_prod_id = mfProduct[0].sapProdID;
+
+                  eor.data.sold_to = mfProduct[0].SAPID;
+
+
+
+                  eor.data.enablingPartner = mfProduct[0].enabling_partner;
+
+                  eor.data.mfgPartner = mfProduct[0].mfg_partner;
+
+                  eor.data.distrPartner = mfProduct[0].distr_partner;
+
+                  eor.data.resellPartner = mfProduct[0].resell_partner;
+
+                  eor.data.directPartner = mfProduct[0].direct_partner;
+
+                  eor.data.corporatePartner = mfProduct[0].corporate_partner;
+
+                  eor.data.ibase_product_hier = mfProduct[0].productHier;
+
+                  RightNow.Event.fire("evt_populateIbaseUpdateData", eor);
+
+
+
+                  var eo = new RightNow.Event.EventObject();
+
+                  eo.data.expandlist = new Array('accordionIbaseUpdate');
+
+                  eo.data.showlist = new Array('accordionIbaseUpdate');
+
+                  eo.data.hidelist = new Array('accordionRepairRequest','accordionManageContacts');
+
+                  RightNow.Event.fire("evt_managePanel", eo);
+
+                  //(YAHOO.util.Dom.getElementsByClassName('mysel', 'select', 'panelIbaseUpdate')[0]).focus();
+				  document.querySelectorAll('#panelIbaseUpdate .mysel')[0].focus();
+				  
+				  
+	},
+	
+	_myComponentHandler:function(evt,eo,arr){
+		
+		var trs=document.querySelectorAll("#div_subtable .yui3-datatable-data tr");
+		var rowIndex=0;
+		for(i=0;i<trs.length;i++){
+		   if(trs[i].outerHTML!=evt._currentTarget.outerHTML){
+			  //trs[i].style.display="none";
+		   }
+		   else{
+			   rowIndex=i;
+		   }
+		}
+		
+		cells=eo.getRecord(rowIndex);
+		record=cells._state.data;
+		
+		
+		         /* var rows = this.subcomponentsDataTable.getRecordSet();
+
+                  var record = this.subcomponentsDataTable.getRecord(evt.target); */
+
+
+                  //clear data from contracts table
+
+                  if(this.contractsDataTable != null) {
+
+                    this.contractsDataTable.destroy();
+
+                  }
+
+                  
+
+                  var aContracts = new Array();
+
+                  var aMeters = new Array();
+
+                  var hMeters = new Array();
+
+
+
+                  //record._oData.compID);
+
+                  //alert(YAHOO.lang.dump(record.getData()));
+
+
+
+                  for(var i=0; i < arr[0]['products'].length; i++) {
+
+
+
+                    if(arr[0]['products'][i]['compID'] == record.compID.value) {
+
+                      aContracts = arr[0]['products'][i]['contracts']; 
+
+                      aMeters = arr[0]['products'][i]['meters'];
+
+                      hMeters = arr[0]['products'][i]['meter_history'];
+
+                    }
+
+
+
+                  }
+
+
+
+                  //show meters
+
+                  //
+
+                  //meter data
+
+                  //
+//console.log(arr);
+                  var eoc = new RightNow.Event.EventObject();
+
+                  eoc.data.meterData = aMeters;
+
+                  eoc.data.compID = record.compID.value;
+
+                  RightNow.Event.fire("evt_displayCurrentMeter", eoc);
+
+
+
+                  //
+
+                  //experimental - meter history
+
+                  //
+
+                  var eoh = new RightNow.Event.EventObject();
+
+                  eoh.data.meterData = hMeters;
+
+                  RightNow.Event.fire("evt_displayMeterHistory", eoh);
+
+
+
+                  /*GGGG contractDataSource = new YAHOO.util.DataSource(aContracts);
+
+               
+
+                  contractDataSource.responseType = YAHOO.util.XHRDataSource.TYPE_JSARRAY;
+
+
+
+                  contractDataSource.responseSchema = {
+
+                    resultsList : "", // String pointer to result data
+
+                    fields : [
+
+                    { key: "description" },
+
+                    { key: "id" }, 
+
+                    { key: "type" },   
+
+                    { key: "serviceProfileDesc" },
+
+                    { key: "responseProfileDesc" },
+
+                    { key: "startDate" },
+
+                    { key: "endDate" },
+
+                    { key: "payerID" },
+
+                    { key: "status" },
+
+                    { key: "contractID" }
+
+                    ]
+
+                  }; */
 
 
 
 
 
-    _myAjaxResponse: function (searchArgs) {
+                  var contractColumnDefs = [
 
+                  {key:"description",label:this.data.js.pide_product, sortable:false},
 
+                  {key:"serviceProfileDesc",label:this.data.js.pide_coveragetime, sortable:false},
+
+                  {key:"responseProfileDesc",label:this.data.js.pide_prioritizedresponse, sortable:false},
+
+                  {key:"startDate",label:this.data.js.pide_contractstart, sortable:false},
+
+                  {key:"endDate",label:this.data.js.pide_contractend, sortable:false},
+
+                  {key:"type",label:this.data.js.pide_contracttype, sortable:false},      
+
+                  {key:"status",label:this.data.js.pide_contractstatus, sortable:false},
+
+                  {key:"contractID",label:this.data.js.pide_contractid, sortable:false}
+
+                  ];
 
      
+                  var contracts_table;		 
+					YUI().use('datatable', function (Y) {
+					
+							table = new Y.DataTable({
+								columns: contractColumnDefs,
+								data:aContracts
+							});
+							
+							document.getElementById('div_contracts').innerHTML="";
 
+							table.render("#div_contracts");
+							
+						 contracts_table=table;
+								   
+					  });
+
+                  //GGG this.contractsDataTable = new YAHOO.widget.DataTable("div_contracts", contractColumnDefs, contractDataSource);
+
+
+
+                  //var myTabView = new YAHOO.widget.TabView("tvcontainer");
+
+
+
+                  var tblPayer = document.getElementById("contract_payer_info");
+
+                  var tblEquipmentSite = document.getElementById("equipment_site_info");
+
+
+
+                  //clear equipment site info
+
+                  while(tblEquipmentSite.rows.length > 0) {
+
+                    tblEquipmentSite.deleteRow(0);
+
+                  }
+
+
+
+                  //clear payer info
+
+                  while(tblPayer.rows.length > 0) {
+
+                    tblPayer.deleteRow(0);
+
+                  }
+
+
+
+                  //Payer
+
+                  var pRow = tblPayer.insertRow(-1);
+
+                  var aCell = pRow.insertCell(-1);
+
+                  var bCell = pRow.insertCell(-1);
+
+                  aCell.innerHTML = this.data.js.pidscpi_kodakcustnum;
+
+                  bCell.innerHTML = arr['Payer'].SAPID;
+
+
+
+
+
+                  pRow = tblPayer.insertRow(-1);
+
+                  aCell = pRow.insertCell(-1);
+
+                  bCell = pRow.insertCell(-1);
+
+                  aCell.innerHTML = this.data.js.pidscpi_customername;
+
+                  bCell.innerHTML = arr['Payer'].OrgName;
+
+
+
+                  pRow = tblPayer.insertRow(-1);
+
+                  aCell = pRow.insertCell(-1);
+
+                  bCell = pRow.insertCell(-1);
+
+                  aCell.innerHTML = this.data.js.pidscpi_address;
+
+                  bCell.innerHTML = arr['Payer'].street;
+
+
+
+                  pRow = tblPayer.insertRow(-1);
+
+                  aCell = pRow.insertCell(-1);
+
+                  bCell = pRow.insertCell(-1);
+
+                  aCell.innerHTML = "";
+
+                  bCell.innerHTML = arr['Payer'].city;
+
+
+
+                  pRow = tblPayer.insertRow(-1);
+
+                  aCell = pRow.insertCell(-1);
+
+                  bCell = pRow.insertCell(-1);
+
+                  aCell.innerHTML = "";
+
+                  bCell.innerHTML = arr['Payer'].province;
+
+
+
+                  pRow = tblPayer.insertRow(-1); 
+
+                  aCell = pRow.insertCell(-1);
+
+                  bCell = pRow.insertCell(-1);
+
+                  aCell.innerHTML = "";
+
+                  bCell.innerHTML = arr['Payer'].zip;
+
+
+
+                  pRow = tblPayer.insertRow(-1);
+
+                  aCell = pRow.insertCell(-1);
+
+                  bCell = pRow.insertCell(-1);
+
+                  aCell.innerHTML = "";
+
+                  bCell.innerHTML = arr['Payer'].country;
+
+
+
+                  //equipment site
+
+                  if(arr[0]['products'] != null) {
+
+                    var eRow = tblEquipmentSite.insertRow(-1);
+
+                    var cCell = eRow.insertCell(-1);
+
+                    var dCell = eRow.insertCell(-1);
+
+                    cCell.innerHTML = this.data.js.pidsi_floorbldg;
+
+                    dCell.innerHTML = record.floorBldg.value;
+
+
+
+                 }
+				 
+				 
+				 
+
+	},
+		
+	_selectContact:function(evt,eo){
+		
+		row_id=parseInt(evt._currentTarget.attributes.row_id.value);
+		
+		cells=eo.getRecord(row_id);
+		cell=cells._state.data;
+		
+		var eo = new RightNow.Event.EventObject();
+
+              eo.data.expandlist = new Array('accordionManageContacts');
+
+              eo.data.showlist = new Array('accordionManageContacts');
+
+              eo.data.hidelist = new Array('accordionIbaseUpdate', 'accordionRepairRequest');
+
+              RightNow.Event.fire("evt_managePanel", eo);
+
+              //(YAHOO.util.Dom.getElementsByClassName('mysel', 'select', 'panelManageContacts')[0]).focus();
+			  
+			  document.querySelectorAll('#panelManageContacts .mysel')[0].focus();
+			  var reo = new RightNow.Event.EventObject();
+			  eo.data.selectedOrg = cell.orgID.value;
+			  RightNow.Event.fire("evt_contactSelectChanged",reo);
+              
+			  return false;
+			  
+	},
+
+    _selectIBase:function(evt, eo){
+		
+      //send data to form to pre-fill
+	  
+	    row_id=parseInt(evt._currentTarget.attributes.row_id.value);
+		
+		cells=eo.getRecord(row_id);
+		oRec=cells._state.data;
+
+                 var eor = new RightNow.Event.EventObject();
+
+                 eor.data.knum = oRec.ID.value;
+
+                 eor.data.sn = oRec.SN.value;
+
+                 eor.data.equip_id = oRec.compID.value;
+
+                 eor.data.sap_prod_id = oRec.sapProdID.value;
+
+                 eor.data.sold_to = oRec.SAPID.value;
+
+
+
+                 eor.data.ibase_product_hier = oRec.productHier.value;
+
+                 RightNow.Event.fire("evt_populateIbaseUpdateData", eor);
+
+
+
+                 var eo = new RightNow.Event.EventObject();
+
+                 eo.data.expandlist = new Array('accordionIbaseUpdate');
+
+                 eo.data.showlist = new Array('accordionIbaseUpdate');
+
+                 eo.data.hidelist = new Array('accordionRepairRequest','accordionManageContacts');
+
+                 RightNow.Event.fire("evt_managePanel", eo);
+
+                 (YAHOO.util.Dom.getElementsByClassName('mysel', 'select', 'panelIbaseUpdate')[0]).focus();
+				 
+		
+	},
+
+     _selectIRepair:function(evt,eo){
+		 
+		 row_id=parseInt(evt._currentTarget.attributes.row_id.value);
+		
+			cells=eo.getRecord(row_id);
+		    oRec=cells._state.data;
+		
+		 var eo = new RightNow.Event.EventObject();
+
+                 eo.data.showlist = new Array('accordionRepairRequest');
+
+                 eo.data.hidelist = new Array('accordionIbaseUpdate','accordionManageContacts');
+
+                 RightNow.Event.fire("evt_managePanel", eo);
+
+                 //(YAHOO.util.Dom.getElementsByClassName('mysel', 'select', 'panelRepairRequest')[0]).focus();
+				 document.querySelectorAll('#panelRepairRequest .mysel')[0].focus();
+
+
+
+                 //send data to form to pre-fill
+
+                 var eor = new RightNow.Event.EventObject();
+
+                 eor.data.sds = (oRec.hasOwnProperty('sds'))?oRec.sds.value:"";
+
+                 eor.data.knum = (oRec.hasOwnProperty('ID'))?oRec.ID.value:"";
+
+                 eor.data.sn = (oRec.hasOwnProperty('SN'))?oRec.SN.value:"";
+
+                 eor.data.sp = (oRec.hasOwnProperty('sp'))?oRec.sp.value:"";
+
+                 eor.data.rp = (oRec.hasOwnProperty('rp'))?oRec.rp.value:"";
+
+                 eor.data.equip_id = (oRec.hasOwnProperty('compID'))?oRec.compID.value:"";
+
+                 eor.data.sap_prod_id = (oRec.hasOwnProperty('sapProdID'))?oRec.sapProdID.value:"";
+
+                 eor.data.sold_to = (oRec.hasOwnProperty('SAPID'))?oRec.SAPID.value:"";
+
+                 eor.data.ibase_product_hier = (oRec.hasOwnProperty('productHier'))?oRec.productHier.value:"";
+
+                 eor.data.remoteEOSL = (oRec.hasOwnProperty('remoteEOSL'))?oRec.remoteEOSL.value:"";
+
+                 eor.data.onsiteEOSL = (oRec.hasOwnProperty('onsiteEOSL'))?oRec.onsiteEOSL.value:"";
+
+                 eor.data.enablingPartner = (oRec.hasOwnProperty('enabling_partner'))?oRec.enabling_partner.value:"";
+
+                 eor.data.mfgPartner = (oRec.hasOwnProperty('mfg_partner'))?oRec.mfg_partner.value:"";
+
+                 eor.data.distrPartner = (oRec.hasOwnProperty('distr_partner'))?oRec.distr_partner.value:"";
+
+                 eor.data.resellPartner = (oRec.hasOwnProperty('resell_partner'))?oRec.resell_partner.value:"";
+
+                 eor.data.directPartner = (oRec.hasOwnProperty('direct_partner'))?oRec.direct_partner.value:"";
+
+                 RightNow.Event.fire("evt_populateRepairData", eor);
+				 
+				 var eo = new RightNow.Event.EventObject();
+
+				 
+                 eo.data.expandlist = new Array('accordionRepairRequest');
+
+                 eo.data.showlist = new Array('accordionRepairRequest');
+
+                 eo.data.hidelist = new Array('accordionIbaseUpdate','accordionManageContacts');
+
+                 RightNow.Event.fire("evt_managePanel", eo);
+
+                 //(YAHOO.util.Dom.getElementsByClassName('mysel', 'select', 'panelRepairRequest')[0]).focus();
+				 document.querySelectorAll('#panelRepairRequest .mysel')[0].focus();
+				 
+		 
+	 },
+
+    _myAjaxResponse: function (searchArgs) {
+   
       var tblSite = document.getElementById("site");
-
-                              
-
+                          
        // First check for errors
 
         var result = searchArgs;
@@ -466,17 +992,17 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
 
             // Add the custom formatter to the shortcuts 
 
-            YAHOO.widget.DataTable.Formatter.myCustom = myCustomFormatter; 
+            //GGYAHOO.widget.DataTable.Formatter.myCustom = myCustomFormatter; 
 
     
 
-            var siteDataSource = new YAHOO.util.DataSource(aSite);
+            //GGvar siteDataSource = new YAHOO.util.DataSource(aSite);
 
-            siteDataSource.responseType = YAHOO.util.XHRDataSource.TYPE_JSARRAY;
+            //GGsiteDataSource.responseType = YAHOO.util.XHRDataSource.TYPE_JSARRAY;
 
 
 
-            siteDataSource.responseSchema = {
+            /* siteDataSource.responseSchema = {
 
                 resultsList : "", // String pointer to result data
 
@@ -502,13 +1028,18 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
 
                 ]
 
-                };
+                }; */
 
 
+            var partnerType = document.getElementById(this.partnerSelectInstance);
 
+		    var partnerIDValue = partnerType.options[partnerType.selectedIndex].label;
+			
+			site_counter=0;
+					
             var siteColumnDefs = [
 
-                {key:"custSAPId",label:this.data.js.sitecustid, sortable:false},
+                {key:"custSAPId",label:this.data.js.sitecustid, sortable:true},
 
                 {key:"OrgName",label:this.data.js.mysites_name, sortable:false},
 
@@ -522,7 +1053,28 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
 
                 {key:"country",label:this.data.js.mysites_country, sortable:false},
 
-                {key:"manage",label:this.data.js.mysites_action, minWidth:140, sortable:false, formatter:"myCustom"}
+                {key:"manage",label:this.data.js.mysites_action, minWidth:140, allowHTML:true,sortable:false, formatter:function(row){
+					
+                   var htmlManage = "";
+				   //htmlManage = "<a class=\"actionlink\" row_id='"+site_counter+"' id=\"lnkManageContacts\">Manage Contact</a>";
+				   
+
+					if (partnerType != null) {
+
+					  var partnerIDValue = partnerType.options[partnerType.selectedIndex].text;
+
+					  if (this.allowManageContact && partnerIDValue == this.data.js.direct) {
+
+						htmlManage = "<a class=\"actionlink\" row_id='"+site_counter+"' id=\"lnkManageContacts\">Manage Contact</a>";
+
+					  }
+					}
+                        
+				      site_counter++;
+					  return htmlManage;
+	  
+				}
+				}
 
               ];
 
@@ -530,15 +1082,30 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
 
 
 
+            var site_table;		 
+			YUI().use('datatable', function (Y) {
+			
+					table = new Y.DataTable({
+						columns: siteColumnDefs,
+						data:aSite
+					});
+					//GG this.siteDataTable = new YAHOO.widget.DataTable("div_sitetable", siteColumnDefs, siteDataSource);
+					document.getElementById('div_sitetable').innerHTML="";
 
+					table.render("#div_sitetable");
+					
+					site_table=table;
+						   
+			  });
 
-             this.siteDataTable = new YAHOO.widget.DataTable("div_sitetable", siteColumnDefs, siteDataSource);
+			  this.Y.all("#div_sitetable .yui3-datatable-data .actionlink").on('click',this._selectContact,this,site_table);
+             
 
 
 
 /////
 
-       this._siteSelectedHandler(searchArgs);  //first one is the mainframe, to display in product identifier panel, and sub-components
+      this._siteSelectedHandler(searchArgs);  //first one is the mainframe, to display in product identifier panel, and sub-components
 
 
 
@@ -673,7 +1240,7 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
               
 
              //events
-
+/*GG
              this.siteDataTable.set("selectionMode", "single");
 
              //this.siteDataTable.subscribe("rowClickEvent", this._siteSelectedHandler, searchArgs, this);  //pass array of products
@@ -686,7 +1253,7 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
 
              this.siteDataTable.subscribe("linkClickEvent", _showManageContacts);
 
-
+*/
 
              //show site panel
 
@@ -715,10 +1282,11 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
      _siteSelectedHandler : function (arr) {
 
 
-
+       
        var mfProduct = new Array();
 
        mfProduct[0] = arr[0]['products'][0];
+	   
 
 
 
@@ -756,7 +1324,7 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
 
                 var htmlProdLnk = "";
 
-                htmlProdLnk = "<a class=\"actionlink\" id=\"lnkPROD\">"+knowledgesearchtxt+"</a> <br/>";
+                //htmlProdLnk = "<a class=\"actionlink\" id=\"lnkPROD\">"+knowledgesearchtxt+"</a> <br/>";
 
 //              htmlProdLnk = "<a target=\"_blank\" class=\"actionlink\" id=\"lnkPROD\" href=\"/app/answers/list/p/"+oRecord._oData.productHier+"\">Knowledge Search</a> <br/>";
 
@@ -776,21 +1344,21 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
 
        // Add the custom formatter to the shortcuts
 
-       YAHOO.widget.DataTable.Formatter.repairCustom = repairCustomFormatter;
+       //GGYAHOO.widget.DataTable.Formatter.repairCustom = repairCustomFormatter;
 
      
 
 
 
-       var productDataSource = new YAHOO.util.DataSource(mfProduct);
+       //GGvar productDataSource = new YAHOO.util.DataSource(mfProduct);
 
 
 
-       productDataSource.responseType = YAHOO.util.XHRDataSource.TYPE_JSARRAY;
+       //GGproductDataSource.responseType = YAHOO.util.XHRDataSource.TYPE_JSARRAY;
 
 
 
-       productDataSource.responseSchema = {
+       /* productDataSource.responseSchema = {
 
                 resultsList : "", // String pointer to result data
 
@@ -855,9 +1423,9 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
                 ]
 
                 };
+ */
 
-
-
+            var product_counter=0;
             var productColumnDefs = [
 
                 {key:"ID",label:this.data.js.prodidentifier, sortable:false},
@@ -872,17 +1440,71 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
 
                 {key:"planEnd",label:this.data.js.pic_contractend, sortable:false},
 
-                {key:"repair",label:this.data.js.pid_action, minWidth:140, sortable:false, formatter:"repairCustom"}
+                {key:"repair",label:this.data.js.pid_action, minWidth:140, allowHTML:true, sortable:false, formatter:function(oRecord){
+					
+					actionRRLink="";
+					actionIULink="";
+					
+					if((this.allowRepairRequest && type == "RepairRequest"))
+
+                      actionRRLink = "<a id=\"lnkRepairRequest\" class=\"actionlink\" row_id="+product_counter+"' >Repair Request</a>";
+
+					if(this.allowIbaseUpdate && type == "IbaseUpdate")
+
+					  actionIULink = "<a id=\"lnkIbaseUpdate\" class=\"actionlink\" row_id='"+product_counter+"' >IBase Update</a>&nbsp;&nbsp;";
+	   
+					
+					  if (oRecord.data.productHier != "") 
+
+						var htmlProdLnk = "";
+
+						//htmlProdLnk = "<a class=\"actionlink\" id=\"lnkPROD\">"+knowledgesearchtxt+"</a> <br/>";
+
+		                htmlProdLnk = "<a target=\"_blank\" class=\"actionlink\" id=\"lnkPROD\" href=\"/app/answers/list/p/"+oRecord.data.productHier+"\">Knowledge Search</a> <br/>";
+
+					   if (oRecord.data.hasActiveContract == "Y" && oRecord.data.plan.toLowerCase().indexOf("parts only") == -1)
+
+						   output = htmlProdLnk + actionRRLink + "</br>" + actionIULink;
+
+					   else
+                           
+						   output = htmlProdLnk + actionIULink;
+						   
+						   product_counter++;
+						   return output;
+			   
+			   
+				}
+				}
 
              ];
 
 
+             var product_table;		 
+			YUI().use('datatable', function (Y) {
+			
+					table = new Y.DataTable({
+						columns: productColumnDefs,
+						data:mfProduct
+					});
+					//GG this.siteDataTable = new YAHOO.widget.DataTable("div_sitetable", siteColumnDefs, siteDataSource);
+					document.getElementById('div_producttable').innerHTML="";
 
-             this.productDataTable = new YAHOO.widget.DataTable("div_producttable", productColumnDefs, productDataSource);
+					table.render("#div_producttable");
+					
+					product_table=table;
+						   
+			  });
+             //GGthis.productDataTable = new YAHOO.widget.DataTable("div_producttable", productColumnDefs, productDataSource);
+			 
+			 this.Y.all("#div_producttable .yui3-datatable-data #lnkIbaseUpdate").on("click",this._selectIBase,this,product_table);
+		     this.Y.all("#div_producttable .yui3-datatable-data #lnkRepairRequest").on("click",this._selectIRepair,this,product_table); 
 
 
 
-             this.productDataTable.set("selectionMode", "single");
+             //GGthis.productDataTable.set("selectionMode", "single");
+			 
+
 
 
 
@@ -901,7 +1523,7 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
 
 
 
-
+/* GGGGGGGGGGGG
              this.productDataTable.subscribe("linkClickEvent", function(oArgs) {
 
 
@@ -1035,7 +1657,7 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
 
 
              });
-
+*/
 
 
               ///////////////////////////////////////////////////////////
@@ -1047,8 +1669,8 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
               //var myProductHandler = function(oArgs) {
 
               
-
-               var aProduct = new Array();
+            aProduct=new Array();
+            component = new Array();
 
                var cnt = 0;
 
@@ -1067,6 +1689,7 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
 
 
                }
+			   
 
 
 
@@ -1084,13 +1707,13 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
 
                // Add the custom formatter to the shortcuts
 
-               YAHOO.widget.DataTable.Formatter.ibaseCustom = ibaseCustomFormatter;
+               //GG YAHOO.widget.DataTable.Formatter.ibaseCustom = ibaseCustomFormatter;
 
 
 
  
 
-                var subDataSource = new YAHOO.util.DataSource(aProduct);
+               /* GGG var subDataSource = new YAHOO.util.DataSource(aProduct);
 
                 subDataSource.responseType = YAHOO.util.XHRDataSource.TYPE_JSARRAY;
 
@@ -1118,9 +1741,9 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
 
                   ]
 
-                };
+                }; */
 
-
+                var component_counter=0;
 
                 var subColumnDefs = [
 
@@ -1134,13 +1757,47 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
 
                   {key:"planEnd",label:this.data.js.pic_contractend, sortable:false},
 
-                  {key:"",label:this.data.js.pid_action, minWidth:140, sortable:false, formatter:"ibaseCustom"}
+                  {key:"svcDelivery",label:this.data.js.pid_action, minWidth:140, allowHTML:true, sortable:false, formatter:function(row){
+					  
+					  output = "<a class=\"actionlink\" row_id='"+component_counter+"' id=\"lnkIbaseUpdateComponent_" + lnkIbaseUpdateIndex + "\">"+ibaseu+"</a>";
+					  
+					  lnkIbaseUpdateIndex++;
+					  component_counter++;
+					  return output;
+				  }
+				  }
 
                 ];
 
 
+                 var component_table;		 
+					YUI().use('datatable', function (Y) {
+						
+							table = new Y.DataTable({
+								columns: subColumnDefs,
+								data:aProduct
+							});
+						
+							document.getElementById('div_subtable').innerHTML="";
+							table.render("#div_subtable");
+							component_table=table;
+						   
+			  });
+                //this.subcomponentsDataTable = new YAHOO.widget.DataTable("div_subtable", subColumnDefs, subDataSource);
+				
 
-                this.subcomponentsDataTable = new YAHOO.widget.DataTable("div_subtable", subColumnDefs, subDataSource);
+                this.Y.all("#div_subtable .yui3-datatable-data tr").on("click",this._myComponentHandler,this,component_table,arr);  //pass array
+				this.Y.all("#div_subtable .yui3-datatable-data .actionlink").on("click",this._ibaseUpdateByComponent,this,component_table,arr);  //pass array
+
+
+
+                //show component details panel 
+
+                var eo = new RightNow.Event.EventObject();
+
+                eo.data.showlist = new Array('accordionComponentDetails');
+
+                RightNow.Event.fire("evt_managePanel", eo);
 
 
 
@@ -1171,6 +1828,8 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
                 //experimental - meter history
 
                 //
+				
+				document.getElementById('panelMeterHistory').style.display="block";
 
                 var eoh = new RightNow.Event.EventObject();
 
@@ -1180,7 +1839,7 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
 
 
 
-                var mylink = new YAHOO.util.Element('lnkIbaseUpdateComponent');
+                var mylink = this.Y.all('#lnkIbaseUpdateComponent');
 
 
 
@@ -1252,13 +1911,13 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
 
                 };
 
-
+/*GGGG
                 // Binding event for each unique ID -- mickey.zhang
                 for (var i=1; i<=lnkIbaseUpdateIndex; i++) {
                     var mylink = new YAHOO.util.Element('lnkIbaseUpdateComponent_' + i);
                     mylink.on('click', ibaseUpdateByComponent, this.subcomponentsDataTable, this);
                 }
-
+*/
 
 
                 //show component details panel 
@@ -1291,7 +1950,8 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
 
 
 
-                  contractDataSource = new YAHOO.util.DataSource(aContracts);
+                  /*GGGGGG
+				  contractDataSource = new YAHOO.util.DataSource(aContracts);
 
 
 
@@ -1330,7 +1990,7 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
                   };
 
 
-
+                   */
 
 
                   var contractColumnDefs = [
@@ -1354,12 +2014,27 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
                   ];
 
 
+                  var contract_table;		 
+					YUI().use('datatable', function (Y) {
+					
+							table = new Y.DataTable({
+								columns: contractColumnDefs,
+								data:aContracts
+							});
+							//GG this.siteDataTable = new YAHOO.widget.DataTable("div_sitetable", siteColumnDefs, siteDataSource);
+							document.getElementById('div_contracts').innerHTML="";
 
-                  this.contractsDataTable = new YAHOO.widget.DataTable("div_contracts", contractColumnDefs, contractDataSource);
+							table.render("#div_contracts");
+							
+							contract_table=table;
+						   
+			        });
+                  //GGGthis.contractsDataTable = new YAHOO.widget.DataTable("div_contracts", contractColumnDefs, contractDataSource);
 
 
 
-                  var myTabView = new YAHOO.widget.TabView("tvcontainer");
+                  //var myTabView = new YAHOO.widget.TabView("tvcontainer");
+				  
 
 
 
@@ -1518,7 +2193,21 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
                     dCell.innerHTML = mfProduct[0].addlAddress;
 
 
-
+                    
+					//document.querySelectorAll(".comp_first_tab")[0].click();
+					
+					  for(i=0;i<document.getElementsByClassName('comp_tab').length;i++){
+						tab=document.getElementsByClassName('comp_tab')[i];
+						display_content=tab.getAttribute('display_content');
+						document.getElementById(display_content).style.display="none";
+						tab.classList.remove("selected");
+					}
+					
+					document.getElementsByClassName('comp_tab')[0].classList.add('selected');
+					dc=document.getElementsByClassName('comp_tab')[0].getAttribute('display_content');
+					document.getElementById(dc).style.display="block";
+					
+					
                  }
 
 
@@ -1529,7 +2218,7 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
 
                 ////////////////////////////////////
 
-
+/*GGGGG
 
                 var myComponentHandler = function(evt, eo) {
 
@@ -1594,7 +2283,7 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
                   //meter data
 
                   //
-
+console.log(arr);
                   var eoc = new RightNow.Event.EventObject();
 
                   eoc.data.meterData = aMeters;
@@ -1826,7 +2515,7 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
 
 
                 }; 
-
+*/
  
 
                 ////////////////////////////////////
@@ -1834,7 +2523,7 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
 
 
 
-
+/* GGGG
                 this.subcomponentsDataTable.set("selectionMode", "single");
 
                 this.subcomponentsDataTable.subscribe("rowMouseoverEvent", this.subcomponentsDataTable.onEventHighlightRow); 
@@ -1851,7 +2540,7 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
 
                 eo.data.showlist = new Array('accordionComponentDetails');
 
-                RightNow.Event.fire("evt_managePanel", eo);
+                RightNow.Event.fire("evt_managePanel", eo); */
 
 
 
@@ -1869,9 +2558,9 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
 
 
 
-             this.productDataTable.subscribe("rowMouseoverEvent", this.productDataTable.onEventHighlightRow); 
+             //GGthis.productDataTable.subscribe("rowMouseoverEvent", this.productDataTable.onEventHighlightRow); 
 
-             this.productDataTable.subscribe("rowMouseoutEvent", this.productDataTable.onEventUnhighlightRow); 
+             //GGthis.productDataTable.subscribe("rowMouseoutEvent", this.productDataTable.onEventUnhighlightRow); 
 
 
 
@@ -1950,14 +2639,18 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
     _overrideAjaxMethod: function () {
 
         RightNow.Event.subscribe('on_before_ajax_request', function (evt, eo) {
+			
+			if(eo[0].hasOwnProperty('data')){
 
            if(eo[0].data.eventName == "evt_getProductResponse") {
 
              eo[0].url = '/cc/ibase_search/get_product';
 
-           }
+			 }
+		}	 
 
         }, this);
+		
 
     },
 
@@ -2049,7 +2742,7 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
 
       }
 
-
+      return htmlManage;
 
     }
 
@@ -2069,7 +2762,7 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
 
   _waitPanel: function (val) {
  var loadingmessage=this.data.js.loadingmessage;
-YUI().use('panel', 'dd-plugin', function(Y) { 
+      YUI().use('panel', 'dd-plugin', function(Y) { 
 
 
         // this._waitPanel =
@@ -2103,7 +2796,7 @@ YUI().use('panel', 'dd-plugin', function(Y) {
         // this._waitPanel.render(document.body);
 
         var wait_panel = new Y.Panel({
-            srcNode      : '#panelContent',
+            srcNode      : '#panelContenteeee',
             headerContent: loadingmessage,
             bodyContent: '<img src=\"/euf/assets/images/rel_interstitial_loading.gif\"/>"',
             width        : 250,

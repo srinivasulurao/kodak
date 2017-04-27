@@ -1,30 +1,38 @@
 RightNow.namespace('Custom.Widgets.CIHFunction.CustomTextInput');
-Custom.Widgets.CIHFunction.CustomTextInput = RightNow.Widgets.extend({ 
+Custom.Widgets.CIHFunction.CustomTextInput = RightNow.SearchFilter.extend({ 
     /**
      * Widget constructor.
      */
     constructor: function(data, instanceID) {
         this.data=data;
         this.instanceID= instanceID;
-         this._formErrorLocation = null;
-    this._validated = false;
-    this._required = false;
-    this._eo = new RightNow.Event.EventObject();
-    this._fieldName = 'rn_' + this.instanceID + '_TextInput';
-    this._parentForm = RightNow.UI.findParentForm(this._fieldName);
-    this._inputField = document.getElementById(this._fieldName);
-    this._previousValue = "";
-
-    if (this._inputField.disabled != true) {
-        this._enableEvents();
-    }
+        this._formErrorLocation = null;
+		this._validated = false;
+		this._required = false;
+		this._eo = new RightNow.Event.EventObject();
+		this._fieldName = 'rn_' + this.instanceID + '_TextInput';
+		this._parentForm = RightNow.UI.findParentForm(this._fieldName);
+		this._inputField = document.getElementById(this._fieldName);
+		this._previousValue = "";
+    
 
     RightNow.Event.subscribe('evt_fieldVisibilityChanged', this._visibilityChanged, this);
     RightNow.Event.subscribe('evt_resetForm', this.onResetForm, this);
-    RightNow.Event.subscribe('evt_formFieldValidatePass', this._onValidate, this);
+    RightNow.Event.subscribe('evt_formFieldValidateRequestTextInput', this._onValidate, this);
+    this.searchSource().on('search', this._onValidate, this);
+	//RightNow.Event.subscribe('evt_formFieldValidateRequest', this._onValidate, this);
     RightNow.Event.subscribe('evt_toggleRequired', this._toggleRequired, this);
-    this.Y.one(this._inputField).on("change",this._onChange,this);
-     
+	
+	/* var form = RightNow.Form.find(this.baseDomID, this.instanceID);
+	      form.on("submit", this.onValidate, this); */
+		  
+	
+		if (this._inputField.disabled != true) {
+			this._enableEvents();
+		}
+		
+		this.Y.one(this._inputField).on("change",this._onChange,this);
+	
     },
 
     /**
@@ -41,6 +49,7 @@ Custom.Widgets.CIHFunction.CustomTextInput = RightNow.Widgets.extend({
         
         if (this.data.attrs.is_search_filter == true) {
             RightNow.Event.subscribe("evt_getFiltersRequest", this._onGetFiltersRequest, this);
+//            this.searchSource().on("search",this._onGetFiltersRequest,this);
             this._setFilter();
         }
         
@@ -54,6 +63,7 @@ Custom.Widgets.CIHFunction.CustomTextInput = RightNow.Widgets.extend({
 
         if (this.data.attrs.is_search_filter == true) {
             RightNow.Event.unsubscribe("evt_getFiltersRequest", this._onGetFiltersRequest);
+//            this.searchSource().initialFilters={};
         }
 
         //RightNow.Event.unsubscribe('evt_fieldVisibilityChanged', this._visibilityChanged, this);
@@ -137,7 +147,7 @@ Custom.Widgets.CIHFunction.CustomTextInput = RightNow.Widgets.extend({
     },
 
     _toggleRequired: function (evt, args) {
-        console.log("Custom text input _Togglerequired");
+        //console.log("Custom text input _Togglerequired");
         if (args[0].data.form != this._parentForm)
             return;
         var fields = args[0].data.toggleRequired.fields;
@@ -185,7 +195,7 @@ Custom.Widgets.CIHFunction.CustomTextInput = RightNow.Widgets.extend({
     },
 
     onResetForm: function (evt, args) {
-        console.log("Custom text input onResetForm");
+        //console.log("Custom text input onResetForm");
         if (this._parentForm == args[0].data.form) {
             this._blurValidate();
 
@@ -218,14 +228,14 @@ Custom.Widgets.CIHFunction.CustomTextInput = RightNow.Widgets.extend({
             "prev": this.data.js.prev,
             "form": this._parentForm
         };
-        if (RightNow.UI.Form.form === this._parentForm || this._parentForm.indexOf("rn_ServiceRequestActivity") > -1 ) {
+        if ("rn_ServiceRequestActivity_2_form" === this._parentForm || this._parentForm.indexOf("rn_ServiceRequestActivity") > -1 ) {
             this._formErrorLocation = args[0].data.error_location;
             this._trimField();
 
             if (this._checkRequired()) {
   
                  this.Y.one(this._inputField).removeClass("rn_ErrorField");
-                this.Y.one("#rn_"+ this.instanceID +"_Label").removeClass("rn_ErrorLabel");
+            //    this.Y.one("#rn_"+ this.instanceID +"_Label").removeClass("rn_ErrorLabel");
                 if (this.data.attrs.require_validation) {
                      this.Y.one(this._validationField).removeClass("rn_ErrorField");
                      this.Y.one("#rn_"+ this.instanceID +"_LabelValidate").removeClass("rn_ErrorLabel");
@@ -245,17 +255,17 @@ Custom.Widgets.CIHFunction.CustomTextInput = RightNow.Widgets.extend({
                     eo.data.channelID = this.data.js.channelID;
                 }
                 eo.w_id = this.data.info.w_id;
-                RightNow.Event.fire("evt_formFieldValidateResponse", eo);
+                RightNow.Event.fire("evt_formFieldValidationPass", eo);
             }
             else {
                 RightNow.UI.Form.formError = true;
             }
         }
         else {
-            RightNow.Event.fire("evt_formFieldValidateResponse", eo);
+            RightNow.Event.fire("evt_formFieldValidationFailure", eo);
         }
         this._validated = false;
-        RightNow.Event.fire("evt_formFieldCountRequest");
+        RightNow.Event.fire("evt_formFieldValidationPass");
     },
 
     _blurValidate: function () {
@@ -270,7 +280,7 @@ Custom.Widgets.CIHFunction.CustomTextInput = RightNow.Widgets.extend({
              this.Y.one(this._inputField).removeClass("rn_ErrorField");
                 if(document.getElementById("rn_"+ this.instanceID+"_Label")!=null)
                 this.Y.one("#rn_"+ this.instanceID +"_Label").removeClass("rn_ErrorLabel");
-            RightNow.Event.fire('evt_formFieldValidateResponse', eo);
+            RightNow.Event.fire('evt_formFieldValidationPass', eo);
             return true;
         }
         return false;

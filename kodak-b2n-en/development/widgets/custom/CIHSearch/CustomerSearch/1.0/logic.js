@@ -1,5 +1,6 @@
 RightNow.namespace('Custom.Widgets.CIHSearch.CustomerSearch');
-Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({ 
+Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
+	
     /**
      * Widget constructor.
      */
@@ -20,7 +21,9 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
     this.allowManageContact = false;
     this.allowRepairRequest = false;
     this.allowIbaseUpdate = false;
+	var adv_c=1;
 
+	
     RightNow.Event.subscribe('evt_registerPartnerType', this._setPartnerTypeSelector, this);
     RightNow.Event.subscribe('evt_MultipleOverride', this._displayMultipleResult, this);
     RightNow.Event.subscribe('evt_NewProductData', this._setProductData, this);
@@ -128,8 +131,8 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
 
     this._advanceSearchPanelTrigger = document.getElementById("rn_" + this.instanceID + "_advSearchPanelTrigger");
 
-
-    this.Y.one("#"+this._advanceSearchPanelTrigger.id).on("click", this._toggleAdvanceSearchPanel,this);
+    if(document.getElementById('this._advanceSearchPanelTrigger.id')!=null)
+    this.Y.all("#"+this._advanceSearchPanelTrigger.id).on("click", this._toggleAdvanceSearchPanel,this,"show");
 
 
     //for Customer Search
@@ -156,10 +159,11 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
     if(this.data.attrs.label_hint)
 
     {
+        if(this._custCityField!=null){
+            this.Y.one("#"+this._custCityField.id).on("focus", this._onFocus,this);
 
-        this.Y.one("#"+this._custCityField.id).on("focus", this._onFocus,this);
-
-        this.Y.one("#"+this._custCityField.id).on("blur", this._onBlur,this);
+            this.Y.one("#"+this._custCityField.id).on("blur", this._onBlur,this);
+        }
 
     }
 
@@ -175,7 +179,7 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
 
     //GGYAHOO.util.Event.addListener( window, "load", this._initPage, this);
 
-    this.Y.one("#main").on("load",this._initPage, this);
+    this.Y.one("#amain").on("load",this._initPage, this);
 
         this._scrollTarg = document.getElementById("scroll_target");
 
@@ -211,7 +215,7 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
     this._advanceSearchPanel = document.getElementById("rn_" + this.instanceID + "_advSearchPanel");
 
     this._advanceSearchPanelTrigger = document.getElementById("rn_" + this.instanceID + "_advSearchPanelTrigger");
-
+    if(this._advanceSearchPanel!=null)
     this.Y.one("#"+this._advanceSearchPanelTrigger.id).on("click", this._toggleAdvanceSearchPanel,this);
 
 
@@ -249,10 +253,11 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
     if(this.data.attrs.label_hint)
 
     {
+        if(this._custCityField!=null){
+            this.Y.one("#"+this._custCityField.id).on("focus", this._onFocus,this);
 
-        this.Y.one("#"+this._custCityField.id).on("focus", this._onFocus,this);
-
-        this.Y.one("#"+this._custCityField.id).on("blur", this._onBlur,this);
+            this.Y.one("#"+this._custCityField.id).on("blur", this._onBlur,this);
+        }
 
     }
 
@@ -286,7 +291,6 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
     },
 
 
-
     _setProductData: function (evt, args) {
 
 
@@ -294,7 +298,6 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
        this._myAjaxProductSearchResponse(args[0].data.productData);
 
     },
-
 
 
     _setPartnerTypeSelector: function (evt, args) {
@@ -306,15 +309,16 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
     },
 
 
-
     _toggleAdvanceSearchPanel: function (evt, args) {
-        
+		
         //var advState = this._advanceSearchPanel.style.display == 'none' ? 'block' : 'none'
-        var advState=document.getElementById('rn_'+this.instanceID+'_advSearchPanel').style.display == 'none' ? 'block' : 'none';
-        this._advanceSearchPanel.style.display = 'block';
+        var advState=document.getElementById('rn_'+this.instanceID+'_advSearchPanel').style.display;
+		if(advState=="none")
+			document.getElementById('rn_'+this.instanceID+'_advSearchPanel').style.display="block";
+		else
+			document.getElementById('rn_'+this.instanceID+'_advSearchPanel').style.display="none";
 
     },
-
 
 
     _setCountryValue: function (evt, args) {
@@ -334,7 +338,6 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
     },
 
 
-
     _setProvinceValue: function (evt, args) {
 
 
@@ -344,7 +347,6 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
         this.provinceParamInstance = args[0].data.instanceID;
 
     },
-
 
 
     _getActionLinks: function (type) {
@@ -388,47 +390,48 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
     },
 
 
+    _getManageLink: function (row) {
 
-    _getManageLink: function () {
-
-
-
-        var htmlManage = "";
-
-        var partnerType = document.getElementById(this.partnerSelectInstance);
-
-
-
-        if (partnerType != null) {
+		if(row!=null && row!=""){
+  
+			var htmlManage = "";
+			
+			htmlManage = "<a class=\"actionlink\" id=\"lnkManageContacts\" org_id='"+row.orgID+"'>"+this.data.js.managecontacts+"</a>";
+			
+			var partnerType = document.getElementById(this.partnerSelectInstance);
 
 
 
-            var partnerIDValue = partnerType.options[partnerType.selectedIndex].text;
-
-            //2013.05.16 scott harris: allow manage contacts for any corporate partner
-
-            if (this.allowManageContact && (partnerIDValue == this.data.js.direct || partnerIDValue == this.data.js.corporate)) {
-
-                htmlManage = "<a class=\"actionlink\" id=\"lnkManageContacts\">"+this.data.js.managecontacts+"</a>";
-
-            }
+			if (partnerType != null) {
 
 
 
-        }
+				var partnerIDValue = partnerType.options[partnerType.selectedIndex].text;
+
+				//2013.05.16 scott harris: allow manage contacts for any corporate partner
+
+				if (this.allowManageContact && (partnerIDValue == this.data.js.direct || partnerIDValue == this.data.js.corporate)) {
+
+					htmlManage = "<a class=\"actionlink\" id=\"lnkManageContacts\" org_id='"+row.orgID+"'>"+this.data.js.managecontacts+"</a>";
+
+				}
 
 
 
-        if (this.allowManageContact && this.data.js.isDirect == "Y")
-
-            htmlManage = "<a class=\"actionlink\" id=\"lnkManageContacts\">"+this.data.js.managecontacts+"</a>";
+			}
 
 
 
-        return htmlManage;
+			if (this.allowManageContact && this.data.js.isDirect == "Y")
+
+				htmlManage = "<a class=\"actionlink\" id=\"lnkManageContacts\" org_id='"+row.orgID+"'>"+this.data.js.managecontacts+"</a>";
+
+
+
+			return htmlManage;
+		}
 
     },
-
 
 
     _onCustSearch: function () {
@@ -592,17 +595,9 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
         }
 
 
-
-
-
         //this._custSearchField.value;
-
-
-
-        //this._waitPanel.show();
+		
         this._waitPanel('show');
-
-
 
         this._overrideAjaxMethodCustomer();
 
@@ -610,10 +605,10 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
 
             data: { eventName: "evt_getIbaseResponse" },
 
-            successHandler: function (myresponse) {
+            successHandler: function (myresponse) { 
 
                 var responseText=myresponse.responseText.replace('<rn:meta title="" template="kodak_b2b_template.php" />',"");
-                responseText=document.getElementById('sample_json2').value; 
+                //responseText=document.getElementById('ibase_list').value; 
 
                 var resp = RightNow.JSON.parse(responseText);
 
@@ -627,11 +622,11 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
 
             },
 
-            failureHandler: function (myresponse) {
+				failureHandler: function (myresponse) {
 
-                 this._waitPanel('hide');
+					 this._waitPanel('hide');
 
-            },
+				},
 
             timeout: 120000,
 
@@ -642,7 +637,6 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
 
 
     },
-
 
 
     _displayMultipleResult: function (evt, args) {
@@ -656,14 +650,14 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
     },
 
 
-
     /**
 
     * Called when the search field is focused. Removes initial_value text
 
     */
 
-    _onFocus: function () {
+   
+   _onFocus: function () {
 
         if (this._custCityField.value === this.data.attrs.label_hint)
 
@@ -671,6 +665,7 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
 
     },
 
+	
     /**
 
     * Called when the search field is blurred. Removes initial_value text
@@ -688,8 +683,108 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
     },
 
 
+    _resetDisplayNew:function(){
+		
+		var eo = new RightNow.Event.EventObject();
 
-    _resetDisplay: function () {
+        eo.data.hidelist = new Array('accordionComponents2', 'accordionComponentDetails2', 'accordionManageContacts2', 'accordionIbaseUpdate2', 'accordionRepairRequest2');
+
+        RightNow.Event.fire("evt_managePanel", eo);
+
+
+
+
+
+        //clear sites
+
+        /* if (this.siteDataTable != null) {
+
+            this.siteDataTable.deleteRows(0, this.siteDataTable.getRecordSet()._records.length);
+
+        } */
+		
+		document.getElementById('div_sitetable2').innerHTML="";
+
+
+
+        //clear products 
+
+        /* if (this.productDataTable != null) {
+
+            this.productDataTable.deleteRows(0, this.productDataTable.getRecordSet()._records.length);
+
+        } */
+		
+		document.getElementById('panelProducts2').innerHTML="";
+
+
+
+        //clear subcomponents
+
+        /* if (this.subcomponentsDataTable != null) {
+
+            this.subcomponentsDataTable.deleteRows(0, this.subcomponentsDataTable.getRecordSet()._records.length);
+
+        } */
+		
+		document.getElementById('panelComponent2').innerHTML="";
+
+
+
+
+
+        //clear data from contracts table
+
+        /* if (this.contractsDataTable != null) {
+
+            this.contractsDataTable.deleteRows(0, this.contractsDataTable.getRecordSet()._records.length);
+
+        } */
+		document.getElementById('div_contracts2').innerHTML="";
+
+
+
+
+
+        var tblEquipmentSite = document.getElementById("equipment_site_info2");
+
+        /* if (tblEquipmentSite.rows.length > 0) {
+
+            //clear equipment site info
+
+            while (tblEquipmentSite.rows.length > 0) {
+
+                tblEquipmentSite.removeChild(tblEquipmentSite.firstChild);
+
+            }
+
+        } */
+		
+		tblEquipmentSite.innerHTML="";
+
+
+
+        var tblPayer = document.getElementById("contract_payer_info2");
+
+        /* if (tblPayer.rows.length > 0) {
+
+            //clear payer info
+
+            while (tblPayer.rows.length > 0) {
+
+                tblPayer.removeChild(tblPayer.firstChild);
+
+            }
+
+        } */
+		
+		tblPayer.innerHTML="";
+
+		
+	},
+  
+
+  _resetDisplay: function () {
 
 
 
@@ -784,7 +879,6 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
     },
 
 
-
     _resetProductDisplay: function () {
 
 
@@ -868,9 +962,6 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
     },
 
 
-
-
-
     _myAjaxIbaseResponse: function (searchArgs) {
 
         var actionRRLink = this._getActionLinks("RepairRequest");
@@ -952,7 +1043,7 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
 
 
 
-
+        var product_row_counter=0;
         var productColumnDefs = [
 
                 { key: "knum", label: this.data.js.prodidentifier, sortable: false },
@@ -967,13 +1058,45 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
 
                 { key: "endDate", label: this.data.js.pic_contractend,  minWidth: 75, sortable: false },
 
-                { key: "repair", label: this.data.js.pid_action, minWidth: 120, sortable: false, formatter: actionIULink,allowHTML:true }
+                { key: "repair", label: this.data.js.pid_action, minWidth: 120, allowHTML:true, sortable: false, formatter:function(row){ 
+					
+					var htmlProdLnk = "";
+
+					var actionRRLink = "<a id=\"lnkRepairRequest\" class=\"actionlink\" row_id="+product_row_counter+">Repair Request</a>";
+
+					var actionIULink = "<a id=\"lnkIbaseUpdate\" class=\"actionlink\" row_id="+product_row_counter+">Ibase Update</a>&nbsp;&nbsp;";
+					
+					oRecord=row.data; 
+					oRecord.plan=(oRecord.hasOwnProperty('plan'))?oRecord.plan:"";
+					//console.log(oRecord);
+					
+					var output="";
+
+						if (oRecord.hasOwnProperty('productHier'))
+
+			                htmlProdLnk = "<a target=\"_blank\" class=\"actionlink\" id=\"lnkPROD\" target='_blank' href=\"/app/answers/list/p/"+oRecord.productHier+"\">Knowledge Search</a> <br/>";
+
+						if (oRecord.hasActiveContract == "Y" && oRecord.plan.toLowerCase().indexOf("parts only") == -1)
+
+							output = htmlProdLnk + actionRRLink + "</br>" + actionIULink;
+
+						else
+							
+							output = htmlProdLnk + actionIULink;
+							
+							product_row_counter++;
+					
+					return output;
+				} 
+				
+				}
 
              ];
 
             
     instance_id=this.instanceID;
 	var product_table="";
+	
     YUI().use('datatable', function (Y) {
             table = new Y.DataTable({
                 columns: productColumnDefs,
@@ -1016,10 +1139,168 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
         // this.productDataTable.subscribe("rowClickEvent", this.productDataTable.onEventSelectRow);
 		
 		
-		if(document.querySelectorAll('#panelProducts2 .yui3-datatable-data tr').length)
+		if(document.querySelectorAll('#panelProducts2 .yui3-datatable-data tr').length){
 		   this.Y.all("#panelProducts2 .yui3-datatable-data tr").on("click",this._productSelectedHandler,this,product_table);
+		   this.Y.all("#panelProducts2 .yui3-datatable-data #lnkIbaseUpdate").on("click",this._selectIBase,this,product_table);
+		   this.Y.all("#panelProducts2 .yui3-datatable-data #lnkRepairRequest").on("click",this._selectIRepair,this,product_table); 
+		}
     },
+	
+	
+	_selectIRepair:function(evt,eo){
+		
+		row_id=evt._currentTarget.attributes.row_id.value;
+		
+		cells=eo.getRecord(parseInt(row_id));
+		
+		cell=cells._state.data;
+		
+		
+		var eo = new RightNow.Event.EventObject();
 
+                eo.data.showlist = new Array('accordionRepairRequest2');
+
+                eo.data.hidelist = new Array('accordionIbaseUpdate2', 'accordionManageContacts2');
+
+                RightNow.Event.fire("evt_managePanel", eo);
+
+                //(YAHOO.util.Dom.getElementsByClassName('mysel', 'select', 'panelRepairRequest2')[0]).focus();
+				
+				document.querySelectorAll('#panelRepairRequest2 .mysel')[0].focus();
+
+
+
+                //send data to form to pre-fill
+
+                var eor = new RightNow.Event.EventObject();
+
+                eor.data.sds = (cell.hasOwnProperty('sds'))?cell.sds.value:"";
+
+                eor.data.knum = (cell.hasOwnProperty('ID'))?cell.ID.value:"";
+
+                eor.data.sn = (cell.hasOwnProperty('SN'))?cell.SN.value:"";
+
+                eor.data.sp = (cell.hasOwnProperty('sp'))?cell.sp.value:"";
+
+                eor.data.rp = (cell.hasOwnProperty('rp'))?cell.rp.value:"";
+
+                eor.data.equip_id = (cell.hasOwnProperty('compID'))?cell.compID.value:"";
+
+                eor.data.sap_prod_id = (cell.hasOwnProperty('sapProdID'))?cell.sapProdID.value:"";
+
+                eor.data.sold_to = (cell.hasOwnProperty('SAPID'))?cell.SAPID.value:"";
+
+                eor.data.ibase_product_hier = (cell.hasOwnProperty('productHier'))?cell.productHier.value:"";
+
+                //alert('prodHier is '+eor.data.ibase_product_hier);                
+
+                eor.data.cust_sapid = (cell.hasOwnProperty('SAPID'))?cell.SAPID.value:"";
+
+                eor.data.remoteEOSL = (cell.hasOwnProperty('remoteEOSL'))?cell.remoteEOSL.value:"";
+
+                eor.data.onsiteEOSL = (cell.hasOwnProperty('onsiteEOSL'))?cell.onsiteEOSL.value:"";
+
+                eor.data.enablingPartner = (cell.hasOwnProperty('enabling_partner'))?cell.enabling_partner.value:"";
+
+                eor.data.mfgPartner = (cell.hasOwnProperty('mfg_partner'))?cell.mfg_partner.value:"";
+
+                eor.data.distrPartner = (cell.hasOwnProperty('distr_partner'))?cell.distr_partner.value:"";
+
+                eor.data.resellPartner = (cell.hasOwnProperty('resell_partner'))?cell.resell_partner.value:"";
+
+                eor.data.directPartner = (cell.hasOwnProperty('direct_partner'))?cell.direct_partner.value:"";
+
+                eor.data.corporatePartner = (cell.hasOwnProperty('corporate_partner'))?cell.corporate_partner.value:"";
+				
+
+                RightNow.Event.fire("evt_populateRepairData", eor);
+				
+				//Open the box.
+				
+				var eo = new RightNow.Event.EventObject();
+
+                eo.data.expandlist = new Array('accordionRepairRequest2');
+
+                eo.data.showlist = new Array('accordionRepairRequest2');
+
+                eo.data.hidelist = new Array('accordionIbaseUpdate2', 'accordionManageContacts2');
+
+                eo.data.setfocus = 1;
+
+                RightNow.Event.fire("evt_managePanel", eo); 
+		
+	},
+	
+	
+	_selectIBase:function(evt,eo){
+		row_id=evt._currentTarget.attributes.row_id.value;
+		
+		cells=eo.getRecord(parseInt(row_id));
+		
+		cell=cells._state.data;
+		
+		
+		//send data to form to pre-fill
+
+                var eor = new RightNow.Event.EventObject();
+
+                eor.data.knum = cell.ID;
+
+                eor.data.sn = cell.SN;
+
+                eor.data.equip_id = cell.compID;
+
+                eor.data.sap_prod_id = cell.sapProdID;
+
+                eor.data.sold_to = cell.SAPID;
+
+                eor.data.enablingPartner = cell.enabling_partner;
+
+                eor.data.mfgPartner = cell.mfg_partner;
+
+                eor.data.distrPartner = cell.distr_partner;
+
+                eor.data.resellPartner = cell.resell_partner;
+
+                eor.data.directPartner = cell.direct_partner;
+
+                eor.data.corporatePartner = cell.corporate_partner;
+
+
+
+                eor.data.ibase_product_hier = cell.productHier; 				
+
+                RightNow.Event.fire("evt_populateIbaseUpdateData", eor);
+
+
+
+                var eo = new RightNow.Event.EventObject();
+
+                eo.data.expandlist = new Array('accordionIbaseUpdate2');
+
+                eo.data.showlist = new Array('accordionIbaseUpdate2');
+
+                eo.data.hidelist = new Array('accordionRepairRequest2', 'accordionManageContacts2');
+
+                eo.data.setfocus = 1;
+
+                RightNow.Event.fire("evt_managePanel", eo);
+
+                //alert('found: ' + YAHOO.util.Dom.getElementsByClassName('mysel', 'select', 'panelIbaseUpdate2').length + ' elements');
+
+                //(YAHOO.util.Dom.getElementsByClassName('mysel', 'select', 'panelIbaseUpdate2')[0]).focus();
+				document.querySelectorAll('#panelIbaseUpdate2 .mysel')[0].focus();
+              
+			    if(document.getElementById("rn_ContactSelect_196_Options")!=null){
+                var mysel = document.getElementById("rn_ContactSelect_196_Options");
+
+                mysel.focus();
+				}
+				
+				
+	},
+
+	
     _myAjaxCustomerResponse: function (searchArgs) {
 
 
@@ -1044,13 +1325,12 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
         } else if (result.status === 1) {
 
 
-
             var aSite = new Array();
 
             for (var z = 0; z < searchArgs[0]['ibase_list'].length; z++) {
 
                 aSite[z] = searchArgs[0]['ibase_list'][z];
-                aSite[z].manage=this._getManageLink();
+                aSite[z].manage=this._getManageLink(searchArgs[0]['ibase_list'][z]);
             }
 
 
@@ -1081,7 +1361,9 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
 
                 RightNow.Event.fire("evt_managePanel", eo);
 
-                (YAHOO.util.Dom.getElementsByClassName('mysel', 'select', 'panelManageContacts2')[0]).focus();
+                //(YAHOO.util.Dom.getElementsByClassName('mysel', 'select', 'panelManageContacts2')[0]).focus();
+				
+				document.querySelectorAll('#panelManageContacts2 .mysel')[0].focus();
 
                 //VS - Keep an eye on this as it may need to be removed. Added to fix issue with manage contacts panel not being displayed
 
@@ -1154,7 +1436,9 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
 
                 RightNow.Event.fire("evt_managePanel", eo);
 
-                (YAHOO.util.Dom.getElementsByClassName('mysel', 'select', 'panelManageContacts2')[0]).focus();
+                //(YAHOO.util.Dom.getElementsByClassName('mysel', 'select', 'panelManageContacts2')[0]).focus();
+				
+				document.querySelectorAll('#panelManageContacts2 .mysel')[0].focus();
 
                 //VS - Keep an eye on this as it may need to be removed. Added to fix issue with manage contacts panel not being displayed
 
@@ -1205,21 +1489,21 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
 
 var columns = [
 
-                { key: "customerID", label: this.data.js.sitecustid, sortable: false },
+                { key: "customerID", label: this.data.js.sitecustid, sortable: false,width: 120 },
 
-                { key: "name", label: this.data.js.mysites_name, sortable: false },
+                { key: "name", label: this.data.js.mysites_name, sortable: false ,width:150},
 
-                { key: "street", label: this.data.js.mysites_street, sortable: false },
+                { key: "street", label: this.data.js.mysites_street, sortable: false, width:150 }, 
 
                 { key: "city", label: this.data.js.mysites_city, sortable: false },
 
-                { key: "zip", label: this.data.js.mysites_postalcode, sortable: false },
+                { key: "zip", label: this.data.js.mysites_postalcode, sortable: false,width:100},
 
                 { key: "province", label: this.data.js.mysites_province, sortable: false },
 
                 { key: "country", label: this.data.js.mysites_country, sortable: false },
 
-                { key: "manage", label: this.data.js.mysites_action, minWidth: 120, sortable: false,allowHTML: true}
+                { key: "manage", label: this.data.js.mysites_action, minWidth: 120, sortable: false,allowHTML: true,width:120}
             ];
 
 var data = [
@@ -1275,9 +1559,7 @@ var data = [
                    
       });
 
-		if(document.querySelectorAll('#panelSites2 .yui3-datatable-data tr').length)
-		   this.Y.all('#panelSites2 .yui3-datatable-data tr').on("click",this._siteSelectedHandler,this,site_table);
-
+		
             var eoSites = new RightNow.Event.EventObject();
 
             eoSites.data.expandlist = new Array('accordionSites2');
@@ -1293,8 +1575,14 @@ var data = [
             //GG this.siteDataTable.subscribe("rowMouseoutEvent", this.siteDataTable.onEventUnhighlightRow);
             //GG //            this.siteDataTable.subscribe("rowClickEvent", this.siteDataTable.onEventSelectRow);
             //GG this.siteDataTable.subscribe("linkClickEvent", _showManageContacts, this);
+			
+			if(document.querySelectorAll('#panelSites2 .yui3-datatable-data tr').length)
+		      this.Y.all('#panelSites2 .yui3-datatable-data tr').on("click",this._siteSelectedHandler,this,site_table);
             if(aSite.length)
-            this.Y.all(".manage_contact_link").on('click',this._selectContact,this,aSite[0]['orgID']);
+              this.Y.all("#panelSites2 .yui3-datatable-data .actionlink").on('click',this._selectContact,this,site_table);
+		
+		 
+			
             //show site panel
 
             var eo = new RightNow.Event.EventObject();
@@ -1309,24 +1597,38 @@ var data = [
 
     },
 
-     _selectContact:function(evt,org_id){
-
+	
+     _selectContact:function(evt,site_table){
+		 
+		 //First Select the Site Row then perform Action.
+		 tbl_classes=document.querySelectorAll("#panelSites2 .yui3-datatable-data")[0].classList;
+		 
+		 var site_table_selected=false;
+		 
+		 for(i=0;i<tbl_classes.length;i++){
+			
+			if(tbl_classes[i]=="site_list_fetched")
+				site_table_selected=true;
+		 }
+		 if(site_table_selected==false)
+		 {
+			alert("Please Select the row before managing the contact"); 
+		    return false;
+		 }
+		 
+		 //Same funda as they were using previously.
+		
                     var eo = new RightNow.Event.EventObject();
                     eo.data.expandlist = new Array('accordionManageContacts2');
                     eo.data.showlist = new Array('accordionManageContacts2');
                     eo.data.hidelist = new Array('accordionIbaseUpdate2','accordionRepairRequest2');
                     RightNow.Event.fire("evt_managePanel", eo);
                     //(YAHOO.util.Dom.getElementsByClassName('mysel', 'select', 'panelManageContacts2')[0]).focus();
-                    var reo = new RightNow.Event.EventObject();
-                    reo.data.selectedOrg = org_id;
-
-                    
-                    RightNow.Event.fire("evt_contactSelectChanged",reo);
-                    return false;
+					document.querySelectorAll('#panelManageContacts2 .mysel')[0].focus();
+                    return true;
 },
 
-
-
+//Seems like not using it anywhere.
     _myAjaxResponse: function (searchArgs) {
 
 
@@ -1372,7 +1674,8 @@ var data = [
 
                 RightNow.Event.fire("evt_managePanel", eo);
 
-                (YAHOO.util.Dom.getElementsByClassName('mysel', 'select', 'ManageContacts2')[0]).focus();
+                //(YAHOO.util.Dom.getElementsByClassName('mysel', 'select', 'ManageContacts2')[0]).focus();
+				document.querySelectorAll('#ManageContacts2 .mysel').focus();
 
 
 
@@ -1497,7 +1800,6 @@ var data = [
     },
 
 
-
     _linkClicked: function (evt, eo) {
 
 
@@ -1522,7 +1824,8 @@ var data = [
 
             RightNow.Event.fire("evt_managePanel", eo);
 
-            (YAHOO.util.Dom.getElementsByClassName('mysel', 'select', 'panelRepairRequest2')[0]).focus();
+            //(YAHOO.util.Dom.getElementsByClassName('mysel', 'select', 'panelRepairRequest2')[0]).focus();
+			document.querySelectorAll('#panelRepairRequest2 .mysel')[0].focus();
 
         }
 
@@ -1556,31 +1859,32 @@ var data = [
 		var rowIndex=0;
 		for(i=0;i<trs.length;i++){
 		   if(trs[i].outerHTML!=evt._currentTarget.outerHTML){
-			  trs[i].remove();
+			  trs[i].style.display="none";
 		   }
 		   else{
-			   rowIndex=i+1;
+			   rowIndex=i;
 		   }
 		}
 		
 		cells=eo.getRecord(rowIndex);
 		cell=cells._state.data;
-		
+		product_id=(cell.hasOwnProperty('componentID'))?cell.componentID.value:cell.compID.value;
+		sap_partner_id=(cell.hasOwnProperty('requestingPartner'))?cell.requestingPartner.value:cell.SAPID;
+
 		
 		var mypostData = {};
 
-        mypostData['product_id'] = cell.componentID.value;
+        mypostData['product_id'] = product_id;
 
         mypostData['ibase_search'] = 'compid';
 
         mypostData['partner_type'] = this.partnerTypeValue;
 
-        mypostData['sap_partner_id'] = cell.requestingPartner.value;
+        mypostData['sap_partner_id'] = sap_partner_id;
 
         this._waitPanel('show');
 
         this._overrideProductSearchAjaxMethod();
-
 
 
         RightNow.Ajax.makeRequest("/cc/ibase_search/get_product", mypostData, {
@@ -1591,13 +1895,13 @@ var data = [
 				
 				responseText=myresponse.responseText.replace('<rn:meta title="" template="kodak_b2b_template.php" />','');
 				
-				reponseText=document.getElementById('ibase_json').value;
+				//reponseText=document.getElementById('product_json').value;
 
                 var resp = RightNow.JSON.parse(responseText);
 
                 this._waitPanel('hide');
 
-                this._myAjaxProductSearchResponse(resp);
+                this._myAjaxProductSearchResponse(responseText);
 
 
 
@@ -1672,10 +1976,16 @@ var data = [
             data: { eventName: "evt_getProductResponse" },
 
             successHandler: function (myresponse) {
+				
+				responseText=myresponse.responseText.replace('<rn:meta title="" template="kodak_b2b_template.php" />','');
+				
+				//reponseText=document.getElementById('product_json').value;
 
                 var resp = RightNow.JSON.parse(myresponse.responseText);
+				
+				
 
-
+ 
 
                 this._waitPanel('hide');
 
@@ -1706,23 +2016,24 @@ var data = [
     },
 
 
-
     _overrideProductSearchAjaxMethod: function () {
 
         this._overrideProductSearchAjaxMethodUnsubscribe();
 
         RightNow.Event.subscribe('on_before_ajax_request', function (evt, eo) {
+			
+			if(eo[0].hasOwnProperty('data')){
 
-            if (eo[0].data.eventName == "evt_getProductResponse") {
+				if (eo[0].data.eventName == "evt_getProductResponse") {
 
-                eo[0].url = '/cc/ibase_search/get_product';
+					eo[0].url = '/cc/ibase_search/get_product';
 
-            }
+				}
+			}
 
         }, this);
 
     },
-
 
 
     _overrideProductSearchAjaxMethodUnsubscribe: function () {
@@ -1738,7 +2049,6 @@ var data = [
         });
 
     },
-
 
 
     _myAjaxProductSearchResponse: function (searchArgs) {
@@ -1782,17 +2092,17 @@ var data = [
         //YAHOO.widget.DataTable.Formatter.repairCustom = repairCustomFormatter;
 		
 		 */
-
-
-
-       searchArgs='{"0":{"SAPID":"600000","PAYERID":null,"OUTSIDEENTID":null,"products":[{"ID":null,"Name":"S200 CTLR","SN":"60","material":"60","SAPID":"600000","repair":"repair","svcDelivery":"O","compID":"1881723","sapProdID":"COI0191382","productHier":"2754,2431,9484","mf":"Y","floorBldg":null,"addlAddress":null,"door":null,"remoteEOSL":"20080430","onsiteEOSL":"20080430","enabling_partner":null,"mfg_partner":"","distr_partner":"","resell_partner":"","direct_partner":"600000","corporate_partner":"","support_plans":null,"contracts":null,"plan":null,"planStart":"","planEnd":"","sds":"Blank","hasActiveContract":"N"}]},"status":1,"Site":[{"OrgName":"BOOKLET BINDING INC","street":"710 KIMBERLY DR","city":"CAROL STREAM","zip":"60188","province":"Illinois-IL","country":"US","custSAPId":"600000","orgID":347075,"manage":"Manage Contacts"}],"Payer":{"OrgName":null,"street":null,"city":null,"zip":null,"province":null,"country":null,"custSAPId":null,"orgID":null,"manage":"Manage Contacts","OUTSIDEENTID":null,"SAPID":null}}';
+		 
+	   //searchArgs=JSON.parse(JSON.stringify(searchArgs));	 
+       //searchArgs='{"0":{"SAPID":"814720","PAYERID":"814720","OUTSIDEENTID":"814720","products":[{"ID":"814720SN","Name":"PLATES SONORA NEWS (074)","SN":null,"material":null,"SAPID":"814720","repair":"repair","svcDelivery":"R","compID":"3741655","sapProdID":"7433741","productHier":"1482,9998,2409,10006","mf":"Y","floorBldg":null,"addlAddress":null,"door":null,"remoteEOSL":"00000000","onsiteEOSL":"00000000","enabling_partner":null,"mfg_partner":"","distr_partner":"","resell_partner":"","direct_partner":"814720","corporate_partner":"773957","support_plans":[{"description":"WARRANTY SUPPORT PLAN","startDate":"2014-12-03","endDate":"9999-12-31","type":"Warranty Contract","serviceProfileDesc":null,"serviceProfileID":null,"responseProfileDesc":null,"responseProfileID":null,"payerID":"814720","outsideEntId":"814720","status":"Active","zz_proctypecode":"ZWRC"}],"contracts":[{"description":"TELEPHONE SUPPORT ENTITLEMENT","startDate":"2014-12-03","endDate":"9999-12-31","type":"Warranty Contract","contractID":"8000077000","serviceProfileDesc":"M-F, 08:00-21:00, US","serviceProfileID":"USR13X5","responseProfileDesc":"Within 1 Hr of Call Receipt","responseProfileID":"WWR1HR","payerID":"814720","outsideEntId":"814720","status":"Active","zz_proctypecode":"ZRMW"},{"description":"ONSITE FIELD SERVICE ENTITLEMENT","startDate":"2014-12-03","endDate":"9999-12-31","type":"Warranty Contract","contractID":"8000077000","serviceProfileDesc":"M-F, 08:00-17:00 US","serviceProfileID":"USO9X5","responseProfileDesc":"Next Business Day","responseProfileID":"WWONBD","payerID":"814720","outsideEntId":"814720","status":"Active","zz_proctypecode":"ZOSW"},{"description":"PARTS COVERAGE ENTITLEMENT","startDate":"2014-12-03","endDate":"9999-12-31","type":"Warranty Contract","contractID":"8000077000","serviceProfileDesc":null,"serviceProfileID":null,"responseProfileDesc":null,"responseProfileID":null,"payerID":"814720","outsideEntId":"814720","status":"Active","zz_proctypecode":"ZPCW"},{"description":"SOFTWARE UPDATES AND PATCHES","startDate":"2014-12-03","endDate":"9999-12-31","type":"Warranty Contract","contractID":"8000077000","serviceProfileDesc":null,"serviceProfileID":null,"responseProfileDesc":null,"responseProfileID":null,"payerID":"814720","outsideEntId":"814720","status":"Active","zz_proctypecode":"ZWPW"}],"plan":"WARRANTY SUPPORT PLAN","planStart":"2014-12-03","planEnd":"9999-12-31","sds":"Remote","sp":"USR13X5","rp":"WWR1HR","hasActiveContract":"Y"}]},"status":1,"Site":[{"OrgName":"DAILY NEWS PUBLISHING CO (THE)","street":"193 JEFFERSON AVE","city":"MEMPHIS","zip":"38103-2322","province":"Tennessee-TN","country":"US","custSAPId":"814720","orgID":405606,"manage":"Manage Contacts"}],"Payer":{"OrgName":"DAILY NEWS PUBLISHING CO (THE)","street":"193 JEFFERSON AVE","city":"MEMPHIS","zip":"38103-2322","province":"Tennessee-TN","country":"US","custSAPId":"814720","orgID":405606,"manage":"Manage Contacts","OUTSIDEENTID":"814720","SAPID":"814720"}}';
+	   	   
 	   searchArgs=JSON.parse(searchArgs);
 
         var mfProduct = new Array();
 
         //mfProduct[0] = arguments[0][0]['products'][0];
 
-        mfProduct[0] = searchArgs[0]['products'][0]; // This is correct.
+        mfProduct[0] = searchArgs[0]['products'][0]; // This is correct, Always takes the first product.
 
 
         //var productDataSource = new YAHOO.util.DataSource(mfProduct);
@@ -1858,7 +2168,7 @@ var data = [
                 ];
 
 
-
+        var product_row_counter=0;
         var productColumnDefs = [
 
                 { key: "ID", label: this.data.js.prodidentifier, sortable: false },
@@ -1873,38 +2183,40 @@ var data = [
 
                 { key: "planEnd", label: this.data.js.pic_contractend, minWidth: 75, sortable: false },
 
-                { key: "repair", label: this.data.js.pid_action, minWidth: 120, sortable: false,allowHTML:true,formatter:function(row,actionRRLink){
+                { key: "repair", label: this.data.js.pid_action, minWidth: 120, sortable: false,allowHTML:true,formatter:function(row){
 					
 					var htmlProdLnk = "";
 
-					var actionRRLink = "<a id=\"lnkRepairRequest\" class=\"actionlink\">Repair Request</a>";
+					var actionRRLink = "<a id=\"lnkRepairRequest\" class=\"actionlink\" row_id="+product_row_counter+">Repair Request</a>";
 
-					var actionIULink = "<a id=\"lnkIbaseUpdate\" class=\"actionlink\">Ibase Update</a>&nbsp;&nbsp;";
+					var actionIULink = "<a id=\"lnkIbaseUpdate\" class=\"actionlink\" row_id="+product_row_counter+">Ibase Update</a>&nbsp;&nbsp;";
 					
 					oRecord=row.data;
 					
 					var output="";
+					//console.log(oRecord);
 
-						if (oRecord.repair.hasOwnProperty('productHier'))
+						if (oRecord.hasOwnProperty('productHier')) 
 
-			                htmlProdLnk = "<a target=\"_blank\" class=\"actionlink\" id=\"lnkPROD\" target='_blank' href=\"/app/answers/list/p/"+oRecord._oData.productHier+"\">Knowledge Search</a> <br/>";
+			                htmlProdLnk = "<a target=\"_blank\" class=\"actionlink\" id=\"lnkPROD\" target='_blank' href=\"/app/answers/list/p/"+oRecord.productHier+"\">Knowledge Search</a> <br/>";
 
-						if (oRecord.repair.hasActiveContract == "Y" && oRecord.repair.plan.toLowerCase().indexOf("parts only") == -1)
+						if (oRecord.hasActiveContract == "Y" && oRecord.plan.toLowerCase().indexOf("parts only") == -1)
 
 							output = htmlProdLnk + actionRRLink + "</br>" + actionIULink;
 
 						else
 							
 							output = htmlProdLnk + actionIULink;
+							
+							
+				product_row_counter++;
 					
 					return output;
 				} }
 
              ];
 			 
-			 
-
-
+			
 
         //this.productDataTable = new YAHOO.widget.DataTable("rn_" + this.instanceID + "_div_producttable", productColumnDefs, productDataSource);
 		instance_id=this.instanceID;
@@ -1926,9 +2238,9 @@ var data = [
 					
 						   
 		});
-
-
-
+		
+		
+		
         var eo = new RightNow.Event.EventObject();
 
         eo.data.expandlist = new Array('accordionComponents2', 'accordionComponentDetails2');
@@ -1978,8 +2290,7 @@ var data = [
             //Ibase Update action
 
             if (oArgs.target.id == "lnkIbaseUpdate") {
-
-
+				
 
                 //send data to form to pre-fill
 
@@ -2029,7 +2340,8 @@ var data = [
 
                 //alert('found: ' + YAHOO.util.Dom.getElementsByClassName('mysel', 'select', 'panelIbaseUpdate2').length + ' elements');
 
-                (YAHOO.util.Dom.getElementsByClassName('mysel', 'select', 'panelIbaseUpdate2')[0]).focus();
+                //(YAHOO.util.Dom.getElementsByClassName('mysel', 'select', 'panelIbaseUpdate2')[0]).focus();
+				document.querySelectorAll('#panelIbaseUpdate2 .mysel')[0].focus();
 
                 //var mysel = document.getElementById("rn_ContactSelect_196_Options");
 
@@ -2055,7 +2367,9 @@ var data = [
 
                 RightNow.Event.fire("evt_managePanel", eo);
 
-                (YAHOO.util.Dom.getElementsByClassName('mysel', 'select', 'panelRepairRequest2')[0]).focus();
+                //(YAHOO.util.Dom.getElementsByClassName('mysel', 'select', 'panelRepairRequest2')[0]).focus();
+				
+				document.querySelectorAll('#panelRepairRequest2 .mysel')[0].focus();
 
 
 
@@ -2116,7 +2430,7 @@ var data = [
         });  //end linkClickEvent function
  */
 
-		alert("Mahathalli");
+		//alert("Tirupati Balaji");
 		
 		
         //show subcomponents
@@ -2175,7 +2489,7 @@ var data = [
 
 
 
-
+        component_counter=0;
         var subColumnDefs = [
 
                   { key: "SN", label: this.data.js.serialnumber, sortable: false },
@@ -2188,9 +2502,11 @@ var data = [
 
                   { key: "planEnd", label: this.data.js.pic_contractend, sortable: false },
 
-                  { key: "", label: this.data.js.pid_action, minWidth: 120, sortable: false, formatter:function(row){
+                  { key: "", label: this.data.js.pid_action, minWidth: 120, sortable: false,allowHTML:true,formatter:function(row){
 					  
-					  return "<a class=\"actionlink\" id=\"lnkIbaseUpdateComponent2_" + lnkIbaseUpdateIndex + "\"></a>&nbsp;&nbsp;";
+					  return "<a row_id='"+component_counter+"' class=\"actionlink\" id=\"lnkIbaseUpdateComponent2_" + lnkIbaseUpdateIndex + "\">Ibase Update</a>";
+					  
+					  component_counter++;
 					  
 				  }					  
 				  }
@@ -2215,8 +2531,7 @@ var data = [
 			
 			subcomponents_table=table;
     });
-
-
+	
 
         //show meters
 
@@ -2264,10 +2579,7 @@ var data = [
 
             //send data to form to pre-fill
 
-
-
-
-
+			
             //scott
 
             var rows = this.subcomponentsDataTable.getRecordSet();
@@ -2322,7 +2634,9 @@ var data = [
 
             RightNow.Event.fire("evt_managePanel", eo);
 
-            (YAHOO.util.Dom.getElementsByClassName('mysel', 'select', 'panelIbaseUpdate2')[0]).focus();
+            //(YAHOO.util.Dom.getElementsByClassName('mysel', 'select', 'panelIbaseUpdate2')[0]).focus();
+			
+			document.querySelectorAll('#panelIbaseUpdate2 .mysel')[0].focus();
 
             //var mysel = document.getElementById("rn_ContactSelect_196_Options");
 
@@ -2335,10 +2649,9 @@ var data = [
         // Binding event for each unique ID -- mickey.zhang
         for (var i=1; i<=lnkIbaseUpdateIndex; i++) {
             var mylink = this.Y.one('#lnkIbaseUpdateComponent2_' + i);
-            mylink.on('click', ibaseUpdateByComponent, this.subcomponentsDataTable, this);
-        }
+            mylink.on('click', ibaseUpdateByComponent, this.subcomponentsDataTable, this); 
+        }  
 
-		
         //end show subcomponents
 
         /* this.productDataTable.subscribe("rowMouseoverEvent", this.productDataTable.onEventHighlightRow);
@@ -2347,7 +2660,10 @@ var data = [
 
         this.productDataTable.subscribe("rowClickEvent", this._productHandler, arguments[0], this);  //pass array */
 		
-		this.Y.one("#panelProducts2 .yui3-datatable-data tr").on("click",this._productHandler,arguments[0],this);
+		this.Y.all("#panelProducts2 .yui3-datatable-data #lnkRepairRequest").on("click",this._selectIRepair,this,product_table);
+		this.Y.all("#panelProducts2 .yui3-datatable-data tr").on("click",this._productHandler,this,product_table,arguments[0]); 
+		this.Y.all("#panelProducts2 .yui3-datatable-data #lnkIbaseUpdate").on("click",this._selectIBase,this,product_table);
+		
 
 
 
@@ -2476,8 +2792,8 @@ var data = [
 			tab.classList.remove("selected");
 		}
 		
-		document.getElementsByClassName('pid_tabs')[1].classList.add('selected');
-		dc=document.getElementsByClassName('pid_tabs')[1].getAttribute('display_content');
+		document.getElementsByClassName('pid_tabs')[0].classList.add('selected');
+		dc=document.getElementsByClassName('pid_tabs')[0].getAttribute('display_content');
 		document.getElementById(dc).style.display="block";
 		
 
@@ -2714,9 +3030,6 @@ var data = [
         RightNow.Event.fire("evt_populateRepairData", eor);
 
 
-
-
-
         eor = new RightNow.Event.EventObject();
 
         eor.data.knum = mfProduct[0].ID;
@@ -2777,24 +3090,87 @@ var data = [
 
         this.subcomponentsDataTable.subscribe("rowClickEvent", this._myComponentHandler, arguments[0], this);  //pass array */
 
-		if(document.querySelectorAll('#panelComponent2 .yui3-datatable-data tr').length)
-           this.Y.one("#panelComponent2 .yui3-datatable-data tr").on("click",this._myComponentHandler,arguments[0],this);
+		if(document.querySelectorAll('#panelComponent2 .yui3-datatable-data tr').length){
+           this.Y.all("#panelComponent2 .yui3-datatable-data tr").on("click",this._myComponentHandler,this,subcomponents_table,arguments);
+	       this.Y.all("#panelComponent2 .yui3-datatable-data .actionlink").on("click",this._selectIBaseUpdateByComponent,this,subcomponents_table,arguments);
+		}
 
 
 
     },
+	
+	
+	_selectIBaseUpdateByComponent:function(evt,eo,arguments){
+	    row_id=parseInt(evt._currentTarget.attributes.row_id.value);
+		cells=eo.getRecord(row_id);
+		record=cells._state.data;
+		//console.log(cells);
+		
+
+            var eor = new RightNow.Event.EventObject();
+
+            eor.data.knum = record.ID.value;
+
+            eor.data.sn = record.SN.value;
+
+            eor.data.equip_id = record.compID.value; 
+
+            eor.data.sap_prod_id = record.sapProdID.value;
+
+            eor.data.sold_to = record.SAPID.value;
+
+            eor.data.ibase_product_hier = record.productHier.value;
+
+            eor.data.enablingPartner = record.enabling_partner.value;
+
+            eor.data.mfgPartner = record.mfg_partner.value;
+
+            eor.data.distrPartner = record.distr_partner.value;
+
+            eor.data.resellPartner = record.resell_partner.value;
+
+            eor.data.directPartner = record.direct_partner.value;
+
+            eor.data.corporatePartner = record.corporate_partner.value;
 
 
-    _productHandler: function (evt, eo) {
+
+            RightNow.Event.fire("evt_populateIbaseUpdateData", eor);
+
+
+
+            var eo = new RightNow.Event.EventObject();
+
+            eo.data.expandlist = new Array('accordionIbaseUpdate2');
+
+            eo.data.showlist = new Array('accordionIbaseUpdate2');
+
+            eo.data.hidelist = new Array('accordionRepairRequest2', 'accordionManageContacts2');
+
+            RightNow.Event.fire("evt_managePanel", eo);
+
+            //(YAHOO.util.Dom.getElementsByClassName('mysel', 'select', 'panelIbaseUpdate2')[0]).focus();
+			
+			document.querySelectorAll('#panelIbaseUpdate2 .mysel')[0].focus();
+
+            //var mysel = document.getElementById("rn_ContactSelect_196_Options");
+
+            //mysel.focus();
+		
+	},
+	
+	
+    _productHandler: function (evt, eo, arguments) {
 
 
         //clear data from contracts table
 
-        if (this.contractsDataTable != null) {
+        /* if (this.contractsDataTable != null) {
 
             this.contractsDataTable.destroy();
 
-        }
+        } */
+		document.getElementById("div_contracts2").innerHTML="";
 
 
 
@@ -2821,14 +3197,20 @@ var data = [
             tblPayer.deleteRow(0);
 
         }
+        
+		
+		arguments=JSON.parse(JSON.stringify(arguments));
+		
+		//arguments='{"0":{"SAPID":"814720","PAYERID":"814720","OUTSIDEENTID":"814720","products":[{"ID":"814720SN","Name":"PLATES SONORA NEWS (074)","SN":null,"material":null,"SAPID":"814720","repair":"repair","svcDelivery":"R","compID":"3741655","sapProdID":"7433741","productHier":"1482,9998,2409,10006","mf":"Y","floorBldg":null,"addlAddress":null,"door":null,"remoteEOSL":"00000000","onsiteEOSL":"00000000","enabling_partner":null,"mfg_partner":"","distr_partner":"","resell_partner":"","direct_partner":"814720","corporate_partner":"773957","support_plans":[{"description":"WARRANTY SUPPORT PLAN","startDate":"2014-12-03","endDate":"9999-12-31","type":"Warranty Contract","serviceProfileDesc":null,"serviceProfileID":null,"responseProfileDesc":null,"responseProfileID":null,"payerID":"814720","outsideEntId":"814720","status":"Active","zz_proctypecode":"ZWRC"}],"contracts":[{"description":"TELEPHONE SUPPORT ENTITLEMENT","startDate":"2014-12-03","endDate":"9999-12-31","type":"Warranty Contract","contractID":"8000077000","serviceProfileDesc":"M-F, 08:00-21:00, US","serviceProfileID":"USR13X5","responseProfileDesc":"Within 1 Hr of Call Receipt","responseProfileID":"WWR1HR","payerID":"814720","outsideEntId":"814720","status":"Active","zz_proctypecode":"ZRMW"},{"description":"ONSITE FIELD SERVICE ENTITLEMENT","startDate":"2014-12-03","endDate":"9999-12-31","type":"Warranty Contract","contractID":"8000077000","serviceProfileDesc":"M-F, 08:00-17:00 US","serviceProfileID":"USO9X5","responseProfileDesc":"Next Business Day","responseProfileID":"WWONBD","payerID":"814720","outsideEntId":"814720","status":"Active","zz_proctypecode":"ZOSW"},{"description":"PARTS COVERAGE ENTITLEMENT","startDate":"2014-12-03","endDate":"9999-12-31","type":"Warranty Contract","contractID":"8000077000","serviceProfileDesc":null,"serviceProfileID":null,"responseProfileDesc":null,"responseProfileID":null,"payerID":"814720","outsideEntId":"814720","status":"Active","zz_proctypecode":"ZPCW"},{"description":"SOFTWARE UPDATES AND PATCHES","startDate":"2014-12-03","endDate":"9999-12-31","type":"Warranty Contract","contractID":"8000077000","serviceProfileDesc":null,"serviceProfileID":null,"responseProfileDesc":null,"responseProfileID":null,"payerID":"814720","outsideEntId":"814720","status":"Active","zz_proctypecode":"ZWPW"}],"plan":"WARRANTY SUPPORT PLAN","planStart":"2014-12-03","planEnd":"9999-12-31","sds":"Remote","sp":"USR13X5","rp":"WWR1HR","hasActiveContract":"Y"}]},"status":1,"Site":[{"OrgName":"DAILY NEWS PUBLISHING CO (THE)","street":"193 JEFFERSON AVE","city":"MEMPHIS","zip":"38103-2322","province":"Tennessee-TN","country":"US","custSAPId":"814720","orgID":405606,"manage":"Manage Contacts"}],"Payer":{"OrgName":"DAILY NEWS PUBLISHING CO (THE)","street":"193 JEFFERSON AVE","city":"MEMPHIS","zip":"38103-2322","province":"Tennessee-TN","country":"US","custSAPId":"814720","orgID":405606,"manage":"Manage Contacts","OUTSIDEENTID":"814720","SAPID":"814720"}}';
 
-
-
-        //fill in contracts
+		//console.log(arguments);
+		
+		
 
         var mfProduct = new Array();
 
-        mfProduct[0] = arguments[1][0]['products'][0];
+        //mfProduct[0] = arguments[1][0]['products'][0];
+		mfProduct[0]=arguments[0]['products'][0];
 
 
 
@@ -2854,15 +3236,15 @@ var data = [
 
 
 
-        contractDataSource = new YAHOO.util.DataSource(aContracts);
+        //contractDataSource = new YAHOO.util.DataSource(aContracts);
 
 
 
-        contractDataSource.responseType = YAHOO.util.XHRDataSource.TYPE_JSARRAY;
+        //contractDataSource.responseType = YAHOO.util.XHRDataSource.TYPE_JSARRAY;
 
 
 
-        contractDataSource.responseSchema = {
+        /* contractDataSource.responseSchema = {
 
             resultsList: "", // String pointer to result data
 
@@ -2890,9 +3272,7 @@ var data = [
 
                     ]
 
-        };
-
-
+        }; */
 
 
 
@@ -2917,16 +3297,24 @@ var data = [
                   ];
 
 
-
-        this.contractsDataTable = new YAHOO.widget.DataTable("div_contracts2", contractColumnDefs, contractDataSource);
-
-
-
-
+        
+				var contracts_table;
+				YUI().use('datatable', function (Y) {
+					table = new Y.DataTable({
+						columns: contractColumnDefs,
+						data:aContracts,
+						highlightMode:"row",
+						selectionMode: 'row'
+					});
+					document.getElementById("div_contracts2").innerHTML="";
+					table.render("#div_contracts2");
+					//this.contractsDataTable = new YAHOO.widget.DataTable("div_contracts2", contractColumnDefs, contractDataSource);
+					contracts_table=table;
+			});
 
         //Payer
-
-         var outsideEntId=mfProduct[0].support_plans[0]['outsideEntId'];
+       
+         var outsideEntId=(mfProduct[0].support_plans !=null)?mfProduct[0].support_plans[0]['outsideEntId']:"";
 
         
 
@@ -2952,7 +3340,7 @@ var data = [
 
        //Nitesh S
 
-        bCell.innerHTML = arguments[1]['Payer'].OUTSIDEENTID;
+        bCell.innerHTML = arguments['Payer'].OUTSIDEENTID;
 
 
 
@@ -2964,7 +3352,7 @@ var data = [
 
         aCell.innerHTML = this.data.js.pidscpi_customername;
 
-        bCell.innerHTML = arguments[1]['Payer'].OrgName;
+        bCell.innerHTML = arguments['Payer'].OrgName;
 
 
 
@@ -2976,7 +3364,7 @@ var data = [
 
         aCell.innerHTML = this.data.js.pidscpi_address;
 
-        bCell.innerHTML = arguments[1]['Payer'].street;
+        bCell.innerHTML = arguments['Payer'].street;
 
 
 
@@ -2988,7 +3376,7 @@ var data = [
 
         aCell.innerHTML = this.data.js.mysites_city;
 
-        bCell.innerHTML = arguments[1]['Payer'].city;
+        bCell.innerHTML = arguments['Payer'].city;
 
 
 
@@ -3000,7 +3388,7 @@ var data = [
 
         aCell.innerHTML = this.data.js.mysites_province;
 
-        bCell.innerHTML = arguments[1]['Payer'].province;
+        bCell.innerHTML = arguments['Payer'].province;
 
 
 
@@ -3012,7 +3400,7 @@ var data = [
 
         aCell.innerHTML = this.data.js.mysites_postalcode;
 
-        bCell.innerHTML = arguments[1]['Payer'].zip;
+        bCell.innerHTML = arguments['Payer'].zip;
 
 
 
@@ -3024,13 +3412,13 @@ var data = [
 
         aCell.innerHTML = this.data.js.mysites_country;
 
-        bCell.innerHTML = arguments[1]['Payer'].country;
+        bCell.innerHTML = arguments['Payer'].country;
 
 
 
         //equipment site
 
-        if (arguments[1] != null) {
+        if (arguments[0] != null) {
 
             var eRow = tblEquipmentSite.insertRow(-1);
 
@@ -3091,18 +3479,27 @@ var data = [
     },
 
 
-    _myComponentHandler: function (evt, eo) {
+    _myComponentHandler: function (evt, eo,arguments) {
+
+        var trs=document.querySelectorAll("#panelComponent2 .yui3-datatable-data tr");
+		var rowIndex=0;
+		for(i=0;i<trs.length;i++){
+		   if(trs[i].outerHTML!=evt._currentTarget.outerHTML){
+			  trs[i].style.display="none";
+		   }
+		   else{
+			   rowIndex=i;
+		   }
+		}
 
 
+        //GG var rows = this.subcomponentsDataTable.getRecordSet();
 
-
-
-        var rows = this.subcomponentsDataTable.getRecordSet();
-
-        var record = this.subcomponentsDataTable.getRecord(evt.target);
-
-
-
+        //GG var record = this.subcomponentsDataTable.getRecord(evt.target);
+		
+		var record=eo.getRecord(rowIndex);
+		
+		
         //clear data from contracts table
 
         if (this.contractsDataTable != null) {
@@ -3110,7 +3507,6 @@ var data = [
             this.contractsDataTable.destroy();
 
         }
-
 
 
         var aContracts = new Array();
@@ -3125,17 +3521,17 @@ var data = [
 
         //alert(YAHOO.lang.dump(record.getData()));
 
-        for (var i = 0; i < arguments[1][0]['products'].length; i++) {
+        for (var i = 0; i < arguments[0][0]['products'].length; i++) {
 
 
 
-            if (arguments[1][0]['products'][i]['compID'] == record._oData.compID) {
+            if (arguments[0][0]['products'][i]['compID'] == record.compID) {
 
-                aContracts = arguments[1][0]['products'][i]['contracts'];
+                aContracts = arguments[0][0]['products'][i]['contracts'];
 
-                aMeters = arguments[1][0]['products'][i]['meters'];
+                aMeters = arguments[0][0]['products'][i]['meters'];
 
-                hMeters = arguments[1][0]['products'][i]['meter_history'];
+                hMeters = arguments[0][0]['products'][i]['meter_history'];
 
             }
 
@@ -3157,7 +3553,7 @@ var data = [
 
         eoc.data.meterData = aMeters;
 
-        eoc.data.compID = record._oData.compID;
+        eoc.data.compID = record.compID;
 
         RightNow.Event.fire("evt_displayCurrentMeter", eoc);
 
@@ -3177,7 +3573,7 @@ var data = [
 
 
 
-        contractDataSource = new YAHOO.util.DataSource(aContracts);
+        /* contractDataSource = new YAHOO.util.DataSource(aContracts);
 
 
 
@@ -3213,7 +3609,7 @@ var data = [
 
                     ]
 
-        };
+        }; */
 
 
 
@@ -3241,7 +3637,20 @@ var data = [
 
 
 
-        this.contractsDataTable = new YAHOO.widget.DataTable("div_contracts2", contractColumnDefs, contractDataSource);
+        //this.contractsDataTable = new YAHOO.widget.DataTable("div_contracts2", contractColumnDefs, contractDataSource);
+		contracts_tables="";
+		YUI().use('datatable', function (Y) {
+            
+		   table = new Y.DataTable({			
+		   columns: contractColumnDefs,
+		   data:aContracts
+		   });
+					
+			document.getElementById("div_contracts2").innerHTML="";
+			table.render("#div_contracts2");
+			contracts_table=table;
+			
+		});
 
 
 
@@ -3285,7 +3694,7 @@ var data = [
 
         //Payer
 
-        var outsideEntId=mfProduct[0].support_plans[0]['outsideEntId'];
+        //var outsideEntId=mfProduct[0].support_plans[0]['outsideEntId'];
 
        //alert("ousideENT Id2: "+outsideEntId);
 
@@ -3301,7 +3710,7 @@ var data = [
 
        // bCell.innerHTML = arguments[1]['Payer'].SAPID;
 
-        bCell.innerHTML = arguments[1]['Payer'].OUTSIDEENTID;
+        bCell.innerHTML = arguments[0]['Payer'].OUTSIDEENTID;
 
 
 
@@ -3315,7 +3724,7 @@ var data = [
 
         aCell.innerHTML = this.data.js.pidscpi_customername;
 
-        bCell.innerHTML = arguments[1]['Payer'].OrgName;
+        bCell.innerHTML = arguments[0]['Payer'].OrgName;
 
 
 
@@ -3327,7 +3736,7 @@ var data = [
 
         aCell.innerHTML = this.data.js.pidscpi_address;
 
-        bCell.innerHTML = arguments[1]['Payer'].street;
+        bCell.innerHTML = arguments[0]['Payer'].street;
 
 
 
@@ -3339,7 +3748,7 @@ var data = [
 
         aCell.innerHTML = this.data.js.mysites_city;
 
-        bCell.innerHTML = arguments[1]['Payer'].city;
+        bCell.innerHTML = arguments[0]['Payer'].city;
 
 
 
@@ -3351,7 +3760,7 @@ var data = [
 
         aCell.innerHTML = this.data.js.mysites_regprovstate;
 
-        bCell.innerHTML = arguments[1]['Payer'].province;
+        bCell.innerHTML = arguments[0]['Payer'].province;
 
 
 
@@ -3363,7 +3772,7 @@ var data = [
 
         aCell.innerHTML = this.data.js.mysites_postalcode;
 
-        bCell.innerHTML = arguments[1]['Payer'].zip;
+        bCell.innerHTML = arguments[0]['Payer'].zip;
 
 
 
@@ -3375,7 +3784,7 @@ var data = [
 
         aCell.innerHTML = this.data.js.mysites_country;
 
-        bCell.innerHTML = arguments[1]['Payer'].country;
+        bCell.innerHTML = arguments[0]['Payer'].country;
 
 
 
@@ -3391,7 +3800,7 @@ var data = [
 
             cCell.innerHTML = this.data.js.pidsi_floorbldg;
 
-            dCell.innerHTML = record._oData.floorBldg;
+            dCell.innerHTML = record.floorBldg;
 
 
 
@@ -3403,47 +3812,55 @@ var data = [
 
             cCell.innerHTML = this.data.js.pidsi_entrancedoor;
 
-            dCell.innerHTML = record._oData.door;
+            dCell.innerHTML = record.door;
 
 
 
 
 
         }
-
-
-
-
-
-
-
+		
     },
 
 
 	_siteSelectedHandler:function(evt,eo){
+	
+		if(evt._event.path[0].attributes.class.value=="actionlink"){
+			//Don't show the listing, if the link is clicked.
+			return;
+		}
+		//this._resetProductDisplay();
 		
-		this._resetProductDisplay();
-		
-		//First Remove the old cells.
+		//First Remove/Hide the Non selected cells.
 		var trs=document.querySelectorAll("#panelSites2 .yui3-datatable-data tr");
 		var rowIndex=0;
 		for(i=0;i<trs.length;i++){
 		   if(trs[i].outerHTML!=evt._currentTarget.outerHTML){
-			  trs[i].remove();
+			  trs[i].style.display="none";
 		   }
 		   else{
-			   rowIndex=i+1;
+			   rowIndex=i;
 		   }
 		}
+		
 		//Highlight the Row.
 		tbl=document.querySelectorAll("#panelSites2 .yui3-datatable-data");
 		tbl[0].className+=" site_list_fetched";
 		
 		cells=eo.getRecord(rowIndex);
+	
 		cell=cells._state.data;
+		
+		//console.log(cell);
+		
+		var eoSite = new RightNow.Event.EventObject();
+        eoSite.w_id = this.instanceID;
+        eoSite.data.orgID = cell.orgID.value  //val of org ids
+		
+        RightNow.Event.fire('evt_changeSite', eoSite);
 
 		//Send Values for Fetching the list
-		partner_or_customer_id=(this.data.js.internal_user == "N")?cell.partnerID.value:cell.customerID;    
+		partner_or_customer_id=(this.data.js.internal_user == "N")?cell.partnerID.value:cell.customerID.value;    
 		partner_function=cell.partnerfunction.value;
 		ibase_id=cell.ibaseID.value;
 
@@ -3510,7 +3927,6 @@ var data = [
     },
 
 
-
     _getIbaseList: function (ibaseID, functionID, partnerID) {
 
 
@@ -3549,7 +3965,7 @@ var data = [
 
                 var responseText=myresponse.responseText.replace('<rn:meta title="" template="kodak_b2b_template.php" />',"");
                 
-                responseText=document.getElementById('product_json').value; 
+                //responseText=document.getElementById('ibase_json').value; 
 
                 var resp = RightNow.JSON.parse(responseText);
 
@@ -3592,7 +4008,7 @@ var data = [
             timeout: 120000
 
         });
-    },
+      },
 
     _getProduct: function (compid) {
 
@@ -3621,18 +4037,18 @@ var data = [
             data: { eventName: "evt_getProductResponse" },
 
             successHandler: function (myresponse) {
+				
+				responseText=myresponse.responseText.replace('<rn:meta title="" template="kodak_b2b_template.php" />','');
+				  
+				//reponseText=document.getElementById('product_json').value;
 
-                var resp = RightNow.JSON.parse(myresponse.responseText);
-
-
+                var resp = RightNow.JSON.parse(responseText);
 
                 this._waitPanel.hide();
 
                 this._myAjaxProductSearchResponse(resp);
 
                 this._overrideProductSearchAjaxMethodUnsubscribe();
-
-
 
             },
 
@@ -3658,38 +4074,52 @@ var data = [
     _overrideAjaxMethodIbase: function () {
 
         this._overrideAjaxMethodIbaseUnsubscribe();
+		
+		
 
-        RightNow.Event.subscribe('on_before_ajax_request', function (evt, eo) {
+			RightNow.Event.subscribe('on_before_ajax_request', function (evt, eo) {
+				
+				if(eo[0].hasOwnProperty('data')){
+				
+					if (eo[0].data.eventName == "evt_getIbaseResponse") {
 
-            eo[0].url = '/cc/ibase_search/get_ibase';
-
-        }, this);
+						eo[0].url = '/cc/ibase_search/get_ibase';
+					
+					}
+				}
+	
+				
+				
+				
+			}, this);
+			
 
     },
-
-
-
+	
+	
     _overrideAjaxMethodIbaseUnsubscribe: function () {
 
-        RightNow.Event.unsubscribe('on_before_ajax_request', function (evt, eo) {
+				RightNow.Event.unsubscribe('on_before_ajax_request', function (evt, eo) {
 
-            eo[0].url = '/cc/ibase_search/get_ibase';
+					eo[0].url = '/cc/ibase_search/get_ibase';
 
-        });
+				});
 
     },
-
 
 
     _overrideAjaxMethod: function () {
 
         RightNow.Event.unsubscribe('on_before_ajax_request', function (evt, eo) {
+			
+			if(eo[0].hasOwnProperty('data')){
 
-            if (eo[0].data.eventName == "evt_getProductResponse") {
+				if (eo[0].data.eventName == "evt_getProductResponse") {
 
-                eo[0].url = '/cc/ibase_search/get_product';
+					eo[0].url = '/cc/ibase_search/get_product';
 
-            }
+				}
+			}
 
         });
 
@@ -3708,20 +4138,22 @@ var data = [
     },
 
 
-
     _overrideAjaxMethodCustomer: function () {
 
-        this._overrideAjaxMethodCustomerUnsubscribe();
+				this._overrideAjaxMethodCustomerUnsubscribe();
 
-        RightNow.Event.subscribe('on_before_ajax_request', function (evt, eo) {
+				RightNow.Event.subscribe('on_before_ajax_request', function (evt, eo) {
+					
+					if(eo[0].hasOwnProperty('data')){
 
-            if (eo[0].data.eventName == "evt_getIbaseResponse") {
+						if (eo[0].data.eventName == "evt_getIbaseResponse") {
 
-                eo[0].url = '/cc/ibase_search/get_ibase_list';
+							eo[0].url = '/cc/ibase_search/get_ibase_list';
 
-            }
+						}
+					}
 
-        }, this);
+				}, this);
 
     },
 
@@ -3775,7 +4207,7 @@ var data = [
 		YUI().use('panel', 'dd-plugin', function(Y) { 
 
 						var wait_panel = new Y.Panel({
-							srcNode      : '#panelContent',
+							srcNode      : '#panelContent3333333',
 							headerContent: loadingmessage,
 							bodyContent: '<img src=\"/euf/assets/images/rel_interstitial_loading.gif\"/>"',
 							width        : 250,
@@ -3828,7 +4260,7 @@ var data = [
 
         this._waitPanel.setHeader(this.data.js.loadingmessage);
 
-        this._waitPanel.setBody("<img src=\"/euf/assets/images/rel_interstitial_loading.gif\"/>");
+        this._waitPanel.setBody("<img src='euf/assets/images/rel_interstitial_loading.gif' alt='Loading, please wait ...' />");
 
         this._waitPanel.render(document.body);
 
@@ -3898,7 +4330,7 @@ var data = [
                 { key: "planStart", label: this.data.js.pic_contractstart,  minWidth: 75, sortable: false },
 
                 { key: "planEnd", label: this.data.js.pic_contractend,  minWidth: 75, sortable: false },
-
+ 
                 { key: "repair", label: this.data.js.pid_action, minWidth: 120, sortable: false, formatter: "repairCustom" }
 
              ];
@@ -3934,4 +4366,4 @@ var data = [
         RightNow.Event.fire("evt_managePanel", eo);
 
     }
-});
+});  

@@ -232,7 +232,7 @@ Custom.Widgets.login.OpenLogin = RightNow.Widgets.extend({
 
         var input = document.getElementById("rn_" + this.instanceID + "_ProviderUrl"),
             goToUrl = function(url){
-                if(this.Y.UA.ie){
+                if(this.YUI.Env.UA.ie){
                     //IE doesn't set http_referer when window.location changes.
                     //IE9 says this behavior is a feature, not a bug.
                     var referLink = document.createElement("a"),
@@ -256,7 +256,7 @@ Custom.Widgets.login.OpenLogin = RightNow.Widgets.extend({
 		loc = loc.toString();
 		loc = loc.toUpperCase();
 		//alert('loc is '+loc);
-		if (loc == "DEV-SERVICES.KODAK.COM" || loc == "KODAK-B2B-EN--UPGRADE.CUSTHELP.COM")  {
+		if (loc == "DEV-SERVICES.KODAK.COM" || loc == "KODAK-B2B-EN--UPGRADE.CUSTHELP.COM" || loc == "KODAK-B2B-EN--PRO.CUSTHELP.COM")  {
 //                input.value = 'https://kodak-staging.opx.janrain.ws';
                   input.value = 'https://openidqa.kodak.com';
 		} 
