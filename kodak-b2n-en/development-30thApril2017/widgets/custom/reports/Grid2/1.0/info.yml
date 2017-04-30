@@ -1,0 +1,146 @@
+version: "1.0"
+requires:
+  framework: ["3.3"]
+  jsModule:
+  - standard
+  - mobile
+  yui: 
+  - datatable-base
+  - datatable-sort
+  - datatable-message
+attributes:
+  report_id:
+    name: rn:msg:REPORT_ID_LBL
+    type: INT
+    description: rn:msg:ID_RPT_DISP_DATA_SEARCH_RESULTS_MSG
+    default: rn:def:CP_NOV09_ANSWERS_DEFAULT
+    min: 1
+    optlistId: rn:msg:OPTL_CURR_INTF_PUBLIC_REPORTS
+  headers:
+    name: rn:msg:SHOW_HEADERS_CMD
+    type: BOOL
+    description: rn:msg:BOOLEAN_DENOTING_HEADERS_SHOWN_RPT_MSG
+    default: true
+  per_page:
+    name: rn:msg:ITEMS_PER_PAGE_LBL
+    type: INT
+    description: rn:msg:CTRLS_RES_DISP_PG_OVERRIDDEN_MSG
+    default: 0
+  truncate_size:
+    name: rn:msg:WRAP_SIZE_LBL
+    type: INT
+    description: rn:msg:NUMMBER_CHARACTERS_TRUNCATE_FIELD_LBL
+    default: 75
+    min: 1
+  max_wordbreak_trunc:
+    name: rn:msg:MAXIMUM_WORD_BREAK_TRUNCATION_LBL
+    type: INT
+    description: rn:msg:MAX_CHARS_ANS_SOLN_ANS_DESC_MSG
+    default: null
+    min: 0
+  label_row_number:
+    name: rn:msg:ROW_NUMBER_LABEL_LBL
+    type: STRING
+    description: rn:msg:LABEL_DISPLAY_ROW_COLUMN_HEADER_LBL
+    default: rn:msg:ROW_NUMBER_LBL
+  label_caption:
+    name: rn:msg:TABLE_CAPTION_LBL
+    type: STRING
+    description: rn:msg:CAPTION_TITLE_DISPLAYED_TB_CAPTION_MSG
+    default:
+  highlight:
+    name: rn:msg:HIGHLIGHTING_LBL
+    type: BOOL
+    description: rn:msg:HIGHLIGHTS_TXT_FLDS_SRCH_TERM_LBL
+    default: true
+  add_params_to_url:
+    name: rn:msg:ADD_PRMS_TO_URL_CMD
+    type: STRING
+    description: rn:msg:COMMA_SEPARATED_L_URL_PARMS_LINKS_MSG
+    default:
+  label_screen_reader_search_success_alert:
+    name: rn:msg:SCREEN_READER_SEARCH_SUCCESS_ALERT_LBL
+    type: STRING
+    description: rn:msg:MSG_ANNOUNCD_SCREEN_READER_USERS_MSG
+    default: rn:msg:YOUR_SEARCH_IS_COMPLETE_MSG
+  label_screen_reader_search_no_results_alert:
+    name: rn:msg:SCREEN_READER_SEARCH_RESULTS_ALERT_LBL
+    type: STRING
+    description: rn:msg:MSG_ANNOUNCED_SCREEN_READER_USERS_MSG
+    default: rn:msg:YOUR_SEARCH_RETURNED_NO_RESULTS_LBL
+  hide_when_no_results:
+    name: rn:msg:HIDE_WHEN_NO_RESULTS_CMD
+    type: BOOL
+    description: rn:msg:HIDES_ENTIRE_WIDGET_CONTENT_CSS_RES_MSG
+    default: false
+  date_format:
+    name: rn:msg:DATE_FORMAT_UC_LBL
+    type: OPTION
+    description: rn:msg:FMT_DATE_COLS_FORMATS_MSG
+    default: short
+    displaySpecialCharsInTagGallery: true
+    options:
+    - short
+    - date_time
+    - long
+    - raw
+  exclude_from_sorting:
+    name: rn:msg:COLUMNS_TO_EXCLUDE_FROM_SORTING_LBL
+    description: rn:msg:L_SRT_STRT_1_PRV_CMMSPRTD_VLS_156_DD_SRT_MSG
+    type: STRING
+  icon_cols:
+    name: rn:msg:COLUMNS_WHERE_ICONS_ARE_USED_LBL
+    description: rn:msg:L_LBL_CSS_HDR_START_1_PROV_CMMA_VALS_46_MSG
+    default: null
+    type: STRING
+  sanitize_data:
+    name: rn:msg:COLUMNS_NEED_SANITIZED_SANITIZATION_LBL
+    description: rn:msg:S_SNTZD_SNTZTN_1_PRV_CMM_VLS_3TXTXMRKDWN_MSG
+    default: null
+    type: STRING
+  max_date_range_interval:
+    name: rn:msg:MAX_DATE_RANGE_INTERVAL_LBL
+    description: rn:msg:MAXIMUM_EXPR_FMT_EX_90_DAYS_2_YEARS_ETC_MSG
+    default: 90 days
+    type: STRING
+  url_column:
+    name: URL Column
+    type: INT
+    description: Column index that has a url that needs to be manually changed to a link
+    default: null
+  url_text:
+    name: URL Text
+    type: STRING
+    description: Text to display as the url link when url_column is specified
+    default:
+info:
+  description: rn:msg:WIDGET_DISP_DATA_TB_GRID_FMT_RPT_MSG
+  urlParameters:
+    kw:
+      name: rn:msg:KEYWORD_LBL
+      description: rn:msg:THE_CURRENT_SEARCH_TERM_LBL
+      example: kw/search
+    r_id:
+      name: rn:msg:REPORT_ID_LBL
+      description: rn:msg:THE_REPORT_ID_TO_APPLY_FILTERS_TO_LBL
+      example: r_id/176
+    st:
+      name: rn:msg:SEARCH_TYPE_LBL
+      description: rn:msg:SETS_SEARCH_TYPE_URL_PARAM_VALUE_LBL
+      example: st/6
+    org:
+      name: rn:msg:ORGANIZATION_TYPE_LBL
+      description: rn:msg:SETS_ORG_TYPE_URL_PARAMETER_VALUE_LBL
+      example: org/2
+    page:
+      name: rn:msg:PAGE_LBL
+      description: rn:msg:SETS_SELECT_PAGE_URL_PARAMETER_LBL
+      example: page/2
+    search:
+      name: rn:msg:SEARCH_LBL
+      description: rn:msg:KEY_DENOTING_SEARCH_PERFORMED_MSG
+      example: search/0
+    sort:
+      name: rn:msg:SORT_BY_LBL
+      description: rn:msg:SETS_SORT_COL_VAL_DIRECTION_COL_1_LBL
+      example: sort/3,1

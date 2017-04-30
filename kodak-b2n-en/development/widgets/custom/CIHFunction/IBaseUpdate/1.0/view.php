@@ -1,3 +1,4 @@
+<div id="rn_<?= $this->instanceID ?>" class="<?= $this->classList ?>">
 <?php
     $CI = get_instance();
 	$sesslang = $CI->session->getSessionData("lang");
@@ -488,7 +489,7 @@
                                             <span><? echo $cih_lang_msg_base_array['rd_erem_effectivedate']; ?></span><span class="rn_Required"> <?=getMessage(FIELD_REQUIRED_MARK_LBL);?></span><br/>
 
 
-                                            <rn:widget path="custom/CIHFunction/CustomTextInput" name="effective_date" required="true" label_input="Effective Date" />
+                                            <rn:widget path="custom/CIHFunction/CustomTextInput" name="effective_date" required="true" field_name="Effective Date" label_required="Effective Date is required" />
 
 
                                         </td>
@@ -506,7 +507,7 @@
                                             <span><? echo $cih_lang_msg_base_array['rd_erem_comments']; ?></span><span class="rn_Required"> <?=getMessage(FIELD_REQUIRED_MARK_LBL);?></span><br/>
 
 
-                                            <rn:widget path="custom/CIHFunction/TextAreaInput" name="thread" width="100%" height="150px" required="true" label_input="Comments" />
+                                            <rn:widget path="custom/CIHFunction/TextAreaInput" name="thread" width="100%" height="150px" required="true" label_input="Comments" label_required="Comments is required" />
 
 
                                         </td>
@@ -615,12 +616,12 @@
 
 
                                                                                 <td>
-
+ 
 
                                                                                         <span><? echo $cih_lang_msg_base_array['rd_erel_sca']; ?></span><span class="rn_Required"> <?=getMessage(FIELD_REQUIRED_MARK_LBL);?></span><br/>
 
 
-                                                                                        <rn:widget path="custom/CIHFunction/TextAreaInput" name="ibase_address" value="" width="50%" required="true" label_input="Site Customer Address" />
+                                                                                        <rn:widget path="custom/CIHFunction/TextAreaInput" name="ibase_address" value="" width="50%" required="true" label_input="Site Customer Address" label_required="Site Customer Address is required" />
 
 
                                                                                 </td>
@@ -764,7 +765,7 @@
                                             <span><? echo $cih_lang_msg_base_array['rd_erel_effdate']; ?></span><span class="rn_Required"> <?=getMessage(FIELD_REQUIRED_MARK_LBL);?></span><br/>
 
 
-                                            <rn:widget path="custom/CIHFunction/CustomTextInput" name="effective_date" value="" required="true" label_input="Effective Date"/>
+                                            <rn:widget path="custom/CIHFunction/CustomTextInput" name="effective_date" value="" required="true" field_name="Effective Date" label_required="Effective Date is required" />
 
 
                                         </td>
@@ -782,7 +783,7 @@
                                             <span><? echo $cih_lang_msg_base_array['rd_erel_comments']; ?></span><span class="rn_Required"> <?=getMessage(FIELD_REQUIRED_MARK_LBL);?></span><br/>
 
 
-                                            <rn:widget path="custom/CIHFunction/TextAreaInput" name="thread" value="" width="100%" height="150px" required="true" label_input="Comments" />
+                                            <rn:widget path="custom/CIHFunction/TextAreaInput" name="thread" value="" width="100%" height="150px" required="true" label_input="Comments" label_required="Comments is required" />
 
 
                                         </td>
@@ -866,7 +867,7 @@
                                             <span><? echo $cih_lang_msg_base_array['rd_echange_comments']; ?></span><span class="rn_Required"> <?=getMessage(FIELD_REQUIRED_MARK_LBL);?></span><br/>
 
 
-                                            <rn:widget path="custom/CIHFunction/TextAreaInput" name="thread" value="" width="100%" height="150px"  required="true" label_input="Comments" />
+                                            <rn:widget path="custom/CIHFunction/TextAreaInput" name="thread" value="" width="100%" height="150px"  required="true" label_input="Comments" label_required="Comments is required" />
 
 
                                         </td>
@@ -890,7 +891,7 @@
                                             <span><? echo $cih_lang_msg_base_array['rd_other_effdate']; ?></span><span class="rn_Required"> <?=getMessage(FIELD_REQUIRED_MARK_LBL);?></span><br/>
 
 
-                                            <rn:widget path="custom/CIHFunction/CustomTextInput" name="effective_date" value="" required="true" label_input="Effective Date"/>
+                                            <rn:widget path="custom/CIHFunction/CustomTextInput" name="effective_date" value="" required="true" field_name="Effective Date" label_required="Effective Date is required" />
 
 
                                         </td>
@@ -908,7 +909,7 @@
                                             <span><? echo $cih_lang_msg_base_array['rd_echange_comments']; ?></span><span class="rn_Required"> <?=getMessage(FIELD_REQUIRED_MARK_LBL);?></span><br/>
 
 
-                                            <rn:widget path="custom/CIHFunction/TextAreaInput" name="thread" value="" width="100%" height="150px"  required="true" label_input="Comments" />
+                                            <rn:widget path="custom/CIHFunction/TextAreaInput" name="thread" value="" width="100%" height="150px"  required="true" label_input="Comments" label_required="Comments is required"/>
 
 
                                         </td>
@@ -1009,4 +1010,5 @@
 
 
         </div>    
-
+		
+</div> <!-- Main div ends here -->

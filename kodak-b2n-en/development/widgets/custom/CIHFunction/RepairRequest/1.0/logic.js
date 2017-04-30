@@ -22,12 +22,16 @@ Custom.Widgets.CIHFunction.RepairRequest = RightNow.Widgets.extend({
 		this._ppErrorMessage = document.getElementById("rn_" + this.instanceID + "_ppErrorMessage");
 
 		this.Y.one("#"+this._createContactButton.id).on("click", this._showHideContactForm,this);
+		
+		this.error_field_exist=false;
 
 		RightNow.Event.subscribe('evt_managePanel', this._onManagePanel, this);
 
 		//this._createWaitPanel();
 
 		RightNow.Event.subscribe('evt_populateRepairData', this._populateRepairData, this);
+		
+		RightNow.Event.subscribe('evt_formErrorExist',this.evt_formErrorExist,this);
 		
 		RightNow.Event.subscribe('evt_repairRequestContactSelectChanged', this._contactSelectChanged, this); //Added by Srini for dynamic contact detail change.
 
@@ -996,12 +1000,23 @@ Custom.Widgets.CIHFunction.RepairRequest = RightNow.Widgets.extend({
 
 
     */
+	
+	evt_formErrorExist:function(type,args){
+		
+		if(args[0].data.error_field){
+		  this.error_field_exist=args[0].data.error_field;
+		}
+		else{
+			this.error_field_exist=false;
+		}
+	 
+	},
 
 
     _overrideAjaxMethod: function (str) {
 
 
-
+       
 
 
         RightNow.Event.unsubscribe('on_before_ajax_request', function (str, eo) {
@@ -1047,6 +1062,21 @@ Custom.Widgets.CIHFunction.RepairRequest = RightNow.Widgets.extend({
 			
 			//This will update/Create the whole Ibase Data
 		   if(eo[0].url=="/cc/incident_custom/incident_submit_repair_request"){
+			   
+			   
+			   //lets fire the validation request.
+			    this.error_field_exist=false;
+			    var eor = new RightNow.Event.EventObject();
+				 
+				eor.data.error_location="rn_"+this.instanceID+"_ErrorLocation";	
+				eor.data.coming_form="rn_"+this.instanceID+"_form";
+				RightNow.Event.fire("evt_formFieldValidateRequest", eor);
+				
+				//Stop the form to submit further.
+				if(this.error_field_exist){
+				  RightNow.Event.fire("evt_formValidateFailure", eor);
+				  return false;
+				}
 			   		
 			                 //All Expected values here. 							
 							//var fields=new Array('c_id','firstname','officephone','language1','optinglobal','country','rn_ListFailedOrgContacts','lastname','mobilephone','language2','optinincident','ek_phone_extension','emailaddress','faxnumber','language3','optincisurvey','role','disabled','login',"orig_submit_id","orig_submit_name","secondarycontact","ek_ibase_updt_type","products","removal_reason","effective_date","thread","ibase_country","entitlement_type","panel","sesslang","ek_type","ek_enabling_partner","ek_mvs_manfacturer","ek_service_dist","ek_service_reseller","ek_corporate","ek_k_number","ek_serial_number","ek_equip_component_id","ek_sap_product_id","ek_sap_soldto_custid","equipment_location","storenumber","zipcode","state","city","street","ibase_address","sitecustomername","ibase_phone","ibase_lastname","ibase_firstname","product_identifier");

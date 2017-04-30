@@ -1,5 +1,5 @@
 RightNow.namespace('Custom.Widgets.CIHFunction.CustomTextInput');
-Custom.Widgets.CIHFunction.CustomTextInput = RightNow.SearchFilter.extend({ 
+Custom.Widgets.CIHFunction.CustomTextInput = RightNow.Widgets.extend({ 
     /**
      * Widget constructor.
      */
@@ -13,14 +13,13 @@ Custom.Widgets.CIHFunction.CustomTextInput = RightNow.SearchFilter.extend({
 		this._fieldName = 'rn_' + this.instanceID + '_TextInput';
 		this._parentForm = RightNow.UI.findParentForm(this._fieldName);
 		this._inputField = document.getElementById(this._fieldName);
-		this._previousValue = "";
-    
+		this._previousValue = ""; 
+		
 
     RightNow.Event.subscribe('evt_fieldVisibilityChanged', this._visibilityChanged, this);
     RightNow.Event.subscribe('evt_resetForm', this.onResetForm, this);
-    RightNow.Event.subscribe('evt_formFieldValidateRequestTextInput', this._onValidate, this);
-    this.searchSource().on('search', this._onValidate, this);
-	//RightNow.Event.subscribe('evt_formFieldValidateRequest', this._onValidate, this);
+    //this.searchSource().on('search', this._onValidate, this);
+	RightNow.Event.subscribe('evt_formFieldValidateRequest', this._onValidate, this);
     RightNow.Event.subscribe('evt_toggleRequired', this._toggleRequired, this);
 	
 	/* var form = RightNow.Form.find(this.baseDomID, this.instanceID);
@@ -145,6 +144,26 @@ Custom.Widgets.CIHFunction.CustomTextInput = RightNow.SearchFilter.extend({
         }
         return true;
     },
+	
+	_checkRequired2:function(args){
+		if(args[0].data.hasOwnProperty('coming_form') && args[0].data.coming_form==this._parentForm){
+							input_field_val=document.getElementById('rn_'+this.instanceID+'_TextInput').value;
+							input_field_instance=document.getElementById('rn_'+this.instanceID+'_TextInput');  
+							
+								if((input_field_val=="" || input_field_val==null) && this.data.attrs.required==true && input_field_instance.disabled==false){
+								  this._displayError(this.data.attrs.label_required);	
+								  RightNow.Event.fire("evt_formFieldValidationFailure", eo);
+								  //Fire a custom Event, for manageContact, IRepairRequest and IBaseRequest
+								  var eo = new RightNow.Event.EventObject();
+								  eo.data.error_field=this.data.attrs.name;
+								  RightNow.Event.fire("evt_formErrorExist", eo);  
+								  return false;
+								}
+        }
+		
+		return true;
+						   
+	},
 
     _toggleRequired: function (evt, args) {
         //console.log("Custom text input _Togglerequired");
@@ -175,7 +194,7 @@ Custom.Widgets.CIHFunction.CustomTextInput = RightNow.SearchFilter.extend({
             if (RightNow.UI.Form.chatSubmit && RightNow.UI.Form.errorCount === 1)
                 commonErrorDiv.innerHTML = "";
 
-            var errorLink = "<div><b><a href='javascript:void(0);' onclick='document.getElementById(\"" + this._inputField.id +
+            var errorLink = "<div><b><a href='javascript:void(0);' style='color:red' onclick='document.getElementById(\"" + this._inputField.id +
                 "\").focus(); return false;'>" + this.data.attrs.label_input + " ";
 
             if (errorMessage.indexOf("%s") > -1)
@@ -217,7 +236,13 @@ Custom.Widgets.CIHFunction.CustomTextInput = RightNow.SearchFilter.extend({
     */
 
     _onValidate: function (type, args) {
-        console.log("Custom text input _onValidate");
+		//console.log(this.data.attrs);
+        //console.log("Custom text input _onValidate");
+		
+		
+		//remove the rn_Hidden on the error location, that is causing problem for us.
+		document.getElementById(args[0].data.error_location).classList.remove("rn_Hidden");
+		
         this._validated = true;
         this._parentForm = this._parentForm || RightNow.UI.findParentForm("rn_" + this.instanceID);
         var eo = new RightNow.Event.EventObject();
@@ -228,41 +253,81 @@ Custom.Widgets.CIHFunction.CustomTextInput = RightNow.SearchFilter.extend({
             "prev": this.data.js.prev,
             "form": this._parentForm
         };
-        if ("rn_ServiceRequestActivity_2_form" === this._parentForm || this._parentForm.indexOf("rn_ServiceRequestActivity") > -1 ) {
-            this._formErrorLocation = args[0].data.error_location;
-            this._trimField();
+		
+        if ("rn_ServiceRequestActivity_2_form" === this._parentForm || this._parentForm.indexOf("rn_ServiceRequestActivity") > -1) {
+				this._formErrorLocation = args[0].data.error_location;
+				this._trimField();
+				if (this._checkRequired()) {
+	  
+					 this.Y.one(this._inputField).removeClass("rn_ErrorField");
+				//    this.Y.one("#rn_"+ this.instanceID +"_Label").removeClass("rn_ErrorLabel");
+					if (this.data.attrs.require_validation) {
+						 this.Y.one(this._validationField).removeClass("rn_ErrorField");
+						 this.Y.one("#rn_"+ this.instanceID +"_LabelValidate").removeClass("rn_ErrorLabel");
+					}
 
-            if (this._checkRequired()) {
-  
-                 this.Y.one(this._inputField).removeClass("rn_ErrorField");
-            //    this.Y.one("#rn_"+ this.instanceID +"_Label").removeClass("rn_ErrorLabel");
-                if (this.data.attrs.require_validation) {
-                     this.Y.one(this._validationField).removeClass("rn_ErrorField");
-                     this.Y.one("#rn_"+ this.instanceID +"_LabelValidate").removeClass("rn_ErrorLabel");
-                }
-
-                if (this.data.js.profile)
-                    eo.data.profile = true;
-                if (this.data.js.customID) {
-                    eo.data.custom = true;
-                    eo.data.customID = this.data.js.customID;
-                    eo.data.customType = this.data.js.type;
-                }
-                else {
-                    eo.data.custom = false;
-                }
-                if (this.data.js.channelID) {
-                    eo.data.channelID = this.data.js.channelID;
-                }
-                eo.w_id = this.data.info.w_id;
-                RightNow.Event.fire("evt_formFieldValidationPass", eo);
-            }
-            else {
-                RightNow.UI.Form.formError = true;
-            }
+					if (this.data.js.profile)
+						eo.data.profile = true;
+					if (this.data.js.customID) {
+						eo.data.custom = true;
+						eo.data.customID = this.data.js.customID;
+						eo.data.customType = this.data.js.type;
+					}
+					else {
+						eo.data.custom = false;
+					}
+					if (this.data.js.channelID) {
+						eo.data.channelID = this.data.js.channelID;
+					}
+					eo.w_id = this.data.info.w_id;
+					RightNow.Event.fire("evt_formFieldValidationPass", eo);
+				
+				}
+				else {
+					RightNow.UI.Form.formError = true; 
+				}
+		
         }
+		else if(this._parentForm.indexOf("rn_ManageContacts") > -1 || this._parentForm.indexOf("rn_IBaseUpdate") > -1 || this._parentForm.indexOf("rn_RepairRequest") > -1){
+			
+				//Srini's Customization.
+				this._formErrorLocation = args[0].data.error_location;
+				this._trimField();
+				if (this._checkRequired2(args)) {
+	  
+					 this.Y.one(this._inputField).removeClass("rn_ErrorField");
+				//    this.Y.one("#rn_"+ this.instanceID +"_Label").removeClass("rn_ErrorLabel");
+					if (this.data.attrs.require_validation) {
+						 this.Y.one(this._validationField).removeClass("rn_ErrorField");
+						 this.Y.one("#rn_"+ this.instanceID +"_LabelValidate").removeClass("rn_ErrorLabel");
+					}
+
+					if (this.data.js.profile)
+						eo.data.profile = true;
+					if (this.data.js.customID) {
+						eo.data.custom = true;
+						eo.data.customID = this.data.js.customID;
+						eo.data.customType = this.data.js.type;
+					}
+					else {
+						eo.data.custom = false;
+					}
+					if (this.data.js.channelID) {
+						eo.data.channelID = this.data.js.channelID;
+					}
+					eo.w_id = this.data.info.w_id;
+					RightNow.Event.fire("evt_formFieldValidationPass", eo);
+				
+				}
+				else {
+					RightNow.UI.Form.formError = true; 
+				}
+			
+		}
         else {
-            RightNow.Event.fire("evt_formFieldValidationFailure", eo);
+	
+                RightNow.Event.fire("evt_formFieldValidationFailure", eo); 
+				return false;
         }
         this._validated = false;
         RightNow.Event.fire("evt_formFieldValidationPass");

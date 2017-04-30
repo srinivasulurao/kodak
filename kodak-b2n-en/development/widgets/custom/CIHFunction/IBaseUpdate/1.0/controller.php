@@ -4,34 +4,49 @@ namespace Custom\Widgets\CIHFunction;
 class IBaseUpdate extends \RightNow\Libraries\Widget\Base {
     function __construct($attrs) {
         parent::__construct($attrs);
+		
+		$this->setAjaxHandlers(array(
+            'default_ajax_endpoint' => array(
+                'method'      => 'handle_default_ajax_endpoint',
+                'clickstream' => 'custom_action',
+            ),
+        ));
     }
 
     function getData() {
 		
-		//Perform php logic here
- 		$sesslang = get_instance()->session->getSessionData("lang");
+ 		//$sesslang = get_instance()->session->getSessionData("lang");
+		$sesslang="en";
 		switch ($sesslang) {
         case "en":
-			$ccih_lang_msg_base_array=load_array("csv_cih_english_strings.php"); 
+			$cih_lang_msg_base_array=load_array("csv_cih_english_strings.php"); 
 			break;
         case "fr":
-			$ccih_lang_msg_base_array=load_array("csv_cih_french_strings.php"); 
+			$cih_lang_msg_base_array=load_array("csv_cih_french_strings.php"); 
 			break;
         case "es":
-			$ccih_lang_msg_base_array=load_array("csv_cih_spanish_strings.php"); 
+			$cih_lang_msg_base_array=load_array("csv_cih_spanish_strings.php"); 
 			break;
         case "pt":
-			$ccih_lang_msg_base_array=load_array("csv_cih_portuguese_strings.php"); 
+			$cih_lang_msg_base_array=load_array("csv_cih_portuguese_strings.php"); 
 			break;
         default:
-			$ccih_lang_msg_base_array=load_array("csv_cih_english_strings.php"); 
+			$cih_lang_msg_base_array=load_array("csv_cih_english_strings.php"); 
 			break;
 		}						
-		$this->data['js']['loadingmessage'] = $ccih_lang_msg_base_array['loadingmessage'];
+		$this->data['js']['loadingmessage'] = $cih_lang_msg_base_array['loadingmessage'];
 
         return parent::getData();
 
     }
-
+	
+	/**
+     * Handles the default_ajax_endpoint AJAX request
+     * @param array $params Get / Post parameters
+     */
+	function handle_default_ajax_endpoint($params) {
+        // Perform AJAX-handling here...
+        // echo response
+    }
     
 }

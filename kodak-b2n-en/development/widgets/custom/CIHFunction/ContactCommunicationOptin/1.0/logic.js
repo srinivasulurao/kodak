@@ -58,6 +58,9 @@ Custom.Widgets.CIHFunction.ContactCommunicationOptin = RightNow.Widgets.extend({
         this._toggleDisplay();
       }
   },
+  _validateRequirement:function(){
+	  return true;
+  },
      onValidate: function (type, args) {
         var eo = new RightNow.Event.EventObject();
         eo.data.name = 'communication_optin_list';

@@ -27,28 +27,51 @@ onSetTextField: function (evt, args) {
     * Validation routine to check if field is required, and if so, ensure it has a value
     * @return Boolean denoting if required check passed
     */
-    _checkRequired: function () {
-        if (this.data.attrs.required) {
+    _checkRequired2: function(args) {
+		
+		if(args[0].data.hasOwnProperty('coming_form') && args[0].data.coming_form==this._parentForm){
+							input_field_val=document.getElementById('rn_'+this.instanceID+'_TextAreaInput').value;
+							input_field_instance=document.getElementById('rn_'+this.instanceID+'_TextAreaInput');  
+							
+								if((input_field_val=="" || input_field_val==null) && this.data.attrs.required==true && input_field_instance.disabled==false){
+								  console.log("Tirupati Balaji");
+								  this._displayError(this.data.attrs.label_required);	
+								  RightNow.Event.fire("evt_formFieldValidationFailure", eo);
+								  //Fire a custom Event, for manageContact, IRepairRequest and IBaseRequest
+								  var eo = new RightNow.Event.EventObject();
+								  eo.data.error_field=this.data.attrs.name;
+								  RightNow.Event.fire("evt_formErrorExist", eo);  
+								  return false;
+								}
+        }
+		
+		return true;
+    },
+	
+	_checkRequired:function(){
+		
+		if (this.data.attrs.required) {
             if (this._inputField.value === "" && this._inputField.disabled == false) {
                 this._displayError(this.data.attrs.label_required);
                 return false;
             }
         }
         return true;
-    },
+	},
 
     /**
     * Displays error by appending message above submit button
     * @param errorMessage String Message to display
     */
     _displayError: function (errorMessage) {
-        var commonErrorDiv = document.getElementById(this._formErrorLocation);
+        var commonErrorDiv = document.getElementById(this._formErrorLocation);	
+		
         if (commonErrorDiv) {
             RightNow.UI.Form.errorCount++;
             if (RightNow.UI.Form.chatSubmit && RightNow.UI.Form.errorCount === 1)
                 commonErrorDiv.innerHTML = "";
 
-            var errorLink = "<div><b><a href='javascript:void(0);' onclick='document.getElementById(\"" + this._inputField.id +
+            var errorLink = "<div><b><a href='javascript:void(0);' style='color:red' onclick='document.getElementById(\"" + this._inputField.id +
                 "\").focus(); return false;'>" + this.data.attrs.label_input + " ";
 
             if (errorMessage.indexOf("%s") > -1)
@@ -124,11 +147,13 @@ onSetTextField: function (evt, args) {
             this._trimField();
 
             if (this._checkRequired()) {
-                    this.Y.one("#"+this._inputField.id).removeClass("rn_ErrorField");
-                    this.Y.one("#rn_" + this.instanceID + "_Label").removeClass("rn_ErrorLabel");
-                if (this.data.attrs.require_validation) {
-                    this.Y.one("#"+this._validationField.id).removeClass("rn_ErrorField");
-                    this.Y.one("#rn_" + this.instanceID + "_LabelValidate").removeClass("rn_ErrorLabel");
+                     this.Y.one("#"+this._inputField.id).removeClass("rn_ErrorField");
+					if(document.getElementById("rn_" + this.instanceID + "_Label")!=null)
+                     this.Y.one("#rn_" + this.instanceID + "_Label").removeClass("rn_ErrorLabel");
+                if(this.data.attrs.require_validation) {
+                     this.Y.one("#"+this._validationField.id).removeClass("rn_ErrorField");
+					if(document.getElementById("rn_" + this.instanceID + "_LabelValidate")!=null)
+                     this.Y.one("#rn_" + this.instanceID + "_LabelValidate").removeClass("rn_ErrorLabel");
                 }
 
                 if (this.data.js.profile)
@@ -145,12 +170,49 @@ onSetTextField: function (evt, args) {
                     eo.data.channelID = this.data.js.channelID;
                 }
                 eo.w_id = this.data.info.w_id;
-                RightNow.Event.fire("evt_formFieldValidateResponse", eo);
+                RightNow.Event.fire("evt_formFieldValidateResponse", eo); 
             }
             else {
                 RightNow.UI.Form.formError = true;
             }
         }
+		else if(this._parentForm.indexOf("rn_ManageContacts") > -1 || this._parentForm.indexOf("rn_IBaseUpdate") > -1 || this._parentForm.indexOf("rn_RepairRequest") > -1){
+			
+				//Srini's Customization.
+				this._formErrorLocation = args[0].data.error_location;
+				this._trimField();
+
+				if (this._checkRequired2(args)) {
+						 this.Y.one("#"+this._inputField.id).removeClass("rn_ErrorField");
+						if(document.getElementById("rn_" + this.instanceID + "_Label")!=null)
+						 this.Y.one("#rn_" + this.instanceID + "_Label").removeClass("rn_ErrorLabel"); 
+				    if(this.data.attrs.require_validation) {
+						 this.Y.one("#"+this._validationField.id).removeClass("rn_ErrorField");
+						if(document.getElementById("rn_" + this.instanceID + "_LabelValidate")!=null)
+						 this.Y.one("#rn_" + this.instanceID + "_LabelValidate").removeClass("rn_ErrorLabel");
+					}
+
+					if (this.data.js.profile)
+						eo.data.profile = true;
+					if (this.data.js.customID) {
+						eo.data.custom = true;
+						eo.data.customID = this.data.js.customID;
+						eo.data.customType = this.data.js.type;
+					}
+					else {
+						eo.data.custom = false;
+					}
+					if (this.data.js.channelID) {
+						eo.data.channelID = this.data.js.channelID;
+					}
+					eo.w_id = this.data.info.w_id;
+					RightNow.Event.fire("evt_formFieldValidateResponse", eo);
+				}
+				else {
+					RightNow.UI.Form.formError = true;
+				}
+			
+		}
         else {
             RightNow.Event.fire("evt_formFieldValidateResponse", eo);
         }

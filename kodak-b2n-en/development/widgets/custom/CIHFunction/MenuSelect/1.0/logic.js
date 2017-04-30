@@ -191,6 +191,30 @@ Custom.Widgets.CIHFunction.MenuSelect = RightNow.SearchFilter.extend({
                 RightNow.UI.Form.formError = true;
             }
         }
+		else if(this._parentForm.indexOf("rn_ManageContacts") > -1 || this._parentForm.indexOf("rn_IBaseUpdate") > -1 || this._parentForm.indexOf("rn_RepairRequest") > -1){
+			
+				//Srini's Customization.
+				this._formErrorLocation = args[0].data.error_location; 
+
+				if (this._validateRequirement2(args)) {
+					if (this.data.js.profile)
+						eo.data.profile = true;
+					if (this.data.js.customID) {
+						eo.data.custom = true;
+						eo.data.customID = this.data.js.customID;
+						eo.data.customType = this.data.js.type;
+					}
+					else {
+						eo.data.custom = false;
+					}
+					eo.w_id = this.data.info.w_id;
+					RightNow.Event.fire("evt_formFieldValidationPass", eo);
+				}
+				else {
+					RightNow.UI.Form.formError = true;
+				}
+			
+		}
         else {
             RightNow.Event.fire("evt_formFieldValidationFailure", eo);
         }
@@ -201,6 +225,47 @@ Custom.Widgets.CIHFunction.MenuSelect = RightNow.SearchFilter.extend({
     * Validation routine to check if field is required, and if so, ensure it has a value
     * @return Boolean denoting if required check passed
     */
+	_validateRequirement2: function (args) {
+        if(args[0].data.hasOwnProperty('coming_form') && args[0].data.coming_form==this._parentForm){ 
+				input_field_val=document.getElementById('rn_'+this.instanceID+'_Options').value;
+				input_field_instance=document.getElementById('rn_'+this.instanceID+'_Options');  
+				
+				if((input_field_val=="" || input_field_val==null) && this.data.attrs.required==true && input_field_instance.disabled==false){
+						
+					  if (this.data.js.type === "Boolean") {
+							if ((this._inputField[0] && this._inputField[1]) && (!this._inputField[0].checked && !this._inputField[1].checked)) {
+								this._displayError(this.data.attrs.label_required);
+								RightNow.Event.fire("evt_formFieldValidationFailure", eo);
+								//Fire a custom Event, for manageContact, IRepairRequest and IBaseRequest
+								var eo = new RightNow.Event.EventObject();
+								eo.data.error_field=this.data.attrs.name;
+								RightNow.Event.fire("evt_formErrorExist", eo);
+								return false;
+							}
+						}
+						else if (this._inputField.type === "checkbox" && !this._inputField.checked) {
+							this._displayError(this.data.attrs.label_required);
+							RightNow.Event.fire("evt_formFieldValidationFailure", eo);
+							//Fire a custom Event, for manageContact, IRepairRequest and IBaseRequest
+							var eo = new RightNow.Event.EventObject();
+							eo.data.error_field=this.data.attrs.name;
+							RightNow.Event.fire("evt_formErrorExist", eo);
+							return false;
+						}
+						else if (this._inputField.value === "") {
+							this._displayError(this.data.attrs.label_required);
+							RightNow.Event.fire("evt_formFieldValidationFailure", eo);
+							//Fire a custom Event, for manageContact, IRepairRequest and IBaseRequest
+							var eo = new RightNow.Event.EventObject();
+							eo.data.error_field=this.data.attrs.name;
+							RightNow.Event.fire("evt_formErrorExist", eo);
+							return false;
+						}
+				}
+        }
+		
+		return true;
+    },
     _validateRequirement: function () {
         if (this.data.attrs.required && this._inputField.disabled == false) {
             if (this.data.js.type === "Boolean") {
@@ -253,11 +318,12 @@ Custom.Widgets.CIHFunction.MenuSelect = RightNow.SearchFilter.extend({
                     inputLabel = this.data.attrs.label_error || this.data.attrs.label_input,
                     label = (errorMessage.indexOf("%s") > -1) ? RightNow.Text.sprintf(errorMessage, inputLabel) : inputLabel + ' ' + errorMessage;
 
-                commonErrorDiv.innerHTML += "<div><b><a href='javascript:void(0);' onclick='document.getElementById(\"" +
+                commonErrorDiv.innerHTML += "<div><b><a href='javascript:void(0);' style='color:red' onclick='document.getElementById(\"" +
                     elementId + "\").focus(); return false;'>" + label + "</a></b></div> ";
             }
         }
         this.Y.one(this._inputField).addClass("rn_ErrorField");
+		if(document.getElementById("rn_"+ this.instanceID+"_Label")!=null)
         this.Y.one("#rn_"+this.instanceID+"_Label").addClass("rn_ErrorLabel");
     },
 

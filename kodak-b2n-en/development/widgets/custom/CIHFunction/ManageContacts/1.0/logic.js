@@ -27,6 +27,8 @@ Custom.Widgets.CIHFunction.ManageContacts = RightNow.Widgets.extend({
 
 
     this._emailAddress;
+	
+	this.error_field_exist=false;
 
 
 
@@ -106,6 +108,7 @@ if(this._disabledField!=null)
 
     RightNow.Event.subscribe('evt_selectedOrgToManage', this._setSelectedOrg, this);
 	RightNow.Event.subscribe('evt_manageContactSelectChanged', this._contactSelectChanged, this); //Added by Srini for dynamic contact detail change.
+	RightNow.Event.subscribe('evt_formErrorExist',this.evt_formErrorExist,this); 
 	
     this._loginRequiredLabel = document.getElementById("rn_" + this.instanceID + "_loginRequiredIndicator");
 
@@ -603,6 +606,17 @@ if(this._form !=null){
 
 
     */
+	
+	evt_formErrorExist:function(type,args){
+		
+		if(args[0].data.error_field){
+		  this.error_field_exist=args[0].data.error_field;
+		}
+		else{
+			this.error_field_exist=false;
+		}
+	 
+	},
 
 
     _overrideAjaxMethod: function () {
@@ -633,12 +647,20 @@ if(this._form !=null){
 		   
 		   if(eo[0].url=="/cc/contact_custom/contact_update_submit"){
 			   
-			   //lets fire the validation request.
 			   
-			   var eor = new RightNow.Event.EventObject();
-				eor.data.name = 'selectedOrg';
-				eor.data.error_location="rn_"+this.instanceID+"_ErrorLocation";		
-				RightNow.Event.fire("evt_formFieldValidateRequestTextInput", eor);
+			   //lets fire the validation request.
+			    this.error_field_exist=false;
+			    var eor = new RightNow.Event.EventObject();
+				 
+				eor.data.error_location="rn_"+this.instanceID+"_ErrorLocation";	
+				eor.data.coming_form="rn_"+this.instanceID+"_form";
+				RightNow.Event.fire("evt_formFieldValidateRequest", eor);
+				
+				//Stop the form to submit further.
+				if(this.error_field_exist){
+				  RightNow.Event.fire("evt_formValidateFailure", eor);
+				  return false;
+				}
 		
 			
                //RightNow.Event.fire("evt_setHiddenField", eo);
@@ -689,6 +711,17 @@ if(this._form !=null){
 
 
         }, this);
+		
+		
+		
+		RightNow.Event.subscribe('on_after_ajax_request', function (evt, eo) {
+			
+			 if(eo[0].url=="/cc/contact_custom/contact_update_submit"){
+				 alert("Hello");
+			 }
+			
+			
+		},this);
 
 
     },

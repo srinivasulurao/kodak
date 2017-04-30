@@ -14,6 +14,7 @@ Custom.Widgets.CIHFunction.IBaseUpdate = RightNow.Widgets.extend({
 		this._createContactContainer = document.getElementById("rn_" + this.instanceID + "_createContact");
 		this._createContactButton = document.getElementById("rn_" + this.instanceID + "_createContactButton");
 		this._ibaseUpdateType = document.getElementsByName("ek_ibase_updt_type")[this.data.attrs.widget_index];
+		this.error_field_exist=false;
 
 
 		this._equipmentRelocationForm = document.getElementById("form_EquipmenRelocationForm" + this.instanceID);
@@ -34,7 +35,7 @@ Custom.Widgets.CIHFunction.IBaseUpdate = RightNow.Widgets.extend({
 		RightNow.Event.subscribe('evt_populateIbaseUpdateData', this._populateIbaseUpdateData, this);
 		
 		RightNow.Event.subscribe('evt_ibaseContactSelectChanged', this._contactSelectChanged, this); //Added by Srini for dynamic contact detail change.
-
+		RightNow.Event.subscribe('evt_formErrorExist',this.evt_formErrorExist,this);
 		RightNow.Event.subscribe('evt_managePanel', this._onManagePanel, this);
 
 		if (this._form.isDisabled != true) {
@@ -751,7 +752,7 @@ Custom.Widgets.CIHFunction.IBaseUpdate = RightNow.Widgets.extend({
     _populateIbaseUpdateData: function (evt, args) { 
 	
 	
-	console.log(args);  
+	//console.log(args);  
 
         //var sds = args[0].data.sds;
 
@@ -874,6 +875,18 @@ Custom.Widgets.CIHFunction.IBaseUpdate = RightNow.Widgets.extend({
 			});
 
 		  },
+		  
+		  evt_formErrorExist:function(type,args){
+				
+				if(args[0].data.error_field){
+				  this.error_field_exist=args[0].data.error_field;
+				}
+				else{
+					this.error_field_exist=false;
+				}
+			 
+			},
+			
     _overrideAjaxMethod: function (str) {
 
 		RightNow.Event.subscribe('on_before_ajax_request', function (str, eo) {
@@ -891,6 +904,21 @@ Custom.Widgets.CIHFunction.IBaseUpdate = RightNow.Widgets.extend({
 		  	   
 		   //This will update/Create the whole Ibase Data
 		   if(eo[0].url=="/cc/incident_custom/incident_submit"){
+			   
+			   //lets fire the validation request.
+			    this.error_field_exist=false;
+			    var eor = new RightNow.Event.EventObject();
+ 
+				eor.data.error_location="rn_"+this.instanceID+"_ErrorLocation";	
+				eor.data.coming_form="rn_"+this.instanceID+"_form";
+				console.log("firing from ibase validation",eor);
+				RightNow.Event.fire("evt_formFieldValidateRequest", eor);
+				
+				//Stop the form to submit further.
+				if(this.error_field_exist){
+				  RightNow.Event.fire("evt_formValidateFailure", eor);
+				  return false;
+				}
 						
 			                //All Expected values here. 							
 							var fields=new Array('c_id','firstname','officephone','language1','optinglobal','country','rn_ListFailedOrgContacts','lastname','mobilephone','language2','optinincident','ek_phone_extension','emailaddress','faxnumber','language3','optincisurvey','role','disabled','login',"orig_submit_id","orig_submit_name","secondarycontact","ek_ibase_updt_type","products","removal_reason","effective_date","thread","ibase_country","entitlement_type","panel","sesslang","ek_type","ek_enabling_partner","ek_mvs_manfacturer","ek_service_dist","ek_service_reseller","ek_corporate","ek_k_number","ek_serial_number","ek_equip_component_id","ek_sap_product_id","ek_sap_soldto_custid","equipment_location","storenumber","zipcode","state","city","street","ibase_address","sitecustomername","ibase_phone","ibase_lastname","ibase_firstname","product_identifier");
