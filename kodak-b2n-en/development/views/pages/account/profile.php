@@ -1,4 +1,4 @@
-<rn:meta title="#rn:msg:ACCOUNT_SETTINGS_LBL#" template="kodak_b2b_template.php" login_required="true" />
+<rn:meta title="#rn:msg:ACCOUNT_SETTINGS_LBL#" template="newkodak_b2b_template.php" login_required="true" />
 
 <div id="rn_PageTitle" class="rn_Account">
     <h1>#rn:msg:ACCOUNT_SETTINGS_LBL#</h1>

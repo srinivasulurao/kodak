@@ -49,4 +49,26 @@
 	display:none !important;
 }
 
+.rn_Accordion_content{
+	padding:0px !important;
+}
+
+.rn_Grid .yui3-datatable-table th, .rn_Grid .yui3-datatable-table td{
+	padding:5px 0 !important;
+}
+
+.rn_Grid .yui3-datatable-table{
+	border:0px !important;
+}
+.rn_Grid .yui3-datatable-sort-liner{
+	padding:3px !important;
+}
+
+.rn_Grid .yui3-datatable-table tr th:nth-child(1), .rn_Grid .yui3-datatable-table tr td:nth-child(1){
+	border-left:0px !important;
+}
+
+.rn_Grid .yui3-datatable-odd .yui3-datatable-cell,.rn_Grid .yui3-datatable-even .yui3-datatable-cell{
+	padding-left:5px !important;
+}
 </style>

@@ -464,15 +464,12 @@ Custom.Widgets.CIHFunction.RepairRequest = RightNow.Widgets.extend({
 		
 		//Srini's Customization.
 		eor = new RightNow.Event.EventObject();
-
-
         eor.data.name = 'prod';
-
-
         eor.data.value = args[0].data.ibase_product_hier;
-
-
+		console.log(args[0].data.ibase_product_hier);
+		RightNow.Event.fire("evt_populateProductCategoryLinking",eor);
         RightNow.Event.fire("evt_setHiddenField", eor);
+		
        //
 
 
@@ -1080,7 +1077,7 @@ Custom.Widgets.CIHFunction.RepairRequest = RightNow.Widgets.extend({
 			   		
 			                 //All Expected values here. 							
 							//var fields=new Array('c_id','firstname','officephone','language1','optinglobal','country','rn_ListFailedOrgContacts','lastname','mobilephone','language2','optinincident','ek_phone_extension','emailaddress','faxnumber','language3','optincisurvey','role','disabled','login',"orig_submit_id","orig_submit_name","secondarycontact","ek_ibase_updt_type","products","removal_reason","effective_date","thread","ibase_country","entitlement_type","panel","sesslang","ek_type","ek_enabling_partner","ek_mvs_manfacturer","ek_service_dist","ek_service_reseller","ek_corporate","ek_k_number","ek_serial_number","ek_equip_component_id","ek_sap_product_id","ek_sap_soldto_custid","equipment_location","storenumber","zipcode","state","city","street","ibase_address","sitecustomername","ibase_phone","ibase_lastname","ibase_firstname","product_identifier");
-							var fields=new Array('c_id','firstname','lastname','emailaddress','officephone','mobilephone','faxnumber','language1','language2','language3','optinglobal','optinincident','optincisurvey','country','ek_phone_extension','orig_submit_id','orig_submit_name','secondarycontact','disabled','ek_ext_ref_no','categories','prod','ek_severity','ek_repeatability','ek_error_code','ek_remote_access_perm','thread','ek_enabling_partner','ek_mvs_manfacturer','ek_service_dist','ek_service_reseller','ek_corporate','ek_type','ek_sds','ek_k_number','ek_serial_number','ek_service_profile','ek_equip_component_id','ek_sap_product_id','ek_sap_soldto_custid','ek_customer_sapid','ek_remote_eos','ek_onsite_eos','panel','sesslang');
+							var fields=new Array('c_id','firstname','lastname','emailaddress','officephone','mobilephone','faxnumber','language1','language2','language3','optinglobal','optinincident','optincisurvey','country','ek_phone_extension','orig_submit_id','orig_submit_name','secondarycontact','disabled','ek_ext_ref_no','categories','prod','cat','ek_severity','ek_repeatability','ek_error_code','ek_remote_access_perm','thread','ek_enabling_partner','ek_mvs_manfacturer','ek_service_dist','ek_service_reseller','ek_corporate','ek_type','ek_sds','ek_k_number','ek_serial_number','ek_service_profile','ek_equip_component_id','ek_sap_product_id','ek_sap_soldto_custid','ek_customer_sapid','ek_remote_eos','ek_onsite_eos','panel','sesslang');
 							var ground=(this.data.attrs.panel_name=="accordionRepairRequest2")?"#panelRepairRequest2":"#panelRepairRequest";
 							var data=new Array();
 							k=0;
@@ -1102,7 +1099,7 @@ Custom.Widgets.CIHFunction.RepairRequest = RightNow.Widgets.extend({
 											}
 											else{ //For other input type.
 											val=document.querySelectorAll(ground+' [name="'+fields[i]+'"]')[j].value;
-											    if(fields[i]=="prod")
+											    if(fields[i]=="prod" || fields[i]=="cat")
 													val=val.split(","); //Should go as an array.
                                             }
 											data[k]={"name":fields[i],"value":val};

@@ -15,8 +15,8 @@ class custom_contact_model extends \RightNow\Models\Base {
 
     function getOrgContacts($orgID=null,$deactivated){
         $status = $deactivated == 'true' ? 1:0;		 
-		   $query="SELECT Contact FROM Contact ORDER By Contact.ID ASC"; 		   
-           //$query="SELECT Contact FROM Contact WHERE Contact.Organization.ID='$orgID' ";
+		   //$query="SELECT Contact FROM Contact ORDER By Contact.ID ASC"; 		   
+           $query="SELECT Contact FROM Contact WHERE Contact.Organization.ID='$orgID' ";
            $contacts=RNCPHP\ROQL::queryObject($query)->next();
           
 
@@ -718,11 +718,10 @@ class custom_contact_model extends \RightNow\Models\Base {
         }
 
         function checkInternalContact($contact_id){
-        	
         	$contact=RNCPHP\Contact::fetch($contact_id);
+			
         	$internal_val=$contact->CustomFields->internal_user;
         	$internal=($internal_val==1)?"Y":"N";
-        	
         	return $internal;
         }
      

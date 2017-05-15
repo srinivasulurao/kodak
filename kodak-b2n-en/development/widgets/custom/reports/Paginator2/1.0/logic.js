@@ -34,7 +34,7 @@ Custom.Widgets.reports.Paginator2 = RightNow.Widgets.Paginator.extend({
 				}
 				
 			} 
-			
+			document.getElementsByClassName('rn_NoResults')[0].classList.add("rn_Hidden");
 			this._eo.filters.page=1;
 			this._eo.filters.per_page=parseInt(this.data.attrs.per_page)+this.loss_calc;
 			this._eo.filters.report_id=this.data.attrs.report_id;
@@ -54,7 +54,7 @@ Custom.Widgets.reports.Paginator2 = RightNow.Widgets.Paginator.extend({
 			
             /* if(this._currentlyChangingPage || !pageNumber || pageNumber === this._currentPage)
                 return; */
-
+            document.getElementsByClassName('rn_NoResults')[0].classList.add("rn_Hidden");
 			
             this._currentlyChangingPage = true;
             pageNumber = (pageNumber < 1) ? 1 : pageNumber;
@@ -70,7 +70,7 @@ Custom.Widgets.reports.Paginator2 = RightNow.Widgets.Paginator.extend({
             var newData = args[0];
             newData = newData.data;
 			
-			console.log(newData);
+			//console.log(newData);
 
         // My Customization.
 

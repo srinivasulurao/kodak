@@ -1,4 +1,4 @@
-<rn:meta title="#rn:msg:PROFILE_UPD_SUCCEED_HDG#" template="kodak_b2b_template.php" login_required="true"/>
+<rn:meta title="#rn:msg:PROFILE_UPD_SUCCEED_HDG#" template="newkodak_b2b_template.php" login_required="true"/>
 
 <div id="rn_PageTitle">
     <h1>#rn:msg:THANK_YOU_LBL#</h1>

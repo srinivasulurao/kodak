@@ -1,9 +1,14 @@
 RightNow.namespace('Custom.Widgets.CIHFunction.CustomTextInput');
-Custom.Widgets.CIHFunction.CustomTextInput = RightNow.Widgets.extend({ 
+var current_url=window.location.href;
+widgetObj=(current_url.indexOf('service_request_activity') > -1)?RightNow.SearchFilter:RightNow.Widgets;
+Custom.Widgets.CIHFunction.CustomTextInput = widgetObj.extend({ 
     /**
      * Widget constructor.
      */
+	overrides:
+	{
     constructor: function(data, instanceID) {
+		this.parent();
         this.data=data;
         this.instanceID= instanceID;
         this._formErrorLocation = null;
@@ -15,23 +20,25 @@ Custom.Widgets.CIHFunction.CustomTextInput = RightNow.Widgets.extend({
 		this._inputField = document.getElementById(this._fieldName);
 		this._previousValue = ""; 
 		
-
+    
     RightNow.Event.subscribe('evt_fieldVisibilityChanged', this._visibilityChanged, this);
     RightNow.Event.subscribe('evt_resetForm', this.onResetForm, this);
-    //this.searchSource().on('search', this._onValidate, this);
-	RightNow.Event.subscribe('evt_formFieldValidateRequest', this._onValidate, this);
+	
+	//Added by Srini, it will fire the event based on the url condition.
+//	var current_url=window.location.href;
+	
+if(current_url.indexOf('service_request_activity') > -1)
+      this.searchSource().on('search', this._onValidate, this);
+ else
+      RightNow.Event.subscribe('evt_formFieldValidateRequest', this._onValidate, this);
+  
     RightNow.Event.subscribe('evt_toggleRequired', this._toggleRequired, this);
-	
-	/* var form = RightNow.Form.find(this.baseDomID, this.instanceID);
-	      form.on("submit", this.onValidate, this); */
-		  
-	
-		if (this._inputField.disabled != true) {
+	if (this._inputField.disabled != true) {
 			this._enableEvents();
 		}
 		
 		this.Y.one(this._inputField).on("change",this._onChange,this);
-	
+	}
     },
 
     /**
@@ -47,8 +54,8 @@ Custom.Widgets.CIHFunction.CustomTextInput = RightNow.Widgets.extend({
         RightNow.Event.subscribe('evt_setTextField', this.onSetTextField, this);
         
         if (this.data.attrs.is_search_filter == true) {
-            RightNow.Event.subscribe("evt_getFiltersRequest", this._onGetFiltersRequest, this);
-//            this.searchSource().on("search",this._onGetFiltersRequest,this);
+//            RightNow.Event.subscribe("evt_getFiltersRequest", this._onGetFiltersRequest, this);
+            this.searchSource().on("search",this._onGetFiltersRequest,this);
             this._setFilter();
         }
         
@@ -61,8 +68,8 @@ Custom.Widgets.CIHFunction.CustomTextInput = RightNow.Widgets.extend({
         //RightNow.Event.unsubscribe('evt_resetForm', this.onResetForm);
 
         if (this.data.attrs.is_search_filter == true) {
-            RightNow.Event.unsubscribe("evt_getFiltersRequest", this._onGetFiltersRequest);
-//            this.searchSource().initialFilters={};
+//            RightNow.Event.unsubscribe("evt_getFiltersRequest", this._onGetFiltersRequest);
+            this.searchSource().initialFilters={};
         }
 
         //RightNow.Event.unsubscribe('evt_fieldVisibilityChanged', this._visibilityChanged, this);
@@ -236,13 +243,7 @@ Custom.Widgets.CIHFunction.CustomTextInput = RightNow.Widgets.extend({
     */
 
     _onValidate: function (type, args) {
-		//console.log(this.data.attrs);
-        //console.log("Custom text input _onValidate");
-		
-		
-		//remove the rn_Hidden on the error location, that is causing problem for us.
-		document.getElementById(args[0].data.error_location).classList.remove("rn_Hidden");
-		
+	
         this._validated = true;
         this._parentForm = this._parentForm || RightNow.UI.findParentForm("rn_" + this.instanceID);
         var eo = new RightNow.Event.EventObject();
@@ -317,7 +318,7 @@ Custom.Widgets.CIHFunction.CustomTextInput = RightNow.Widgets.extend({
 					}
 					eo.w_id = this.data.info.w_id;
 					RightNow.Event.fire("evt_formFieldValidationPass", eo);
-				
+					return eo;
 				}
 				else {
 					RightNow.UI.Form.formError = true; 
@@ -330,7 +331,8 @@ Custom.Widgets.CIHFunction.CustomTextInput = RightNow.Widgets.extend({
 				return false;
         }
         this._validated = false;
-        RightNow.Event.fire("evt_formFieldValidationPass");
+        RightNow.Event.fire("evt_formFieldValidationFailure", eo);
+		return false;
     },
 
     _blurValidate: function () {
@@ -378,10 +380,12 @@ Custom.Widgets.CIHFunction.CustomTextInput = RightNow.Widgets.extend({
         this._setFilter();
         
         if ((this._getValue() != "" ) || (this._getValue() == "" && this._previousValue != this._getValue())) {
-            RightNow.Event.fire("evt_searchFiltersResponse", this._eo);
+//            RightNow.Event.fire("evt_searchFiltersResponse", this._eo);
+			return this._eo;
         }
         else {
-            RightNow.Event.fire("evt_searchFiltersResponse", this._eo);
+//            RightNow.Event.fire("evt_searchFiltersResponse", this._eo);
+			return this._eo;
         
         }
         this._previousValue = this._getValue();

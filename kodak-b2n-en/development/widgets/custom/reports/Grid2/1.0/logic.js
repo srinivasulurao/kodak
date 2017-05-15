@@ -20,8 +20,10 @@ Custom.Widgets.reports.Grid2 = RightNow.ResultsDisplay.extend({
             this._data = [];
             this._sortOn = null;
             
-        RightNow.Event.subscribe("evt_getFiltersRequest", this._onGetFiltersRequest, this);
-        RightNow.Event.subscribe("evt_searchInProgressResponse", this._searchInProgress, this);
+//        RightNow.Event.subscribe("evt_getFiltersRequest", this._onGetFiltersRequest, this);
+//        RightNow.Event.subscribe("evt_searchInProgressResponse", this._searchInProgress, this);
+		this.searchSource().on("search",this._searchInProgress,this);
+		this.searchSource().on("search",this._onGetFiltersRequest,this);
         this.searchSource().on('response', this._onReportChanged, this);
         RightNow.Event.subscribe('evt_sortTypeResponse', this._onSortTypeResponse, this);
         this._setFilter();
@@ -338,7 +340,7 @@ Custom.Widgets.reports.Grid2 = RightNow.ResultsDisplay.extend({
     },
     _onGetFiltersRequest: function(type, args)
     {
-         RightNow.Event.fire("evt_searchFiltersResponse", this._sortEo);
+         return this._sortEo;
     },
 
     /**

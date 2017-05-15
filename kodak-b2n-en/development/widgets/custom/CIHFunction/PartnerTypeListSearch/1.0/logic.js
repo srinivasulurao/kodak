@@ -19,7 +19,8 @@ Custom.Widgets.CIHFunction.PartnerTypeListSearch = RightNow.SearchFilter.extend(
         this.Y.one(this._inputField).on("change",this._onSelectChange,this);
         //RightNow.Event.subscribe('evt_formFieldValidateRequest', this.onValidate, this);
         this.searchSource().on("search",this.onValidate,this);
-        this.searchSource().on("search",this._onGetFiltersRequest,this);                  
+        this.searchSource().on("search",this._onGetFiltersRequest,this); 
+//		this._selectBox.on("change",this._onGetFiltersRequest,this);
         this._setSelectedDropdownItem(this.data.js.defaultFilter);
         this._eo.data.initial_search = true;
         this._onSelectChange();
@@ -130,12 +131,14 @@ Custom.Widgets.CIHFunction.PartnerTypeListSearch = RightNow.SearchFilter.extend(
 
             this._eo.w_id = this.data.info.w_id;
             RightNow.Event.fire("evt_formFieldValidationPass", this._eo);
+			return this._eo;
         }
         else {
             RightNow.UI.Form.formError = true;
         }
 
-        RightNow.Event.fire("evt_formFieldValidationPass" , this._eo);
+        RightNow.Event.fire("evt_formFieldValidationFailure" , this._eo);
+		return false;
     },
 
     _validateRequirement: function () {

@@ -21,8 +21,8 @@ Custom.Widgets.CIHFunction.ServiceRequestActivity = RightNow.SearchFilter.extend
             this._searchRequest();
         
         RightNow.Event.subscribe("evt_partnerTypeSearchChanged", this._partnerTypeChanged, this);
-        RightNow.Event.subscribe("evt_searchRequest", this. _searchRequest, this);
-//        this.searchSource().on("search",this._searchRequest,this);
+//        RightNow.Event.subscribe("evt_searchRequest", this. _searchRequest, this);
+        this.searchSource().on("search",this._searchRequest,this);
 //        this.searchSource().on("search", this._searchRequest,this);
         this.Y.one(this._advanceSearchPanelTrigger).on("click", this._toggleAdvanceSearchPanel, this);
         this._checkAdvSearchCookie();

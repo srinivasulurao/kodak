@@ -52,7 +52,7 @@
 					<a id="rn_<?=$this->instanceID;?>_advSearchPanelTrigger" style="cursor:pointer"><? echo $cih_lang_msg_base_array['sra_showhideadv']; ?></a>
 				</td>
 				<td valign="bottom" align="right" width="850px" style="margin-right:200px;">
-					<rn:widget path="custom/CIHSearch/SearchButton2" label="Search" report_id="#rn:php:$cih_lang_msg_base_array['sra_repideksupporthistory']#" />
+					<rn:widget path="standard/search/SearchButton" label="Search" report_id="#rn:php:$cih_lang_msg_base_array['sra_repideksupporthistory']#" />
 				</td>				
 			</tr>
 			<tr>
@@ -72,7 +72,7 @@
   <div id="rn_<?=$this->instanceID;?>_containerServiceRequests" class="rn_FormPanel">
     <div id="panelServiceRequests" class="rn_Accordion_content" style="pading:10px;">
 		<div id="searchResultsContainer" class="rn_Hidden">
-		<rn:widget path="custom/reports/Grid2" report_id="#rn:php:$cih_lang_msg_base_array['sra_repideksupporthistory']#" date_format="date_time"/>
+		<rn:widget path="standard/reports/Grid" report_id="#rn:php:$cih_lang_msg_base_array['sra_repideksupporthistory']#" date_format="date_time"/>
 		<rn:widget path="standard/reports/Paginator" report_id="#rn:php:$cih_lang_msg_base_array['sra_repideksupporthistory']#" label_forward="#rn:php:$cih_lang_msg_base_array['next']#" label_back="#rn:php:$cih_lang_msg_base_array['previous']#" />  
 		</div>
 	</div>

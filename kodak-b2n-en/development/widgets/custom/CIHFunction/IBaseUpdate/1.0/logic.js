@@ -911,7 +911,7 @@ Custom.Widgets.CIHFunction.IBaseUpdate = RightNow.Widgets.extend({
  
 				eor.data.error_location="rn_"+this.instanceID+"_ErrorLocation";	
 				eor.data.coming_form="rn_"+this.instanceID+"_form";
-				console.log("firing from ibase validation",eor);
+				//console.log("firing from ibase validation",eor);
 				RightNow.Event.fire("evt_formFieldValidateRequest", eor);
 				
 				//Stop the form to submit further.

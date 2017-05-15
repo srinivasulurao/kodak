@@ -3,8 +3,10 @@ Custom.Widgets.CIHFunction.DateInputCalendar = RightNow.SearchFilter.extend({
     /**
      * Widget constructor.
      */
-    
+    overrides:
+	{
     constructor: function(data, instanceID) {
+		this.parent();
         this.data = data;
         this.instanceID = instanceID;
         this._over_cal = false;
@@ -16,8 +18,9 @@ Custom.Widgets.CIHFunction.DateInputCalendar = RightNow.SearchFilter.extend({
         this._createCalendar();
 		this._setFilter();
         //RightNow.Event.subscribe("evt_getFiltersRequest", this._onGetFiltersRequest, this);
-//        this.searchSource().on("search",this._onGetFiltersRequest,this);
+        this.searchSource().on("search",this._onGetFiltersRequest,this);
 		//this.searchSource
+	}
     },
                     
             
@@ -112,6 +115,6 @@ _stringToDate: function (mon, dd, yyyy, hh, mm) {
         },
     _onGetFiltersRequest: function (type,args) {
         this._setFilter();
-        RightNow.Event.fire("evt_formFieldValidationPass", this._eo);
+        return this._eo;
     }
 });

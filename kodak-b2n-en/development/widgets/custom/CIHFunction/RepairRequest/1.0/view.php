@@ -457,9 +457,10 @@
                                                                         <rn:widget path="custom/CIHFunction/ProdCatSelection" required_lvl="4" data_type="products" table="incidents" vis="display:none;" />
                                                                         -->
 																		
-																	   <rn:widget path="input/ProductCategoryInput" name="Incident.Product" linking_off='false' label_nothing_selected="" label_all_values='No Value' />
+																	   <rn:widget path="custom/CIHFunction/ProblemFound" name="Incident.Category" required_lvl="3" data_type="categories" table="incidents" linking_off='false' label_nothing_selected="" label_all_values='No Value' /> 
 																		
-																		<rn:widget path="custom/CIHFunction/HiddenInput" name="prod" hide="true" />
+																	   <rn:widget path="custom/CIHFunction/HiddenInput" name="prod" hide="true" />
+                                                                       <rn:widget path="custom/CIHFunction/HiddenInput" name="cat" hide="true" />
 
                                 <td nowrap="nowrap" valign="top">
 
@@ -627,7 +628,6 @@
 
 
         </div>    
-
 
 
 

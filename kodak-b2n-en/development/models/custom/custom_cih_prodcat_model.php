@@ -1,5 +1,8 @@
 <?php /* Originating Release: February 2012 */
-namespace Custom\Models;class Custom_CIH_Prodcat_model extends \RightNow\Models\Base {
+namespace Custom\Models;use RightNow\Connect\v1 as RNCPHP;
+require_once( get_cfg_var("doc_root")."/include/ConnectPHP/Connect_init.phph" );
+initConnectAPI();
+class Custom_CIH_Prodcat_model extends \RightNow\Models\Base {
     private static $arrayOfProductHierLevels;
 
     function __construct() {
@@ -133,6 +136,30 @@ namespace Custom\Models;class Custom_CIH_Prodcat_model extends \RightNow\Model
         }
         return $topLevel;
     }
+	
+	function getProductCategoryLinking($linked_product_id){
+		$product_ids=explode(",",$linked_product_id);
+		$product_id_size=sizeof($product_ids)-1;
+		$product_id=$product_ids[$product_id_size];
+		
+		$categories_list=RNCPHP\ROQL::query("SELECT CategoryLinks.ServiceCategoryList.ServiceCategory.* FROM ServiceProduct WHERE ServiceProduct.ID='$product_id'")->next(); 
+		
+		$categories_show=array();
+		while($res=$categories_list->next()){
+			if($res['ID'])
+			  $categories_show[]=$res['ID'];
+		    if($res['Parent'])
+			  $categories_show[]=$res['Parent'];
+		}
+		$categories_show=array_unique($categories_show); 
+		
+		//No missing keys, otherwise it may create problem for json.
+		$categories_list_show=array();
+		foreach($categories_show as $key=>$value):
+		  $categories_list_show[]=$value;
+		endforeach;
+		return $categories_list_show;
+	}
 
     /**
      * This function gets values out of the hier_menus table for all the children

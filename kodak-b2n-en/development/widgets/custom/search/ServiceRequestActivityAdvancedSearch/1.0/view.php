@@ -66,8 +66,7 @@
 			<td nowrap="nowrap" valign="top" colspan="2">
 				<span><? echo $cih_lang_msg_base_array['sra_sitecustid']; ?></span><br/>
 				<rn:widget path="custom/CIHFunction/CustomTextInput" name="ek_customer_sapid" is_search_filter="true" search_filter_id="19" label_required="#rn:php:$cih_lang_msg_base_array['sra_custidisrequired']#" required="true" search_operator_id="1" search_report_id="#rn:php:$this->data['attrs']['report_id']#" />
-				<rn:widget path="custom/CIHFunction/CustomTextInput" name="ek_customer_sapid" is_search_filter="true" search_filter_id="19" label_required="#rn:php:$cih_lang_msg_base_array['sra_custidisrequired']#" required="true" search_operator_id="1" search_report_id="#rn:php:$this->data['attrs']['report_id']#" />
-
+				
                         </td>
 <? endif; ?>
 			<td>

@@ -167,7 +167,7 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
 
     }
 
-    this.Y.one("#rn_" + this.instanceID + "_CustSubmit").on("click", this._onCustSearch,this);
+    //this.Y.one("#rn_" + this.instanceID + "_CustSubmit").on("click", this._onCustSearch,this);
 
     //var mySearchTabView = new YAHOO.widget.TabView("tvsearchcontainer");
 
@@ -963,6 +963,9 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
 
 
     _myAjaxIbaseResponse: function (searchArgs) {
+		
+		this._waitPanel('hide');
+		this._waitPanel('show');
 
         var actionRRLink = this._getActionLinks("RepairRequest");
 
@@ -1144,6 +1147,8 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
 		   this.Y.all("#panelProducts2 .yui3-datatable-data #lnkIbaseUpdate").on("click",this._selectIBase,this,product_table);
 		   this.Y.all("#panelProducts2 .yui3-datatable-data #lnkRepairRequest").on("click",this._selectIRepair,this,product_table); 
 		}
+		
+		this._waitPanel('hide');
     },
 	
 	
@@ -2205,7 +2210,6 @@ var data = [
 							output = htmlProdLnk + actionRRLink + "</br>" + actionIULink;
 
 						else
-							
 							output = htmlProdLnk + actionIULink;
 							
 							
@@ -3970,7 +3974,7 @@ var data = [
 
                 var resp = RightNow.JSON.parse(responseText);
 
-                if (resp.status == 1 || 1)
+                if (resp.status == 1)
  
                     this._myAjaxIbaseResponse(resp);
 

@@ -1,4 +1,4 @@
-<rn:meta title="#rn:msg:NOTIFICATIONS_HDG#" template="kodak_b2b_template.php" login_required="true"/>
+<rn:meta title="#rn:msg:NOTIFICATIONS_HDG#" template="newkodak_b2b_template.php" login_required="true"/>
 <div id="rn_PageTitle" class="rn_Account">
     <h1>#rn:msg:NOTIFICATIONS_HDG#</h1>
 </div>

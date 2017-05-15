@@ -1442,7 +1442,7 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
 
                 {key:"repair",label:this.data.js.pid_action, minWidth:140, allowHTML:true, sortable:false, formatter:function(oRecord){
 					
-					actionRRLink="";
+					actionRRLink="<a id=\"lnkRepairRequest\" class=\"actionlink\" row_id="+product_counter+"' >Repair Request</a>";
 					actionIULink="";
 					
 					if((this.allowRepairRequest && type == "RepairRequest"))
@@ -1468,7 +1468,7 @@ Custom.Widgets.CIHSearch.SimpleProductSearch = RightNow.Widgets.extend({
 
 					   else
                            
-						   output = htmlProdLnk + actionIULink;
+						   output = htmlProdLnk + actionRRLink + "</br>" + actionIULink;
 						   
 						   product_counter++;
 						   return output;

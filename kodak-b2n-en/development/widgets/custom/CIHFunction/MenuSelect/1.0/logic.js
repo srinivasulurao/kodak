@@ -1,5 +1,7 @@
 RightNow.namespace('Custom.Widgets.CIHFunction.MenuSelect');
-Custom.Widgets.CIHFunction.MenuSelect = RightNow.SearchFilter.extend({ 
+var current_url=window.location.href;
+widgetObj=(current_url.indexOf('service_request_activity') > -1)?RightNow.SearchFilter:RightNow.Widgets;
+Custom.Widgets.CIHFunction.MenuSelect = widgetObj.extend({ 
    overrides:
     {
     constructor: function(data, instanceID) {
@@ -24,8 +26,14 @@ Custom.Widgets.CIHFunction.MenuSelect = RightNow.SearchFilter.extend({
 		}
 
     RightNow.Event.subscribe('evt_resetForm', this.onResetForm, this);
-    RightNow.Event.subscribe('evt_formFieldValidateRequest', this._onValidate, this);
-    //this.searchSource().on("search",this._onValidate,this);
+	
+    //Added by Srini, it will fire the event based on the url condition.
+	var current_url=window.location.href;
+	if(current_url.indexOf('service_request_activity') > -1)
+      this.searchSource().on('search', this._onValidate, this);
+    else
+	  RightNow.Event.subscribe('evt_formFieldValidateRequest', this._onValidate, this);
+  
     RightNow.Event.subscribe('evt_fieldVisibilityChanged', this._visibilityChanged, this);
     RightNow.Event.subscribe('evt_toggleRequired', this._toggleRequired, this);
 
@@ -186,6 +194,7 @@ Custom.Widgets.CIHFunction.MenuSelect = RightNow.SearchFilter.extend({
                 }
                 eo.w_id = this.data.info.w_id;
                 RightNow.Event.fire("evt_formFieldValidationPass", eo);
+				return eo;
             }
             else {
                 RightNow.UI.Form.formError = true;
@@ -209,6 +218,7 @@ Custom.Widgets.CIHFunction.MenuSelect = RightNow.SearchFilter.extend({
 					}
 					eo.w_id = this.data.info.w_id;
 					RightNow.Event.fire("evt_formFieldValidationPass", eo);
+					return eo;
 				}
 				else {
 					RightNow.UI.Form.formError = true;
@@ -217,8 +227,10 @@ Custom.Widgets.CIHFunction.MenuSelect = RightNow.SearchFilter.extend({
 		}
         else {
             RightNow.Event.fire("evt_formFieldValidationFailure", eo);
+			return false;
         }
-        RightNow.Event.fire("evt_formFieldValidationPass", eo);
+        RightNow.Event.fire("evt_formFieldValidationFailure", eo);
+		return false;
     },
 
     /**

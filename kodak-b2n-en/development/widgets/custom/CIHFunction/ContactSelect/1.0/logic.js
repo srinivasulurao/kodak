@@ -172,7 +172,9 @@ Custom.Widgets.CIHFunction.ContactSelect = RightNow.Widgets.extend({
 		
         if(this._optionsSelect!=null){
 			
-			var selectedValue = this._optionsSelect.options[this._optionsSelect.selectedIndex].value;
+			
+			
+			var selectedValue = (this._optionsSelect.selectedIndex > 0)?this._optionsSelect.options[this._optionsSelect.selectedIndex].value:0;
 			
 			this._setSelected();
 			

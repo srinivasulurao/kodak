@@ -2,7 +2,7 @@
 <?
 switch(getUrlParm('error_id'))
 {
-    case 1:
+    case 1: 
         $errorTitle = getMessage(NOT_AVAIL_LBL);
         $errorMessage = getMessage(ANSWER_IS_NO_LONGER_AVAILABLE_MSG);
         break;

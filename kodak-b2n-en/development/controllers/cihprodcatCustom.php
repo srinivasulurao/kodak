@@ -17,6 +17,12 @@ class cihprodcatCustom extends \RightNow\Controllers\Base {
         //Perform logic on post data here
         echo $returnedInformation;
     }
+	
+	function getFiredProductCategoryLinks(){
+		$product_id=$this->input->post('fired_products');
+	    $results=$this->model('custom/custom_cih_prodcat_model')->getProductCategoryLinking($product_id);
+		echo json_encode($results);
+	}
 
     function getHierValues() {
         $filter = $this->input->request('filter');

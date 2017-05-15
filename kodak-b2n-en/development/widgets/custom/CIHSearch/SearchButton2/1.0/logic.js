@@ -15,27 +15,29 @@ Custom.Widgets.CIHSearch.SearchButton2 = RightNow.ResultsDisplay.extend({
         this._enableClickListener();
 //        this.on('response', this._onSearchResponse, this);
         this.searchSource().on('response', this._onSearchResponse, this);
-        //RightNow.Event.subscribe("evt_formValidatedResponse", this._onFormValidated, this);
+        RightNow.Event.subscribe("evt_formValidatedResponse", this._onFormValidated, this);
         RightNow.Event.subscribe("evt_autoSearch", this._startSearch, this);
     }
     },
      _startSearch: function (evt) {
 
         this._eo.w_id = this.instanceID;
+		 
+       var searchPage = this.data.attrs.report_page_url;
         this._eo.data = { form : this._parentForm, 
                          error_location: "", 
                          f_tok: "" };
-       var searchPage = this.data.attrs.report_page_url;
-        this.searchSource().fire("search", new RightNow.Event.EventObject(this, {filters: {
+		this._eo.filters= {
             report_id: this.data.attrs.report_id,
             source_id: this.data.attrs.source_id,
             reportPage: searchPage,
-            newPage: this.data.attrs.force_page_flip || top !== self || (searchPage !== "" && searchPage !== "{current_page}" && !RightNow.Url.isSameUrl(searchPage)),
             target: this.data.attrs.target,
             popupWindow: this.data.attrs.popup_window,
             width: this.data.attrs.popup_window_width_percent,
             height: this.data.attrs.popup_window_height_percent
-        }}));
+        };
+        this.searchSource().fire("search", this._eo);
+		 RightNow.Event.fire("evt_formValidatedResponse",this._eo);
     },
 
     _onFormValidated: function () {

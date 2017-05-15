@@ -7,19 +7,10 @@ Custom.Widgets.search.ServiceRequestActivityAdvancedSearch = RightNow.Widgets.ex
         this.data= data;
         this.instanceID= instanceID;
         this._eo = new RightNow.Event.EventObject();
-        this._ref_no = document.getElementsByName("ek_ibase_updt_type")[0];
-        var RightNowEvent = RightNow.Event;
+        this._ref_no = document.getElementsByName("ek_ibase_updt_type")[0];;
         this._setFilter();
         this._eo.data = this._getValue();
     },
- _setFilters: function(){
-        
-    },
-
-    /**
-    * sets the initial event object data
-    *
-    */
     _setFilter: function () {
         this._eo.w_id = this.instanceID;
         this._eo.filters = { "searchName": this.data.js.searchName,
@@ -47,7 +38,8 @@ Custom.Widgets.search.ServiceRequestActivityAdvancedSearch = RightNow.Widgets.ex
     * @param args object Arguments passed with event
     */
     _onGetFiltersRequest: function (type, args) {
-         RightNow.Event.fire("evt_searchFiltersResponse", this._eo);
+         
+		return this._eo;
 
     }
 });

@@ -17,11 +17,17 @@ Custom.Widgets.search.SearchButton2OnChange = RightNow.Widgets.SearchButton.exte
         }, 
 		_startSearch: function(evt) {
 			 
-			 if(document.getElementsByClassName('rn_CurrentPage')[0].innerText==1){
-			   document.getElementsByClassName('rn_CurrentPage')[0].click();
+			 document.getElementsByClassName('rn_NoResults')[0].classList.add("rn_Hidden");
+			 if(document.getElementsByClassName('rn_CurrentPage').length){
+				 if(document.getElementsByClassName('rn_CurrentPage')[0].innerText==1){
+				   document.getElementsByClassName('rn_CurrentPage')[0].click();
+				 }
+				 else{
+					 document.querySelectorAll(".rn_PaginationLinks li:nth-child(2) a")[0].click();
+				 }
 			 }
-		     else{
-				 document.querySelectorAll(".rn_PaginationLinks li:nth-child(2) a")[0].click();
+			 else{
+				 this.parent(evt);
 			 }
         
     },

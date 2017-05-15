@@ -1,5 +1,5 @@
 RightNow.namespace('Custom.Widgets.search.OrgList2');
-Custom.Widgets.search.OrgList2 = RightNow.ResultsDisplay.extend({ 
+Custom.Widgets.search.OrgList2 = RightNow.SearchFilter.extend({ 
     /**
      * Widget constructor.
      */
@@ -12,7 +12,7 @@ Custom.Widgets.search.OrgList2 = RightNow.ResultsDisplay.extend({
         this._eo = new RightNow.Event.EventObject();
         this._fieldName = "rn_" + this.instanceID + "_Options";
         this._optionsSelect = document.getElementById(this._fieldName);
-
+		this._selectBox=this.Y.one(this.baseSelector+"_Options");
         RightNow.Event.subscribe("evt_orgTypeResponse", this._onChangedResponse, this);
 //        this.searchSource().on("orgChanged", this._onChangedResponse, this);
 //        RightNow.Event.subscribe("evt_reportResponse", this._onChangedResponse, this);
@@ -20,8 +20,9 @@ Custom.Widgets.search.OrgList2 = RightNow.ResultsDisplay.extend({
 //         this.searchSource(this.data.attrs.report_id).on("response", this._onChangedResponse, this);
         
         if (this._optionsSelect.disabled == false) {
-            RightNow.Event.subscribe("evt_getFiltersRequest", this._onGetFiltersRequest, this);
-//            this.searchSource().on("search",this._onGetFiltersRequest,this);
+//            RightNow.Event.subscribe("evt_getFiltersRequest", this._onGetFiltersRequest, this);
+			  this.searchSource().on("search",this._onGetFiltersRequest,this); 
+//			this._selectBox.on("change",this._onGetFiltersRequest,this);
         }
         
         RightNow.Event.subscribe("evt_resetFilterRequest", this._onResetRequest, this);
@@ -33,11 +34,14 @@ Custom.Widgets.search.OrgList2 = RightNow.ResultsDisplay.extend({
 
     _partnerTypeChanged: function (evt, args) {
         if (args[0].customer_type == 'direct') {
-            RightNow.Event.subscribe("evt_getFiltersRequest", this._onGetFiltersRequest, this);
-//            this.searchSource().on("search",this._onGetFiltersRequest,this);
+//            RightNow.Event.subscribe("evt_getFiltersRequest", this._onGetFiltersRequest, this);
+            this.searchSource().on("search",this._onGetFiltersRequest,this);
+//			this._selectBox.on("change",this._onGetFiltersRequest,this);
         }
         else {
-            RightNow.Event.unsubscribe("evt_getFiltersRequest", this._onGetFiltersRequest);
+//            RightNow.Event.unsubscribe("evt_getFiltersRequest", this._onGetFiltersRequest);
+//			this._selectBox.detach("change",this._onGetFiltersRequest,this);
+			this.searchSource().intialFilters= {};
         }
     },
 
@@ -166,10 +170,11 @@ Custom.Widgets.search.OrgList2 = RightNow.ResultsDisplay.extend({
     _onGetFiltersRequest: function (type, args) {
         this._setSelectedFilters();
         if (this._optionsSelect.disabled == false) {
-            RightNow.Event.fire("evt_searchFiltersResponse", this._eo);
+//            RightNow.Event.fire("evt_searchFiltersResponse", this._eo);
+			return this._eo;
         }
         else {
-            RightNow.Event.fire("evt_searchFiltersResponse", null);
+            return null;
         }
     }
 });

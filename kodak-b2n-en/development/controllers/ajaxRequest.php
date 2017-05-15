@@ -1,5 +1,12 @@
 <?php
 namespace Custom\Controllers;
+use RightNow\Utils\Framework,
+    RightNow\Libraries\AbuseDetection,
+	RightNow\Utils\Config;
+
+
+use RightNow\Connect\v1_1 as RNCPHP;
+use RightNow\Connect\v1_1\SAP_TEMP as RNCPHP_CO;
 
 class ajaxRequest extends \RightNow\Controllers\Base
 {
@@ -52,12 +59,10 @@ class ajaxRequest extends \RightNow\Controllers\Base
     function getReportData() {
         $filters = $this->input->post('filters');
         $filters = json_decode($filters);
-        echo "<pre>";
-        print_r($filters);
-        echo "</pre>";
         //2013.05.2 scott harris: logic to switch org id for the reporting incidents based on request for sap cust id
         $internal = $this->model('custom/custom_contact_model')->checkInternalContact($this->session->getProfileData('c_id'));
-        
+		
+		
 		if($internal == 'Y' && is_object($filters->CustomTextInput_14->filters->data) && is_object($filters->org->filters->data)) {
 			if($filters->CustomTextInput_14->filters->data->val != "") {
 				$requestedOrgID = $this->model('custom/custom_contact_model')->getOrgBySAPID($filters->CustomTextInput_14->filters->data->val);
@@ -91,21 +96,18 @@ class ajaxRequest extends \RightNow\Controllers\Base
 		if($internal == 'Y' && $filters->org->filters->data->fltr_id == 'incidents.c_id') {
 			$filters->org->filters->data->val = "";
 		}
-
         $filters = get_object_vars($filters);
-        logmessage($filters);
 
         $reportID = $this->input->post('report_id');
         $reportToken = $this->input->post('r_tok');
         $format = $this->input->post('format');
         $format = get_object_vars(json_decode($format));
-       
-        if($filters['search'] == 1)
+		if($filters['search'] == 1)
             $this->model('standard/Report')->updateSessionforSearch();
-		
         $results = $this->model('standard/Report')->getDataHTML($reportID, $reportToken, $filters, $format);
-//        print_r(json_encode($results));
-        /*
+//		$results = get_object_vars($results);
+        //print_r(json_encode($results));
+		/*
          * This request cannot be cached because not all rules that define how the page is rendered are in the POST data:
          * User search preferences, such as the number of results per page, are stored in the contacts table.
          * The Ask a Question tab may be hidden if the user has not searched enough times.
@@ -116,7 +118,8 @@ class ajaxRequest extends \RightNow\Controllers\Base
 				$results['data'][$i][9] = str_replace('service_request_detail',"service_request_detail/corp_id/$corp_id",$results['data'][$i][9]);
 			} 
 		}
-		echo json_encode($results);
+		echo json_encode($results->result);
+//		print_r($results);
     }
 
     /**
