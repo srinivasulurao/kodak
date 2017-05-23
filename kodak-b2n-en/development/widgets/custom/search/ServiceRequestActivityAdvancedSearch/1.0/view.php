@@ -54,7 +54,7 @@
 				<span><? echo $cih_lang_msg_base_array['sra_sitecustid']; ?></span><br/>
 				<rn:widget path="custom/CIHFunction/CustomTextInput" name="ek_customer_sapid" is_search_filter="true" search_filter_id="19" search_operator_id="1" search_report_id="#rn:php:$this->data['attrs']['report_id']#" />
 			</td>
-			<td valign="top">
+			<td valign="top" class='country_cell'>
 				<?
 					$options_json = json_encode($this->data['country_list']);	
 				?>

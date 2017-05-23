@@ -42,7 +42,7 @@
 
 	$page_title = 	$srd['incident']->Subject;
 ?>
-<rn:meta title="#rn:php:$cih_lang_msg_base_array['srd_srda']#" template="kodak_b2b_template.php" login_required="true" clickstream="incident_view"/>
+<rn:meta title="#rn:php:$cih_lang_msg_base_array['srd_srda']#" template="newkodak_b2b_template.php" login_required="true" clickstream="incident_view"/>
 
 <rn:widget path="CIHFunction/SwapReportController" />
 <div id="rn_PageTitle" class="rn_AskQuestion">
@@ -51,7 +51,7 @@
 <div id="rn_PageContent" class="rn_QuestionDetail">
     <div class="rn_Padding">
 		<div class="rn_Accordion_container">
-			<rn:widget path="CIHFunction/Accordion"  item_to_toggle="pnlDetails" label_header="#rn:php:$cih_lang_msg_base_array['srd_servicerequest']#" name="servicerequest" expanded="false"/>
+			<rn:widget path="CIHFunction/Accordion"  item_to_toggle="pnlDetails" label_header="#rn:php:$cih_lang_msg_base_array['srd_servicerequest']#" name="servicerequest" expanded="true"/>
 			<div id="pnlDetails" style="padding:10px;">
 				<div id="rn_AdditionalInfo">
 				
@@ -89,7 +89,7 @@
 		
 		<? if ($internal == "Y") : ?>
 		<div class="rn_Accordion_container">
-			<rn:widget path="CIHFunction/Accordion" item_to_toggle="pnlEvents" label_header="#rn:php:$cih_lang_msg_base_array['srd_servicerequestevents']#" name="serviceevents" expanded="false"/>
+			<rn:widget path="CIHFunction/Accordion" item_to_toggle="pnlEvents" label_header="#rn:php:$cih_lang_msg_base_array['srd_servicerequestevents']#" name="serviceevents" expanded="true"/>
 			<div id="pnlEvents" style="padding:10px;">
 				<div id="rn_AdditionalInfo">
 					<!-- <rn:widget path="custom/reports/Grid"  report_id="100903" url_column="2" url_text="View Details"/> -->
@@ -101,7 +101,7 @@
 		
 		
 		<div class="rn_Accordion_container">
-			<rn:widget path="CIHFunction/Accordion" item_to_toggle="pnlCommunication" label_header="#rn:php:$cih_lang_msg_base_array['srd_communicationactivity']#" name="communicationactivity" expanded="false"/>
+			<rn:widget path="CIHFunction/Accordion" item_to_toggle="pnlCommunication" label_header="#rn:php:$cih_lang_msg_base_array['srd_communicationactivity']#" name="communicationactivity" expanded="true"/>
 			<div id="pnlCommunication">
 				<div id="rn_AdditionalInfo" style="padding:10px;">
 					<!-- <rn:widget path="custom/output/IncidentThreadDisplay" /> -->
@@ -111,7 +111,7 @@
 		</div>
 				
 		<div class="rn_Accordion_container">
-			<rn:widget path="CIHFunction/Accordion" item_to_toggle="pnlUpdateRequest" label_header="#rn:php:$cih_lang_msg_base_array['srd_updateservicereqinfo']#" name="updateservicerequest" expanded="false"/>
+			<rn:widget path="CIHFunction/Accordion" item_to_toggle="pnlUpdateRequest" label_header="#rn:php:$cih_lang_msg_base_array['srd_updateservicereqinfo']#" name="updateservicerequest" expanded="true"/>
 			<div id="pnlCommunication">
 				<div id="pnlUpdateRequest" style="padding:10px;">
 

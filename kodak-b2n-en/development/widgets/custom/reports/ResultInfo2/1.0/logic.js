@@ -72,7 +72,8 @@ Custom.Widgets.reports.ResultInfo2 = RightNow.Widgets.ResultInfo.extend({
             }
             else
             { 
-                RightNow.UI.hide(resultsDiv);
+                //RightNow.UI.hide(resultsDiv);
+				document.getElementsByClassName('rn_Results')[0].innerHTML="Results <span>0</span> - <span>0</span> of <span>0</span>";
             }
         }
     }

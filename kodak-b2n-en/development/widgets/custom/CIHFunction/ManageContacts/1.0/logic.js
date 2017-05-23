@@ -299,7 +299,7 @@ if(this._form !=null){
 
     _contactSelectChanged: function (evt, args) {
 		
-         
+         console.log(document.querySelectorAll("#panelManageContacts2 [name='c_id']")[0].value);
          if (this._form_name !== args[0].data.form)
 
              return;

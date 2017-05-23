@@ -747,9 +747,9 @@ logMessage("Outside Ent Id1: "+$contract[ZZ_OutsideEntID]);
    
       if($start != "") {
       
-        $dt_now = new DateTime(date('Y-m-d H:i:s',time()));
-        $dt_start = new DateTime($start);
-        $dt_end = new DateTime($end);
+        $dt_now = new \DateTime(date('Y-m-d H:i:s',time()));
+        $dt_start = new \DateTime($start);
+        $dt_end = new \DateTime($end);
         $diff_to_start = date_diff($dt_now,$dt_start);
         $diff_to_end = date_diff($dt_now,$dt_end);
           //if( intval($diff_to_start->format('%R%a')) && intval($diff_to_end->format('%R%a')) ) {

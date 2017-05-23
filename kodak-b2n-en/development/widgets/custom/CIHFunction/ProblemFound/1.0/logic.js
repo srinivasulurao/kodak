@@ -37,10 +37,14 @@ Custom.Widgets.CIHFunction.ProblemFound = RightNow.Widgets.extend({
 				//Now Show the list.
 				
 				    var cat_list_show=JSON.parse(response.responseText);
-					for(j=0;j<=cat_list_show.length;j++){ 
+					for(j=0;j<cat_list_show.length;j++){ 
 					   document.querySelectorAll(groundPanel+" .cat_"+cat_list_show[j])[0].classList.add('rn_Show');
 					   document.querySelectorAll(groundPanel+" .cat_"+cat_list_show[j])[0].classList.remove('rn_Hidden');
 					}
+					
+			    //Prepopulate severity and repeatablity.
+				document.querySelectorAll(groundPanel+" [name='ek_severity']")[0].value="";
+				document.querySelectorAll(groundPanel+" [name='ek_repeatability']")[0].value="";
 				
                 },
                 failuerHandler: function (response) {

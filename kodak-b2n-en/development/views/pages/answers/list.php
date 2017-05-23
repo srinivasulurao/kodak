@@ -63,8 +63,8 @@ else{
     <div class="rn_Padding">
         <h2 class="rn_ScreenReaderOnly">#rn:msg:SEARCH_RESULTS_CMD#</h2>
         <rn:widget path="custom/reports/ResultInfo2" per_page="#rn:php:$lines_per_page#" report_id="#rn:php:$templ_msg_base_array['portal_report_id']#"/>
-        <rn:widget path="knowledgebase/TopicWords" per_page="#rn:php:$lines_per_page#" />
-		<rn:widget path="knowledgebase/SearchSuggestions" report_id="#rn:php:$templ_msg_base_array['portal_report_id']#" />
+        <rn:widget path="knowledgebase/TopicWords" per_page="#rn:php:$lines_per_page#" target='_blank' show_topic_icon='true' />
+		<!--<rn:widget path="knowledgebase/SearchSuggestions" label_input="Recommended Links" report_id="#rn:php:$templ_msg_base_array['portal_report_id']#" /> -->
         <rn:widget path="custom/reports/Multiline2" per_page="#rn:php:$lines_per_page#" report_id="#rn:php:$templ_msg_base_array['portal_report_id']#" />  <!-- stupid comment to fix problem with some content like on page 39262  -->
         <!--<rn:widget path="reports/SearchTruncation2"  report_id="#rn:php:$templ_msg_base_array['portal_report_id']#" />     -->
         <rn:widget path="custom/reports/Paginator2" prod_selected='#rn:php:$product->LookupName#' cat_selected="#rn:php:$category->LookupName#" per_page="#rn:php:$lines_per_page#" report_id="#rn:php:$templ_msg_base_array['portal_report_id']#"/>

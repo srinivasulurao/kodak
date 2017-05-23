@@ -69,6 +69,11 @@
 }
 
 .rn_Grid .yui3-datatable-odd .yui3-datatable-cell,.rn_Grid .yui3-datatable-even .yui3-datatable-cell{
-	padding-left:5px !important;
+	padding-left:3px !important;
+	padding-right:3px !important;
+}
+
+.country_cell select{
+	width:145px !important;
 }
 </style>

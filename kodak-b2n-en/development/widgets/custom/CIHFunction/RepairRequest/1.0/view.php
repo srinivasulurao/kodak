@@ -1,7 +1,7 @@
 <rn:meta controller_path="custom/CIHFunction/RepairRequest" js_path="custom/CIHFunction/RepairRequest" base_css="custom/CIHFunction/RepairRequest" presentation_css="widgetCss/FormPanel.css"/>
 
 
-<?
+<?php
 
 
     $CI = get_instance();
@@ -526,7 +526,7 @@
 
                                 <td valign="bottom" align="right" width="250px" style="margin-right:200px;">
 
-
+                                <rn:widget path="custom/CIHFunction/PanelValidator" required_field="firstname|lastname|emailaddress|officephone|language1|country|cat|ek_severity|ek_repeatability|thread" panel="rn_#rn:php:$this->instanceID#_container"  error_location="rn_#rn:php:$this->instanceID#_ErrorLocation" >
                                 <rn:widget path="custom/CIHFunction/AjaxFormSubmit" error_location="rn_#rn:php:$this->instanceID#_ErrorLocation" ajax_method="/cc/incident_custom/incident_submit_repair_request" challenge_required="false" disable_result_handler="true" on_success_url='none' label_on_success_banner="Updated Successfully !" />
 
 

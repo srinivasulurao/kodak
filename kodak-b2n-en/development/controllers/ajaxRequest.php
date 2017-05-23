@@ -114,8 +114,8 @@ class ajaxRequest extends \RightNow\Controllers\Base
          * The user's profile is updated when they do a search.
          */
 		if($corp_request) {
-			for($i=0; $i<count($results['data']); $i++) {
-				$results['data'][$i][9] = str_replace('service_request_detail',"service_request_detail/corp_id/$corp_id",$results['data'][$i][9]);
+			for($i=0; $i<count($results->result['data']); $i++) {
+				$results->result['data'][$i][9] = str_replace('service_request_detail',"service_request_detail/corp_id/$corp_id",$results->result['data'][$i][9]);
 			} 
 		}
 		echo json_encode($results->result);

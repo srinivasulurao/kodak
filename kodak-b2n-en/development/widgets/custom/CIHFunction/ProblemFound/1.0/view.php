@@ -6,13 +6,13 @@ $categories=$this->data['categories'];
 // echo "</pre>";
 ?>
       <select name='cat' id='cat'>
-      <option>--Select Problem--</option>
+      <option value="">--Select Problem--</option>
       <?php
       //Level1.
       foreach($categories['lvl_1'] as $key1=>$value1):
       	$level_value=$value1['ID'];
         $value1_lookupName=str_replace("X","",$value1['LookupName']);
-      	echo "<option value='$level_value' class='lvl_1 rn_Hidden cat_{$value1['ID']}'>$value1_lookupName</option>";
+      	echo "<option value='$level_value' class='lvl_1 rn_Hidden cat_{$value1['ID']}' disabled style='background:lightgrey'>$value1_lookupName</option>";
       //Level 2.
       	  if($value1['lvl_2']):
       	  foreach($value1['lvl_2'] as $key2=>$value2):

@@ -5,7 +5,7 @@
     <select class="rn_MenuSelect" name="<?=$this->data['attrs']['name']?>" id='rn_<?=$this->instanceID;?>_Options' <?=tabIndex($this->data['attrs']['tabindex'], 1);?>>
 	<option value="">--</option>
         <? foreach($this->data['menu'] as $key => $value): ?>
-	<option value="<?=$value['ID'];?>" <?=($this->data['attrs']['selected_value'] == $value['ID']) ? 'selected="selected"' : '';?> ><?=$value['LookupName']?></option>
+	<option value="<?=$value['ID'];?>" <?php //($this->data['attrs']['selected_value'] == $value['ID']) ? 'selected="selected"' : ''; ?> ><?=$value['LookupName']?></option>
         <? endforeach;?>
     </select>
 </div>

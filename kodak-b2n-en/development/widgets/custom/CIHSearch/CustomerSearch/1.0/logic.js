@@ -2211,9 +2211,8 @@ var data = [
 
 						else
 							output = htmlProdLnk + actionIULink;
-							
-							
-							
+		
+												
 				product_row_counter++;
 					
 					return output;

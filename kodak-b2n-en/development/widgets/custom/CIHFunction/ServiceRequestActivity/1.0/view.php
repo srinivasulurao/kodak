@@ -51,7 +51,7 @@
 				<td nowrap="nowrap" valign="bottom">
 					<a id="rn_<?=$this->instanceID;?>_advSearchPanelTrigger" style="cursor:pointer"><? echo $cih_lang_msg_base_array['sra_showhideadv']; ?></a>
 				</td>
-				<td valign="bottom" align="right" width="850px" style="margin-right:200px;">
+				<td valign="bottom" align="right" width="425px" style="margin-right:200px;">
 					<rn:widget path="standard/search/SearchButton" label="Search" report_id="#rn:php:$cih_lang_msg_base_array['sra_repideksupporthistory']#" />
 				</td>				
 			</tr>

@@ -932,7 +932,7 @@
 
                             <td valign="bottom" align="right" width="850px" style="margin-right:200px;" colspan="3">
 
-
+                                <rn:widget path="custom/CIHFunction/PanelValidator" required_field="firstname|lastname|emailaddress|officephone|language1|country|ek_ibase_updt_type" dynamic_field="removal_reason|effective_date|thread|product_identifier|ibase_firstname|ibase_lastname|ibase_phone|sitecustomername|ibase_address|street|city|state|zipcode|ibase_country|entitlement_type" panel="rn_#rn:php:$this->instanceID#_container"  error_location="rn_#rn:php:$this->instanceID#_ErrorLocation" >
                                 <rn:widget path="custom/CIHFunction/AjaxFormSubmit" error_location="rn_#rn:php:$this->instanceID#_ErrorLocation" ajax_method="incident_custom/incident_submit" challenge_required="false" disable_result_handler="true" on_success_url='none' label_on_success_banner="Updated Successfully !" />
 
 

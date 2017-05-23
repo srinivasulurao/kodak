@@ -294,7 +294,7 @@
 
 							<td valign="top" align="right" width="850px" style="margin-right:200px;">
 						
-
+                                                           <rn:widget path="custom/CIHFunction/PanelValidator" required_field="firstname|lastname|emailaddress|officephone|language1|country" panel="rn_#rn:php:$this->instanceID#"  error_location="rn_#rn:php:$this->instanceID#_ErrorLocation" >
                                                            <rn:widget path="custom/CIHFunction/AjaxFormSubmit" error_location="rn_#rn:php:$this->instanceID#_ErrorLocation" ajax_method="contact_custom/contact_update_submit" label_confirm_dialog = "Changes Saved Successfully" on_success_url='none' label_on_success_banner="Updated Successfully !" challenge_required="false" disable_result_handler="true"/> 
 
                                                   </td>
