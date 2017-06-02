@@ -1,0 +1,92 @@
+version: "1.0"
+requires:
+  jsModule:
+  - standard
+  - mobile
+attributes:
+  
+  label:
+    name:
+    type: STRING
+    description: 
+    default:
+  name:
+    name:
+    type: STRING
+    description: 
+    default:
+  label_input:
+    name:
+    type: STRING
+    description:
+    default:
+  selected_value:
+    name: Selected Value
+    type: Int
+    description: The Selected value of the select box when the page loads.
+    default: 0
+  custom_field:
+    name:
+    type: STRING
+    description: 
+    default: 
+  table:
+    name:
+    type: STRING
+    description: 
+    default: Contact
+  required:
+    name: rn:msg:REQUIRED_LBL
+    type: BOOL
+    description: rn:msg:SET_TRUE_FLD_CONT_VAL_CF_SET_REQD_MSG
+    default: false
+  label_required:
+    name: rn:msg:REQUIRED_LABEL_LBL
+    type: STRING
+    description: rn:msg:LABEL_DISPLAY_REQUIREMENT_MESSAGE_LBL
+    default: rn:msg:PCT_S_IS_REQUIRED_MSG
+  data:
+    name: Data List
+    type: STRING
+    description: JSON encoded string of ID and LookupName values for the drop down list
+    default: 
+  usetextasvalue:
+    name: Use option text as value
+    type: BOOL
+    description: Use the option text instead of the defined value as the value of the selected item
+    default: false
+  core_field:
+    name: Core Field
+    type: BOOL
+    description: Is the field being referenced a core field (not a custom field)
+    default: false
+  is_search_filter:
+    name: Search Filter
+    type: BOOL
+    description: Field is being used as a search filter
+    default: false
+  search_filter_id:
+    name: Filter ID
+    type: INT
+    description: Search filter id.
+    default: null
+  search_report_id:
+    name: Report ID
+    type: INT
+    description: Search report id.
+    default: null
+  search_operator_id:
+    name: Operator ID
+    type: INT
+    description: Search operator id.
+    default: null
+  remove_options: 
+    name: Remove options
+    type: STRING
+    description: Options to remove from the drop down list.
+    default:
+
+info:
+  notes:
+    
+    

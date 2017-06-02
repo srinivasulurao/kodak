@@ -29,10 +29,10 @@ Custom.Widgets.CIHFunction.MenuSelect = widgetObj.extend({
 	
     //Added by Srini, it will fire the event based on the url condition.
 	var current_url=window.location.href;
-	if(current_url.indexOf('service_request_activity') > -1)
+	//if(current_url.indexOf('service_request_activity') > -1)
       this.searchSource().on('search', this._onValidate, this);
-    else
-	  RightNow.Event.subscribe('evt_formFieldValidateRequest', this._onValidate, this);
+  //  else
+	//  RightNow.Event.subscribe('evt_formFieldValidateRequest', this._onValidate, this);
   
     RightNow.Event.subscribe('evt_fieldVisibilityChanged', this._visibilityChanged, this);
     RightNow.Event.subscribe('evt_toggleRequired', this._toggleRequired, this);
@@ -87,8 +87,9 @@ Custom.Widgets.CIHFunction.MenuSelect = widgetObj.extend({
                 "val": this._getValue(),
                 "w_id":this._fieldName
             }
-
+						
         };
+		console.log(this._eo.filters);
         this._eo.filters.data.val = this._getValue();
     },
     /**
@@ -178,7 +179,8 @@ Custom.Widgets.CIHFunction.MenuSelect = widgetObj.extend({
             "prev": this.data.js.prev,
             "form": this._parentForm
         };
-        if ("rn_ServiceRequestActivity_2_form" === this._parentForm) {
+//        if ("rn_ServiceRequestActivity_1_form" === this._parentForm) {
+		if(this._parentForm.indexOf("rn_ServiceRequestActivity") > -1 ){
             this._formErrorLocation = args[0].data.error_location;
 
             if (this._validateRequirement()) {
@@ -193,8 +195,8 @@ Custom.Widgets.CIHFunction.MenuSelect = widgetObj.extend({
                     eo.data.custom = false;
                 }
                 eo.w_id = this.data.info.w_id;
-                RightNow.Event.fire("evt_formFieldValidationPass", eo);
-				return eo;
+                RightNow.Event.fire("evt_formFieldValidationFailure", eo);
+				return false;
             }
             else {
                 RightNow.UI.Form.formError = true;
@@ -217,8 +219,8 @@ Custom.Widgets.CIHFunction.MenuSelect = widgetObj.extend({
 						eo.data.custom = false;
 					}
 					eo.w_id = this.data.info.w_id;
-					RightNow.Event.fire("evt_formFieldValidationPass", eo);
-					return eo;
+					RightNow.Event.fire("evt_formFieldValidationFailure", eo);
+					return false;
 				}
 				else {
 					RightNow.UI.Form.formError = true;
@@ -344,6 +346,7 @@ Custom.Widgets.CIHFunction.MenuSelect = widgetObj.extend({
     * @return String/Boolean that is the field value
     */
     _getValue: function () {
+		console.log(this._inputField.value);
         if (this.data.js.type === "Boolean") {
             if (this._inputField[0].checked)
                 return this._inputField[0].value;
@@ -362,7 +365,7 @@ Custom.Widgets.CIHFunction.MenuSelect = widgetObj.extend({
                 return '~any~';
 
             if (this.data.attrs.usetextasvalue)
-                return this._inputField.options[this._inputField.selectedIndex].text; ;
+                return this._inputField.options[this._inputField.selectedIndex].text; 
             return this._inputField.value;
         }
     },

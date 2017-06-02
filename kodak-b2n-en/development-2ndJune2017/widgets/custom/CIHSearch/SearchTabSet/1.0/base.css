@@ -1,0 +1,44 @@
+/**
+ * base.css: Base CSS for SearchTabSet
+ */
+.rn_SearchTabSet {
+
+}
+
+.rn_SearchTabSet .yui-nav{
+	border-bottom:3px solid #2647a0;
+	margin-bottom: 10px;
+}
+
+.rn_SearchTabSet ul li a{
+	display: inline-block !important;
+	background:white;
+	color:black;
+	padding:8px 15px;
+	border:1px solid lightgrey;
+	text-decoration: none;
+	text-transform: capitalize;
+	font-weight: bold;
+	border-bottom: 0px;
+	border-radius:10px 10px 0 0;
+}
+
+.rn_SearchTabSet .selected a{
+	background: #2647a0 !important;
+    color: white;
+    border: 1px solid #2647a0 !important
+}
+
+.rn_SearchTabSet ul li{
+	display: inline-block;
+	margin-right:1px;
+}
+
+#custSearch,#prodSearch{
+	clear: both;
+	display: block;
+}
+
+#panelDetails2{
+	padding:10px;
+}

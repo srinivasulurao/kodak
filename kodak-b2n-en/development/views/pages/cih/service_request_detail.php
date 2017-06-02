@@ -79,10 +79,9 @@
 					
 				</div>
 
-				<h2 class="rn_HeadingBar"><? echo $cih_lang_msg_base_array['srd_installedprodinfo']; ?></h2>
+				<h2 class="rn_HeadingBar"><?php echo $cih_lang_msg_base_array['srd_installedprodinfo']; ?></h2>
 				<div id="rn_AdditionalInfo">
-					<!-- <rn:widget path="custom/reports/Grid2JSSort"  report_id="#rn:php:$cih_lang_msg_base_array['repid_ekinstalledprodinformation']#"/> -->
-					<rn:widget path="reports/Grid"  report_id="#rn:php:$cih_lang_msg_base_array['repid_ekinstalledprodinformation']#"/>
+					<rn:widget path="custom/reports/Grid2JSSort"  report_id="#rn:php:$cih_lang_msg_base_array['repid_ekinstalledprodinformation']#"/>
 				</div>
 			</div>
 		</div>
@@ -167,3 +166,15 @@
 	
 </div>
 
+
+<script>
+thread_length=document.querySelectorAll('.rn_ThreadAuthor').length;
+
+for(i=0;i<thread_length;i++){
+	inner_text=document.querySelectorAll('.rn_ThreadAuthor')[i].innerText;
+	if(inner_text.indexOf('Customer Proxy') == -1 && inner_text.indexOf('Customer') > -1)
+		document.querySelectorAll('.rn_ThreadAuthor')[i].innerText="Customer";
+	if(inner_text.indexOf('Customer Proxy') > -1 && inner_text.indexOf('Phone') > -1)
+		document.querySelectorAll('.rn_ThreadAuthor')[i].innerText="Customer Proxy Via Phone";
+}
+</script>

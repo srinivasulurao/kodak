@@ -20,13 +20,14 @@ Custom.Widgets.CIHFunction.DateInputCalendar = RightNow.SearchFilter.extend({
         //RightNow.Event.subscribe("evt_getFiltersRequest", this._onGetFiltersRequest, this);
         this.searchSource().on("search",this._onGetFiltersRequest,this);
 		//this.searchSource
-	}
+		}
     },
                     
             
 _stringToDate: function (mon, dd, yyyy, hh, mm) {
+		console.log("Month:"+mon+"Day:"+dd+"Year:"+yyyy+"Hour:"+hh+"Minute:"+mm);
       var newDate = new Date(yyyy, mon, dd, hh, mm);
-
+		console.log("From String To Date Function:"+newDate);
       return Math.round(newDate.getTime()/1000);
 
     },
@@ -51,12 +52,10 @@ _stringToDate: function (mon, dd, yyyy, hh, mm) {
         if (this._fromDate.value === "" || this._toDate.value === "") {
             return "";
         }
-
-        var arrFromDate = this._fromDate.value.split("/");
-        var arrToDate = this._toDate.value.split("/");
-
+        var arrFromDate = this._fromDate.value.split("-");
+        var arrToDate = this._toDate.value.split("-");
         //date hrs relative to 0600, ie. 6am, zero-indexed so 05=6am
-        return this._stringToDate(parseInt(arrFromDate[0])-1, parseInt(arrFromDate[1]), arrFromDate[2], -6,0) + '|' + this._stringToDate(parseInt(arrToDate[0])-1, parseInt(arrToDate[1]), arrToDate[2],17,59);
+        return this._stringToDate(parseInt(arrFromDate[1])-1, parseInt(arrFromDate[2]), arrFromDate[0], -6,0) + '|' + this._stringToDate(parseInt(arrToDate[1])-1, parseInt(arrToDate[2]), arrToDate[0],17,59);
     },
      _createCalendar: function () {
          var over_cal = false,
@@ -84,7 +83,6 @@ _stringToDate: function (mon, dd, yyyy, hh, mm) {
                         cur_field.value=dtdate.format(newDate);
                         over_cal=false;
                         hideCal();
-
                     });
                 calendar.render("#mycalendar");
                 });

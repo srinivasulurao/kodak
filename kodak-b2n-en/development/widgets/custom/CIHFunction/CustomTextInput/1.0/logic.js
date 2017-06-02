@@ -68,11 +68,8 @@ if(current_url.indexOf('service_request_activity') > -1)
         //RightNow.Event.unsubscribe('evt_resetForm', this.onResetForm);
 
         if (this.data.attrs.is_search_filter == true) {
-//            RightNow.Event.unsubscribe("evt_getFiltersRequest", this._onGetFiltersRequest);
-            this.searchSource().initialFilters={};
+			            RightNow.Event.unsubscribe("evt_getFiltersRequest", this._onGetFiltersRequest);
         }
-
-        //RightNow.Event.unsubscribe('evt_fieldVisibilityChanged', this._visibilityChanged, this);
 
         if (this.data.attrs.required_listener == true) {
             RightNow.Event.unsubscribe('evt_RequiredFieldChanged', this._toggleRequired);
@@ -80,7 +77,6 @@ if(current_url.indexOf('service_request_activity') > -1)
     },
 
     _visibilityChanged: function (evt, args) {
-        //console.log("Custom text input _visibility changed");
         if (args[0].id == this._inputField.id) {
             if (this._inputField.disabled == true) {
                 this._disableEvents();
@@ -255,7 +251,7 @@ if(current_url.indexOf('service_request_activity') > -1)
             "form": this._parentForm
         };
 		
-        if ("rn_ServiceRequestActivity_2_form" === this._parentForm || this._parentForm.indexOf("rn_ServiceRequestActivity") > -1) {
+       if( this._parentForm.indexOf("rn_ServiceRequestActivity") > -1) {
 				this._formErrorLocation = args[0].data.error_location;
 				this._trimField();
 				if (this._checkRequired()) {
@@ -360,7 +356,7 @@ if(current_url.indexOf('service_request_activity') > -1)
     * @return Mixed String or Int (for Int data type)
     */
     _getValue: function () {
-        if (this.data.js.type === RightNow.Interface.Constants.EUF_DT_INT) {
+        if (this.data.js.type === "Integer") {
             if (this._inputField.value !== "")
                 return parseInt(this._inputField.value);
         }

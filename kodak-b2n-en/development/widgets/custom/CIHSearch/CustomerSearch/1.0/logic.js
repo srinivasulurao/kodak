@@ -964,8 +964,6 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
 
     _myAjaxIbaseResponse: function (searchArgs) {
 		
-		this._waitPanel('hide');
-		this._waitPanel('show');
 
         var actionRRLink = this._getActionLinks("RepairRequest");
 
@@ -1148,7 +1146,7 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
 		   this.Y.all("#panelProducts2 .yui3-datatable-data #lnkRepairRequest").on("click",this._selectIRepair,this,product_table); 
 		}
 		
-		this._waitPanel('hide');
+		
     },
 	
 	
@@ -3865,7 +3863,7 @@ var data = [
 
 		//Send Values for Fetching the list
 		partner_or_customer_id=(this.data.js.internal_user == "N")?cell.partnerID.value:cell.customerID.value;    
-		partner_function=cell.partnerfunction.value;
+		partner_function=(this.data.js.defaultPartnerSearch == "00000002")?cell.partnerfunction.value:this.data.js.defaultPartnerSearch;
 		ibase_id=cell.ibaseID.value;
 
 		this._resetProductDisplay();
@@ -3961,11 +3959,9 @@ var data = [
 
         RightNow.Ajax.makeRequest("/cc/ibase_search/get_ibase", mypostData, {
 
-            data: { eventName: "evt_getIbaseResponse" },
+            data: { eventName: "evt_getIbaseResponse",ignoreFailure: true  },
 
             successHandler: function (myresponse) {
-
-                this._waitPanel('hide');
 
                 var responseText=myresponse.responseText.replace('<rn:meta title="" template="kodak_b2b_template.php" />',"");
                 
@@ -3987,7 +3983,7 @@ var data = [
 
                 this._waitPanel('hide');
 
-                this._overrideAjaxMethodIbaseUnsubscribe();
+                //this._overrideAjaxMethodIbaseUnsubscribe();
 
                 //if one product, then retrieve
 
@@ -4370,4 +4366,4 @@ var data = [
         RightNow.Event.fire("evt_managePanel", eo);
 
     }
-});  
+})

@@ -1,0 +1,101 @@
+   #mycalendar {
+            position: absolute;
+            display: none;
+        }
+
+        #mycalendar {
+            z-index: 500;
+        }
+        .dp-highlighter {
+            z-index: 1;
+}
+
+.yui3-calendar-column-hidden, .yui3-calendar-hidden {
+	display:none;
+}
+
+.yui3-calendar-day {
+	cursor: pointer;
+}
+
+.yui3-calendar-selection-disabled {
+    cursor: default;
+}
+
+.yui3-calendar-prevmonth-day {
+    cursor: default;
+}
+
+.yui3-calendar-nextmonth-day {
+	cursor: default;
+}
+
+.yui3-calendar-content:hover .yui3-calendar-day,
+.yui3-calendar-content:hover .yui3-calendar-prevmonth-day,
+.yui3-calendar-content:hover .yui3-calendar-nextmonth-day {
+    -moz-user-select: none;
+}
+.yui3-calendarnav-prevmonth
+{
+    background: rgba(0, 0, 0, 0) url("/euf/assets/images/sprite.png") no-repeat scroll 0 -450px;
+    cursor: pointer;
+    height: 15px;
+    margin-left: 0.3em;
+    width: 25px;
+    overflow: hidden;
+    position: absolute;
+    z-index: 500;
+  
+}
+.yui3-calendarnav-nextmonth{
+    background: rgba(0, 0, 0, 0) url("/euf/assets/images/sprite.png") no-repeat scroll 0 -500px;
+    cursor: pointer;
+    height: 15px;
+    right: 14px;
+    top: 10px;
+    width: 25px;
+    overflow: hidden;
+    position: absolute;
+}
+.yui3-calendar-header-label {
+    background: transparent none repeat scroll 0 0 !important;
+    font-weight: bold;
+    padding: 0 0 0.6em;
+    text-align: center;
+    position: relative;
+    text-align: center;
+    width: 100%;
+}
+.yui3-calendar
+{
+    background-color: #f2f2f2;
+    border: 1px solid #808080;
+    padding: 10px;
+}
+.yui3-calendar-weekday
+{
+    background: transparent none repeat scroll 0 0 !important;
+    color: #000;
+    font-weight: bold;
+    text-align: center;
+    width: 2em;
+}
+.yui3-calendar-day
+{
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #ccc;
+    height: 1.6em;
+    line-height: 1.6em;
+    padding: 1px;
+    text-align: center;
+    white-space: nowrap;
+}
+.yui3-calendar-day-selected
+{
+    background-color: #b3d4ff;
+    color: #000;
+}
+.yui3-calendar-day-today
+{
+    background-color: #fff;
+}

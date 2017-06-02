@@ -1,0 +1,9 @@
+/**
+ * base.css: Base CSS for ServiceRequestActivityAdvancedSearch
+ */
+.rn_ServiceRequestActivityAdvancedSearch {
+    padding:10px;
+}
+.rn_ServiceRequestActivityAdvancedSearch_table {
+    background-color:#f2f2f2;
+}

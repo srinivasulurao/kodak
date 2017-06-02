@@ -97,7 +97,6 @@ class ajaxRequest extends \RightNow\Controllers\Base
 			$filters->org->filters->data->val = "";
 		}
         $filters = get_object_vars($filters);
-
         $reportID = $this->input->post('report_id');
         $reportToken = $this->input->post('r_tok');
         $format = $this->input->post('format');
@@ -119,7 +118,7 @@ class ajaxRequest extends \RightNow\Controllers\Base
 			} 
 		}
 		echo json_encode($results->result);
-//		print_r($results);
+//		
     }
 
     /**

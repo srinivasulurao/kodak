@@ -1,0 +1,33 @@
+/**
+ * base.css: Base CSS for ProductCategorySearchFilterOnChange
+ */
+.rn_ProductCategorySearchFilterOnChange.rn_ProductCategorySearchFilter {
+
+}
+.rn_ProductCategorySearchFilterOnChange div.yui-panel-container {
+    position:relative;
+}
+
+.rn_ProductCategorySearchFilterOnChange button.rn_DisplayButton {
+    background:none;
+    color:#000;
+    cursor:pointer;
+    font-weight:normal;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    -moz-border-radius:0px;
+    -webkit-border-radius:0px;
+    -moz-box-shadow:none;
+    -webkit-box-shadow:none;
+    z-index:0 !important;
+}
+.rn_ProductCategorySearchFilterOnChange .ygtvrow {
+    cursor:pointer;
+}
+/* make the text label font relative*/
+.rn_ProductCategorySearchFilterOnChange .ygtvlabel,
+.rn_ProductCategorySearchFilterOnChange .ygtvlabel:link,
+.rn_ProductCategorySearchFilterOnChange .ygtvlabel:visited,
+.rn_ProductCategorySearchFilterOnChange .ygtvlabel:hover { 
+    font-size:inherit;
+}
