@@ -1,0 +1,21 @@
+/**
+ * base.css: Base CSS for CurrentMeter
+ */
+.rn_CurrentMeter {
+
+}
+
+#div_meters2,#meters .rn_Accordion_container{
+	width:100% !important;
+	margin-bottom:20px;
+}
+
+#meters .yui3-datatable-message-content{
+	padding:5px !important;
+}
+
+.meter_error{
+	background: #FFB700;
+    padding-left: 5px;
+    margin: 0px !important;
+}

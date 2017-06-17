@@ -271,7 +271,12 @@ Custom.Widgets.output.CurrentMeter = RightNow.Widgets.extend({
                     var eop = new RightNow.Event.EventObject();
                     eop.data.productData = resp;
                     RightNow.Event.fire("evt_NewProductData", eop);
-
+                    
+                    //Focus the tab.
+                    tab_focus=document.querySelectorAll("#rn_div_currentMeter_"+this.instanceID)[0].parentNode;
+                    focus_tab_id=tab_focus.id.split("div_meters").join("panelDetails");
+                    document.querySelectorAll("#"+focus_tab_id+" .pid_tabs")[3].click();
+                    
                 }
                 else {
                     var errorDiv = document.getElementById("meter_err_"+this.instanceID);

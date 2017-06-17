@@ -1,8 +1,10 @@
 <?php /* Originating Release: February 2012 */
-namespace Custom\Models;use RightNow\Connect\v1 as RNCPHP;
+namespace Custom\Models;
+use RightNow\Connect\v1 as RNCPHP;
 require_once( get_cfg_var("doc_root")."/include/ConnectPHP/Connect_init.phph" );
 initConnectAPI();
-class Custom_CIH_Prodcat_model extends \RightNow\Models\Base {
+
+class Custom_CIH_Prodcat_model extends \RightNow\Models\Base {
     private static $arrayOfProductHierLevels;
 
     function __construct() {
@@ -136,13 +138,21 @@ initConnectAPI();
         }
         return $topLevel;
     }
+
+    function getTransactionCatId(){
+    $trans_query="SELECT CategoryLinks.ServiceCategoryList.ServiceCategory.* FROM ServiceProduct WHERE CategoryLinks.ServiceCategoryList.ServiceCategory.LookupName  LIKE '%TRANSACTIONS%' LIMIT 1";
+    $res=RNCPHP\ROQL::query($trans_query)->next();
+        while($rec=$res->next()):
+          return $rec['ID']; 
+        endwhile;
+    }
 	
 	function getProductCategoryLinking($linked_product_id){
 		$product_ids=explode(",",$linked_product_id);
 		$product_id_size=sizeof($product_ids)-1;
 		$product_id=$product_ids[$product_id_size];
-		
-		$categories_list=RNCPHP\ROQL::query("SELECT CategoryLinks.ServiceCategoryList.ServiceCategory.* FROM ServiceProduct WHERE ServiceProduct.ID='$product_id'")->next(); 
+        $trans_id=$this->getTransactionCatId();	
+		$categories_list=RNCPHP\ROQL::query("SELECT CategoryLinks.ServiceCategoryList.ServiceCategory.* FROM ServiceProduct WHERE ServiceProduct.ID='$product_id' AND CategoryLinks.ServiceCategoryList.ServiceCategory.ID > '$trans_id'")->next(); 
 		
 		$categories_show=array();
 		while($res=$categories_list->next()){
@@ -245,13 +255,27 @@ below was commented out
     }
 
 
-    function hierMenuGet($filterType, $level, $id, $linking, $prodid=0) {// need to lookup from french language when its Categories
+    function hierMenuGet($filterType, $level, $id, $linking, $prodid=0) {
+// need to lookup from french language when its Categories
         $hierMenuType = (stringContains($filterType, 'prod')) ? HM_PRODUCTS : HM_CATEGORIES;
         $level = min(6, max(1, (int)$level));
         $parentLevel = $level - 1;
         $childLevel = $level + 1;
         $grandchildLevel = $childLevel + 1;
-        $languageID = lang_id(LANG_DIR);//        $contID = $this->session->getProfileData('c_id');  // both ways work here//        $cont = RNCPHP\Contact::fetch($contID);//	    $lID = $cont->CustomFields->ek_lang_pref1;//logMessage("hierMenuGet languageID from profile is ".$lID->ID);$sesslang = get_instance()->session->getSessionData("lang");logMessage("session variable for lang is ".$sesslang);//        if (($lID->ID == 20) && ($hierMenuType == HM_CATEGORIES))        if (($sesslang == 'fr') && ($hierMenuType == HM_CATEGORIES))      		$languageID = 9;        if (($sesslang == 'es') && ($hierMenuType == HM_CATEGORIES))      		$languageID = 6;        if (($sesslang == 'pt') && ($hierMenuType == HM_CATEGORIES))      		$languageID = 13;
+        $languageID = lang_id(LANG_DIR);
+//        $contID = $this->session->getProfileData('c_id');  // both ways work here
+//        $cont = RNCPHP\Contact::fetch($contID);
+//	    $lID = $cont->CustomFields->ek_lang_pref1;
+//logMessage("hierMenuGet languageID from profile is ".$lID->ID);
+$sesslang = get_instance()->session->getSessionData("lang");
+logMessage("session variable for lang is ".$sesslang);
+//        if (($lID->ID == 20) && ($hierMenuType == HM_CATEGORIES))
+        if (($sesslang == 'fr') && ($hierMenuType == HM_CATEGORIES))
+      		$languageID = 9;
+        if (($sesslang == 'es') && ($hierMenuType == HM_CATEGORIES))
+      		$languageID = 6;
+        if (($sesslang == 'pt') && ($hierMenuType == HM_CATEGORIES))
+      		$languageID = 13;
 
 //test
 //$categoryIDs = $this->getCategoriesLinkedTo(3543);
@@ -261,7 +285,8 @@ if($prodid == 0) {
 else {
   $categoryIDs = sprintf("AND h.id in (%s) ", $this->getCategoriesLinkedTo($prodid));
 }
-        //$interfaceID = intf_id();
+        //$interfaceID = intf_id();
+
                 $interfaceID = 17;  //hard-coded interface that contains the categories
         $hierMenuTableID = TBL_HIER_MENUS;
         $id = (int)$id;
@@ -326,7 +351,8 @@ else {
             'link_map' => $linkMap,
         );
     }
-	/**
+
+	/**
      * Given a product ID, this function will return the linked categories.  The first element in
      * the returned array will be the level of the category.
      *

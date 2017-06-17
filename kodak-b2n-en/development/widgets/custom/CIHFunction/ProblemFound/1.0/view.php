@@ -5,7 +5,7 @@ $categories=$this->data['categories'];
 // print_r($categories);
 // echo "</pre>";
 ?>
-      <select name='cat' id='cat'>
+      <select name='cat' id='cat' class='problem_found_box' onclick="increaseSize()" onfocusout="decreaseSize()">
       <option value="">--Select Problem--</option>
       <?php
       //Level1.
@@ -59,3 +59,13 @@ $categories=$this->data['categories'];
 	padding-left:10px !important;
 }
 </style>
+
+<script>
+function increaseSize(){
+document.getElementsByClassName('problem_found_box')[0].size="10";
+}
+
+function decreaseSize(){
+	document.getElementsByClassName('problem_found_box')[0].size="0";
+}
+</script>

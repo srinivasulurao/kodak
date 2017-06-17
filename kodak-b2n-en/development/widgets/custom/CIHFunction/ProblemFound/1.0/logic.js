@@ -11,6 +11,9 @@ Custom.Widgets.CIHFunction.ProblemFound = RightNow.Widgets.extend({
         constructor: function() {
             // Call into parent's constructor
 			RightNow.Event.subscribe('evt_populateProductCategoryLinking', this._getProductCategoryHireData, this);
+
+            var groundPanel=(this.data.attrs.panel_name=="accordionRepairRequest2")?"#panelRepairRequest2":"#panelRepairRequest";
+
         },
 		_getProductCategoryHireData:function(type,args){ 
 			postData=new Array();
@@ -25,8 +28,8 @@ Custom.Widgets.CIHFunction.ProblemFound = RightNow.Widgets.extend({
                 successHandler: function (response) {
 
                  //First hide all the categories.
-				     var groundPanel=(this.data.attrs.panel_name=="accordionRepairRequest2")?"#panelRepairRequest2":"#panelRepairRequest";;
-				     var groundPanel=(this.data.attrs.panel_name=="accordionRepairRequest2")?"#panelRepairRequest2":"#panelRepairRequest";;
+				     var groundPanel=(this.data.attrs.panel_name=="accordionRepairRequest2")?"#panelRepairRequest2":"#panelRepairRequest";
+				     var groundPanel=(this.data.attrs.panel_name=="accordionRepairRequest2")?"#panelRepairRequest2":"#panelRepairRequest";
 					 var pf_length=document.querySelectorAll(groundPanel+" .rn_show").length;
 					 //pf_length=10;
 					 for(i=0;i<parseInt(pf_length);i++){

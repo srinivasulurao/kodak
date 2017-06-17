@@ -16,7 +16,7 @@ class custom_contact_model extends \RightNow\Models\Base {
     function getOrgContacts($orgID=null,$deactivated){
         $status = $deactivated == 'true' ? 1:0;		 
 		   //$query="SELECT Contact FROM Contact ORDER By Contact.ID ASC"; 		   
-           $query="SELECT Contact FROM Contact WHERE Contact.Organization.ID='$orgID' ";
+           $query="SELECT Contact FROM Contact WHERE Contact.Organization.ID='$orgID' ORDER BY Contact.Name.Last ASC";
            $contacts=RNCPHP\ROQL::queryObject($query)->next();
           
 
@@ -371,7 +371,8 @@ class custom_contact_model extends \RightNow\Models\Base {
 			}
 		else{
 				$contact->Login = $values['emailaddress'];
-			$contact->CustomFields->ek_role_id  = $values['role'];
+				if($values['role'])
+			    $contact->CustomFields->ek_role_id  = $values['role'];
 			}
 
                 //create note for history

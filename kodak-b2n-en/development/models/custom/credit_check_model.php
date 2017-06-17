@@ -204,7 +204,7 @@ class credit_check_model extends \RightNow\Models\Base {
                 
                 $errMsg = sprintf("Unable to parse API response, HTTP Code:%d, URL:%s %s", $http_code, $last_url, $curl_err);
                 $this->log->error($errMsg, null, $resp_envelope);
-				
+				return false; //Srini's temporary Customization.
 				throw new Exception($errMsg);
             } else { // Otherwise just close cURL request object since we are done with it
                 curl_close($req);

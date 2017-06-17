@@ -1,0 +1,29 @@
+version: "1.0"
+requires:
+  jsModule:
+  - standard
+  - mobile
+attributes:
+
+  name:
+    name: Field name
+    type: STRING
+    description: Name of the field
+    default:
+  max_year:
+    name: rn:msg:MAXIMUM_YEAR_LBL
+    type: INT
+    description: rn:msg:MAX_DISPLAYED_DATE_FLD_DEFS_VAL_EU_LBL
+    max: 2100
+  min_year:
+    name: rn:msg:MINIMUM_YEAR_LBL
+    type: INT
+    description: rn:msg:MINIMUM_YEAR_DISPLAYED_DATE_FIELD_MSG
+    max: 2100
+  hide_hint:
+    name: rn:msg:HIDE_HINT_CMD
+    type: BOOL
+    description: rn:msg:SPECIFIES_HINTS_HIDDEN_DISPLAYED_MSG
+    default: false
+info:
+  notes: rn:msg:WDGT_ALLOWS_USERS_SET_FLD_VALS_DB_MSG

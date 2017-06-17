@@ -190,7 +190,7 @@ Custom.Widgets.CIHFunction.PartnerTypeListSearch = RightNow.SearchFilter.extend(
     },
 
     _ajaxIntercept: function (evt, args) {
-		console.log(evt);
+		//console.log(evt);
         if (args[0].url == '/ci/ajaxRequest/getReportData' && args[0].post.report_id == this.data.attrs.search_report_id) {
 
              

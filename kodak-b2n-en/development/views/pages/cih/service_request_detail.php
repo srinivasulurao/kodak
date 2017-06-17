@@ -23,20 +23,20 @@
     $internal =  $this->CI->custom_contact_model->checkInternalContact($this->CI->session->getProfileData('c_id'));
 	$this->CI->load->model('custom/custom_incident_model');
 	
-	if(getUrlParm('corp_id')) {
-			$verify = $this->CI->custom_incident_model->verifyCorpAccess(getUrlParm('obj_id'), getUrlParm('corp_id'));
-		}
-        else {
-			if (getUrlParm('i_id') || ($internal == "Y")) {
-			} else {
-				$reqUri = $_SERVER['REQUEST_URI'];
-				header("Location: $reqUri"."/i_id/".getUrlParm('obj_id')); exit;
-			} 
-          $verify = $this->CI->custom_incident_model->verifyAccess(getUrlParm('obj_id'));
-		}
+	// if(getUrlParm('corp_id')) {
+	// 		$verify = $this->CI->custom_incident_model->verifyCorpAccess(getUrlParm('obj_id'), getUrlParm('corp_id'));
+	// 	}
+    //     else {
+	// 		if (getUrlParm('i_id') || ($internal == "Y")) {
+	// 		} else {
+	// 			$reqUri = $_SERVER['REQUEST_URI'];
+	// 			header("Location: $reqUri"."/i_id/".getUrlParm('obj_id')); exit;
+	// 		} 
+    //       $verify = $this->CI->custom_incident_model->verifyAccess(getUrlParm('obj_id'));
+	// 	}
 
-        if($verify == "0")
-          header('Location: /app/error/error_id/6');
+        //if($verify == "0") //Giving Access to all users as of now.
+          //header('Location: /app/error/error_id/6');
 
 	$srd = $this->CI->custom_incident_model->getServiceRequestDetails(getUrlParm('obj_id'));
 

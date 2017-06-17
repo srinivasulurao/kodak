@@ -93,98 +93,6 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
 
 
 
-    this._scrollTarg = document.getElementById("scroll_target");
-
-
-
-    if(this.data.js.direct_site_data) {
-
-      this._myAjaxCustomerResponse(this.data.js.direct_site_data);
-
-
-
-      if(this.data.js.direct_site_data[0]['ibase_list'].length > 0) {
-
-
-
-        if(this.data.js.defaultPartnerSearch == "00000002") {
-
-          this._getIbaseList(this.data.js.direct_site_data[0]['ibase_list'][0]['ibaseID'], this.partnerTypeValue, this.data.js.direct_site_data[0]['ibase_list'][0]['custSAPId']);
-
-        }
-
-
-
-        else { 
-
-          this._getIbaseList(this.data.js.direct_site_data[0]['ibase_list'][0]['ibaseID'], this.data.js.defaultPartnerSearch, this.data.js.direct_site_data[0]['ibase_list'][0]['partnerID']);
-
-        }
-
-      }
-
-    }
-
-    //for advanced search
-
-    this._advanceSearchPanel = document.getElementById("rn_" + this.instanceID + "_advSearchPanel");
-
-    this._advanceSearchPanelTrigger = document.getElementById("rn_" + this.instanceID + "_advSearchPanelTrigger");
-
-    if(document.getElementById('this._advanceSearchPanelTrigger.id')!=null)
-    this.Y.all("#"+this._advanceSearchPanelTrigger.id).on("click", this._toggleAdvanceSearchPanel,this,"show");
-
-
-    //for Customer Search
-
-    this._custCityField = document.getElementById("rn_" + this.instanceID + "_CustCityField");
-
-    this._custStreetField = document.getElementById("rn_" + this.instanceID + "_CustStreetField");
-
-    this._custNameField = document.getElementById("rn_" + this.instanceID + "_CustNameField");
-
-    this._custPostalCode = document.getElementById("rn_" + this.instanceID + "_CustPostalCodeField");
-
-    this._custIDField = document.getElementById("rn_" + this.instanceID + "_CustIDField");
-
-    this._partnerTypeField = document.getElementById("rn_" + this.instanceID + "_PartnerTypeField");
-
-    this._custMaterialField = document.getElementById("rn_" + this.instanceID + "_CustMaterial");
-
-
-    if(this.data.attrs.initial_focus && this._custCityField.focus)
-
-        this._custCityField.focus();
-
-    if(this.data.attrs.label_hint)
-
-    {
-        if(this._custCityField!=null){
-            this.Y.one("#"+this._custCityField.id).on("focus", this._onFocus,this);
-
-            this.Y.one("#"+this._custCityField.id).on("blur", this._onBlur,this);
-        }
-
-    }
-
-    //this.Y.one("#rn_" + this.instanceID + "_CustSubmit").on("click", this._onCustSearch,this);
-
-    //var mySearchTabView = new YAHOO.widget.TabView("tvsearchcontainer");
-
-    //var demoTabView = new YAHOO.widget.TabView("demo");
-
-    RightNow.Event.subscribe('evt_country_filter', this._setCountryValue, this);
-
-    RightNow.Event.subscribe('evt_province_filter', this._setProvinceValue, this);
-
-    //GGYAHOO.util.Event.addListener( window, "load", this._initPage, this);
-
-    this.Y.one("#amain").on("load",this._initPage, this);
-
-        this._scrollTarg = document.getElementById("scroll_target");
-
-
-
     if(this.data.js.direct_site_data) {
 
       this._myAjaxCustomerResponse(this.data.js.direct_site_data);
@@ -207,8 +115,6 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
       }
 
     }
-
-
 
     //for advanced search
 
@@ -294,8 +200,8 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
     _setProductData: function (evt, args) {
 
 
-
-       this._myAjaxProductSearchResponse(args[0].data.productData);
+       var pd=args[0].data.productData;
+       this._myAjaxProductSearchResponse(JSON.stringify(pd));  
 
     },
 
@@ -391,9 +297,8 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
 
 
     _getManageLink: function (row) {
-
 		if(row!=null && row!=""){
-  
+
 			var htmlManage = "";
 			
 			htmlManage = "<a class=\"actionlink\" id=\"lnkManageContacts\" org_id='"+row.orgID+"'>"+this.data.js.managecontacts+"</a>";
@@ -403,8 +308,6 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
 
 
 			if (partnerType != null) {
-
-
 
 				var partnerIDValue = partnerType.options[partnerType.selectedIndex].text;
 
@@ -424,7 +327,7 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
 
 			if (this.allowManageContact && this.data.js.isDirect == "Y")
 
-				htmlManage = "<a class=\"actionlink\" id=\"lnkManageContacts\" org_id='"+row.orgID+"'>"+this.data.js.managecontacts+"</a>";
+				 htmlManage = "<a class=\"actionlink corporate_site_table\" id=\"lnkManageContacts\" org_id='"+row.orgID+"' >"+this.data.js.managecontacts+"</a>";
 
 
 
@@ -1557,6 +1460,9 @@ var data = [
             document.getElementById('div_sitetable2').innerHTML="";
 
             table.render("#div_sitetable2");
+
+            //Just to make sure we have to open the panel site.
+            document.getElementById('panelSites2').style.display="block";
 			
 			site_table=table;
                    
@@ -1579,21 +1485,24 @@ var data = [
             //GG //            this.siteDataTable.subscribe("rowClickEvent", this.siteDataTable.onEventSelectRow);
             //GG this.siteDataTable.subscribe("linkClickEvent", _showManageContacts, this);
 			
+			
 			if(document.querySelectorAll('#panelSites2 .yui3-datatable-data tr').length)
 		      this.Y.all('#panelSites2 .yui3-datatable-data tr').on("click",this._siteSelectedHandler,this,site_table);
             if(aSite.length)
-              this.Y.all("#panelSites2 .yui3-datatable-data .actionlink").on('click',this._selectContact,this,site_table);
-		
-		 
-			
-            //show site panel
+              this.Y.all("#panelSites2 .yui3-datatable-data .actionlink").on('click',this._selectContact,this,site_table); 
+		  
+		  
+            // //show site panel
 
-            var eo = new RightNow.Event.EventObject();
+            // var eo = new RightNow.Event.EventObject();
 
-            eo.data.showlist = new Array('accordionSites2');
+            // eo.data.expandlist = new Array('accordionSites2');
 
-            RightNow.Event.fire("evt_managePanel", eo);
+            // eo.data.showlist = new Array('accordionSites2');
 
+            // RightNow.Event.fire("evt_managePanel", eo);
+
+            
 
 
         }
@@ -2209,6 +2118,7 @@ var data = [
 
 						else
 							output = htmlProdLnk + actionIULink;
+						    //output = htmlProdLnk + actionRRLink + "</br>" + actionIULink; 
 		
 												
 				product_row_counter++;
@@ -2606,7 +2516,7 @@ var data = [
 
             eor.data.sold_to = mfProduct[0].SAPID;
 
-            eor.data.ibase_product_hier = mfProduct[0].productHier;
+            eor.data.ibase_product_hier = mfProduct[0].Hier;
 
             eor.data.enablingPartner = mfProduct[0].enabling_partner;
 
@@ -2731,15 +2641,15 @@ var data = [
 
         var contractColumnDefs = [
 
-                  { key: "description", label: this.data.js.pide_product, sortable: false },
+                  { key: "description", label: this.data.js.pide_product,width:150, sortable: false },
 
-                  { key: "serviceProfileDesc", label: this.data.js.pide_coveragetime, sortable: false },
+                  { key: "serviceProfileDesc", label: this.data.js.pide_coveragetime,width:120, sortable: false },
 
-                  { key: "responseProfileDesc", label: this.data.js.pide_prioritizedresponse, sortable: false },
+                  { key: "responseProfileDesc", label: this.data.js.pide_prioritizedresponse,width:120, sortable: false },
 
-                  { key: "startDate", label: this.data.js.pide_contractstart, sortable: false },
+                  { key: "startDate", label: this.data.js.pide_contractstart,width:100, sortable: false },
 
-                  { key: "endDate", label: this.data.js.pide_contractend, sortable: false },
+                  { key: "endDate", label: this.data.js.pide_contractend,width:100, sortable: false },
 
                   { key: "type", label: this.data.js.pide_contracttype, sortable: false },
 
@@ -2762,6 +2672,7 @@ var data = [
             });
             //this.siteDataTable = new YAHOO.widget.DataTable("div_sitetable2", siteColumnDefs, siteDataSource);
             document.getElementById("div_contracts2").innerHTML="";
+            document.getElementById('div_contracts2').style.width="99%";
             table.render("#div_contracts2");
             //this.contractsDataTable = new YAHOO.widget.DataTable("div_contracts2", contractColumnDefs, contractDataSource);
 		    contracts_table=table;
@@ -2803,9 +2714,9 @@ var data = [
 
         //var yval = YAHOO.util.Dom.getY(this._scrollTarg);
 		
-		var yval = this.Y.one(this._scrollTarg).getY();
+		// var yval = this.Y.one(this._scrollTarg).getY();
 
-        window.scrollTo(0,yval-600);
+        // window.scrollTo(0,yval-600);
 
 
 
@@ -3280,15 +3191,15 @@ var data = [
 
         var contractColumnDefs = [
 
-                  { key: "description", label: this.data.js.sitecustid, sortable: false },
+                   { key: "description", label: this.data.js.pide_product,width:150, sortable: false },
 
-                  { key: "serviceProfileDesc", label: this.data.js.pide_coveragetime, sortable: false },
+                  { key: "serviceProfileDesc", label: this.data.js.pide_coveragetime,width:120, sortable: false },
 
-                  { key: "responseProfileDesc", label: this.data.js.pide_prioritizedresponse, sortable: false },
+                  { key: "responseProfileDesc", label: this.data.js.pide_prioritizedresponse,width:120, sortable: false },
 
-                  { key: "startDate", label: this.data.js.pide_contractstart, sortable: false },
+                  { key: "startDate", label: this.data.js.pide_contractstart,width:100, sortable: false },
 
-                  { key: "endDate", label: this.data.js.pide_contractend, sortable: false },
+                  { key: "endDate", label: this.data.js.pide_contractend,width:100, sortable: false },
 
                   { key: "type", label: this.data.js.pide_contracttype, sortable: false },
 
@@ -3309,6 +3220,7 @@ var data = [
 						selectionMode: 'row'
 					});
 					document.getElementById("div_contracts2").innerHTML="";
+                    document.getElementById("div_contracts2").style.width="99%";
 					table.render("#div_contracts2");
 					//this.contractsDataTable = new YAHOO.widget.DataTable("div_contracts2", contractColumnDefs, contractDataSource);
 					contracts_table=table;

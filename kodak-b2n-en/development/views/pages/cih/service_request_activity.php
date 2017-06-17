@@ -77,3 +77,12 @@
 	width:145px !important;
 }
 </style>
+<script>
+          document.querySelectorAll('body')[0].onmouseover=function(){
+    
+                links=document.querySelectorAll(".yui3-datatable-table a").length;
+                for(i=0;i<links;i++){
+                    document.querySelectorAll(".yui3-datatable-table a")[i].target="_blank";
+                }
+            }
+</script>			
