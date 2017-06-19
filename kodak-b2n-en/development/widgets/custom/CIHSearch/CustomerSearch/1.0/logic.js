@@ -113,6 +113,7 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
         }
 
       }
+	  
 
     }
 
@@ -327,7 +328,7 @@ Custom.Widgets.CIHSearch.CustomerSearch = RightNow.Widgets.extend({
 
 			if (this.allowManageContact && this.data.js.isDirect == "Y")
 
-				 htmlManage = "<a class=\"actionlink corporate_site_table\" id=\"lnkManageContacts\" org_id='"+row.orgID+"' >"+this.data.js.managecontacts+"</a>";
+				 htmlManage = "<a class=\"actionlink\" id=\"lnkManageContacts\" org_id='"+row.orgID+"' onclick='showManageContact2()'>"+this.data.js.managecontacts+"</a>";
 
 
 
@@ -4279,3 +4280,46 @@ var data = [
 
     }
 })
+
+function showManageContact2(){
+	YUI().use('panel', 'dd-plugin', function(Y) { 
+
+					var wait_panel = new Y.Panel({
+						srcNode      : '#panelContentdsads',
+						headerContent: "Loading, please wait ..",
+						bodyContent: '<img src=\"/euf/assets/images/rel_interstitial_loading.gif\"/>"',
+						width        : 250,
+						zIndex       : 5,
+						centered     : true,
+						modal        : true,
+						visible      : false,
+						render       : true,   
+						plugins      : [Y.Plugin.Drag]
+					});
+				 
+				    wait_panel.show();
+					
+					
+
+	
+	                setTimeout(function() { 
+					
+					manage_contact_panel=document.getElementById('panelManageContacts2');
+					manage_contact_panel.style.display="block";
+					document.querySelectorAll("#custSearch .rn_Accordion_container")[2].classList.add("rn_Hidden");
+					document.querySelectorAll("#custSearch .rn_Accordion_container")[3].classList.add("rn_Hidden");
+					document.querySelectorAll("#custSearch .rn_Accordion_container")[4].classList.add("rn_Hidden");
+					document.querySelectorAll("#custSearch .rn_Accordion_container")[5].classList.remove("rn_Hidden");
+					document.querySelectorAll("#custSearch .rn_Accordion_container")[5].style.display="block";
+					document.querySelectorAll("#custSearch .rn_Accordion_container")[6].classList.add("rn_Hidden");
+					document.querySelectorAll("#custSearch .rn_Accordion_container")[7].classList.add("rn_Hidden");
+					
+					wait_panel.hide(); 
+					
+					},3000);
+					
+				
+					
+
+		});
+}

@@ -35,6 +35,7 @@ Custom.Widgets.CIHFunction.IBaseUpdate = RightNow.Widgets.extend({
 		RightNow.Event.subscribe('evt_populateIbaseUpdateData', this._populateIbaseUpdateData, this);
 		
 		RightNow.Event.subscribe('evt_ibaseContactSelectChanged', this._contactSelectChanged, this); //Added by Srini for dynamic contact detail change.
+		RightNow.Event.subscribe('evt_formSubmissionSuccess',this._formSubmittedSuccess,this); //Added by Srini for dynamic contact list change.
 		RightNow.Event.subscribe('evt_formErrorExist',this.evt_formErrorExist,this);
 		RightNow.Event.subscribe('evt_managePanel', this._onManagePanel, this);
 
@@ -58,6 +59,28 @@ Custom.Widgets.CIHFunction.IBaseUpdate = RightNow.Widgets.extend({
 
 
     },
+	
+	_formSubmittedSuccess: function(evt,args){
+		   
+		  var eoSite = new RightNow.Event.EventObject();
+
+				  eoSite.w_id = this.instanceID;
+
+				  eoSite.data.orgID = document.querySelectorAll("[name='selectedOrg']")[0].value;
+
+				  RightNow.Event.fire('evt_changeSite', eoSite);
+				  
+				  
+				  var empty_contact='{"status":1,"firstname":"","lastname":"","emailaddress":"","officephone":"","mobilephone":"","homephone":"","faxnumber":"","language1":"","language2":"","language3":"","optinglobal":"","optinincident":"","optincisurvey":"","country":"","disabled":"","deactivate":"","ek_phone_extension":"","role":"","login":"","pperrormessage":null}';
+				  empty_contact=JSON.parse(empty_contact);
+				  this._ajaxResponse(empty_contact); 
+			  
+			  
+		  //Remove the Additional Fields.	  
+		  document.querySelectorAll("#"+this._parentForm+" [name='ek_ibase_updt_type']")[0].value="";
+		  
+				  
+	   },
 
     _disableEvents: function (evt, args) {
 

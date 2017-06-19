@@ -18,6 +18,8 @@ Custom.Widgets.CIHFunction.RepairRequest = RightNow.Widgets.extend({
 		this._createContactButton = document.getElementById("rn_" + this.instanceID + "_createContactButton");
 
 		this._eo.data.form = this._form_name;
+		
+		this._parentForm = RightNow.UI.findParentForm("rn_" + this.instanceID + "_form");
 
 		this._ppErrorMessage = document.getElementById("rn_" + this.instanceID + "_ppErrorMessage");
 
@@ -34,6 +36,8 @@ Custom.Widgets.CIHFunction.RepairRequest = RightNow.Widgets.extend({
 		RightNow.Event.subscribe('evt_formErrorExist',this.evt_formErrorExist,this);
 		
 		RightNow.Event.subscribe('evt_repairRequestContactSelectChanged', this._contactSelectChanged, this); //Added by Srini for dynamic contact detail change.
+		
+		RightNow.Event.subscribe('evt_formSubmissionSuccess',this._formSubmittedSuccess,this); //Added by Srini for dynamic contact list change.
 
 		if (this._form.isDisabled != true) {
 
@@ -62,7 +66,33 @@ Custom.Widgets.CIHFunction.RepairRequest = RightNow.Widgets.extend({
 
     },
 
+	_formSubmittedSuccess: function(evt,args){
+		
+		var empty_contact='{"status":1,"firstname":"","lastname":"","emailaddress":"","officephone":"","mobilephone":"","homephone":"","faxnumber":"","language1":"","language2":"","language3":"","optinglobal":"","optinincident":"","optincisurvey":"","country":"","disabled":"","deactivate":"","ek_phone_extension":"","role":"","login":"","pperrormessage":null,"ek_ext_ref_no":"","cat":"","ek_severity":"","ek_repeatability":"","ek_error_code":""}';
+			  empty_contact=JSON.parse(empty_contact);
+			  this._ajaxResponse(empty_contact); 
+        
+		   
+		  var eoSite = new RightNow.Event.EventObject();
 
+				  eoSite.w_id = this.instanceID;
+
+				  eoSite.data.orgID = document.querySelectorAll("[name='selectedOrg']")[0].value;
+
+				  RightNow.Event.fire('evt_changeSite', eoSite);
+				  
+		      
+		  //Remove the Additional Fields.
+		  
+		  document.querySelectorAll("#"+this._parentForm+" [name='ek_ext_ref_no']")[0].value="";
+		  document.querySelectorAll("#"+this._parentForm+" [name='cat']")[0].value="";
+		  document.querySelectorAll("#"+this._parentForm+" [name='ek_severity']")[0].value="";
+		  document.querySelectorAll("#"+this._parentForm+" [name='ek_repeatability']")[0].value="";
+		  document.querySelectorAll("#"+this._parentForm+" [name='ek_error_code']")[0].value="";
+		  
+			  
+				  
+	   },
 
 
 

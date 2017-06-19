@@ -1,0 +1,21 @@
+version: "1.0"
+requires:
+  jsModule:
+  - standard
+  - mobile
+
+attributes:
+  
+  attribute:
+    name: rn:msg:ATTRIBUTE_NAME_LBL
+    type: STRING
+    description: rn:msg:ATTRIBUTE_DESCRIPTION_LBL
+    default: rn:msg:ATTRIBUTE_DEFAULT_VALUE_LBL
+
+info:
+  description: rn:msg:WIDGET_SERVES_TEMPL_MODEL_OWN_CUST_MSG
+  urlParameters:
+    url_parameter:
+      name: rn:msg:URL_PARAMETER_LBL
+      description: rn:msg:DEF_URL_PARAMETERS_AFFECT_WIDGET_LBL
+      example: parm/3

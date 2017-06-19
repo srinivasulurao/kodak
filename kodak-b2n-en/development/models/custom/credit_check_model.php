@@ -173,7 +173,7 @@ class credit_check_model extends \RightNow\Models\Base {
             $req = curl_init();
               curl_setopt($req, CURLOPT_SSLVERSION,3);
            // curl_setopt($req, CURLOPT_SSL_CIPHER_LIST, 'TLSv1');
-            //curl_setopt($req, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_0);
+            curl_setopt($req, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_0);
             curl_setopt($req, CURLOPT_SSL_VERIFYPEER,FALSE);
             curl_setopt($req, CURLOPT_SSL_VERIFYHOST, 0);
            
@@ -204,8 +204,7 @@ class credit_check_model extends \RightNow\Models\Base {
                 
                 $errMsg = sprintf("Unable to parse API response, HTTP Code:%d, URL:%s %s", $http_code, $last_url, $curl_err);
                 $this->log->error($errMsg, null, $resp_envelope);
-				return false; //Srini's temporary Customization.
-				throw new Exception($errMsg);
+				throw new \Exception($errMsg);
             } else { // Otherwise just close cURL request object since we are done with it
                 curl_close($req);
             }
@@ -221,9 +220,9 @@ class credit_check_model extends \RightNow\Models\Base {
                 $this->log->error("Invalid response from credit check API", null, $resp_envelope);
                 throw new Exception($errMsg);
             }
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             // Indicate to caller that thrown exception occurred during API web service call
-            throw new Exception("error calling API: " . $e->getMessage());
+            throw new \Exception("error calling API: " . $e->getMessage());
         }
         
         // Return any messages we retreived from API, if credit hold is required, and if so zterm and smail values for incident

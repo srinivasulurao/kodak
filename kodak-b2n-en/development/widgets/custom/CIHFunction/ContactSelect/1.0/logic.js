@@ -178,6 +178,7 @@ Custom.Widgets.CIHFunction.ContactSelect = RightNow.Widgets.extend({
 			
 			this._setSelected();
 			
+			
 			RightNow.Event.fire("evt_contactSelectChanged", this._eo);
 			
 			if(evt){
@@ -302,8 +303,11 @@ Custom.Widgets.CIHFunction.ContactSelect = RightNow.Widgets.extend({
                     option.value = args[contact].c_id;
 
                     this._optionsSelect.appendChild(option);
+					
+					var phone_no=args[contact].phone;
+					var phone=phone_no.toString().split("undefined").join("");
 
-                    this._optionsSelect.options[optionCount].text = args[contact].last_name + ', ' + args[contact].first_name + ' ' + args[contact].phone;
+                    this._optionsSelect.options[optionCount].text = args[contact].last_name + ', ' + args[contact].first_name + ' ' + phone;
 
                     optionCount+=1;
 

@@ -94,7 +94,7 @@ Custom.Widgets.CIHFunction.AjaxFormSubmit = RightNow.Widgets.FormSubmit.extend({
 				this.parent(type, args);
 			
 			if(args[0].data.status==1){
-				
+			    this._resetContactSelectBox();
 				RightNow.UI.Dialog.messageDialog(args[0].data.message, new RightNow.Event.EventObject(this, {
 					'title': "Success",
 					'width': "350px",
@@ -116,5 +116,17 @@ Custom.Widgets.CIHFunction.AjaxFormSubmit = RightNow.Widgets.FormSubmit.extend({
             'width': "250px",
             'icon': icon
         })).show();
-    }
+    },
+
+	_resetContactSelectBox:function(){
+		
+		      var eoSite = new RightNow.Event.EventObject();
+
+              eoSite.w_id = this.instanceID;
+
+              RightNow.Event.fire('evt_formSubmissionSuccess', eoSite);
+	}
+	
+	
+	
 });

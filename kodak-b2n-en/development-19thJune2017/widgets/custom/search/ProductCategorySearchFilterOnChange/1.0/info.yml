@@ -1,0 +1,16 @@
+version: "1.0"
+requires:
+  jsModule:
+  - standard
+  - mobile
+  yui:
+  - panel
+  - RightNowTreeView
+  - RightNowTreeViewDialog
+  - RightNowTreeViewDropdown
+extends:
+  widget: standard/search/ProductCategorySearchFilter
+  components:
+  - php
+  - view
+  - js

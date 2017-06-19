@@ -109,6 +109,7 @@ if(this._disabledField!=null)
     RightNow.Event.subscribe('evt_selectedOrgToManage', this._setSelectedOrg, this);
 	RightNow.Event.subscribe('evt_manageContactSelectChanged', this._contactSelectChanged, this); //Added by Srini for dynamic contact detail change.
 	RightNow.Event.subscribe('evt_formErrorExist',this.evt_formErrorExist,this); 
+	RightNow.Event.subscribe('evt_formSubmissionSuccess',this._formSubmittedSuccess,this); //Added by Srini for dynamic contact list change.
 	
     this._loginRequiredLabel = document.getElementById("rn_" + this.instanceID + "_loginRequiredIndicator");
 
@@ -164,7 +165,21 @@ if(this._form !=null){
 
 
 
+   _formSubmittedSuccess: function(evt,args){
+	   
+	  var eoSite = new RightNow.Event.EventObject();
 
+              eoSite.w_id = this.instanceID;
+
+              eoSite.data.orgID = document.querySelectorAll("[name='selectedOrg']")[0].value;
+
+              RightNow.Event.fire('evt_changeSite', eoSite);
+			  
+			  var empty_contact='{"status":1,"firstname":"","lastname":"","emailaddress":"","officephone":"","mobilephone":"","homephone":"","faxnumber":"","language1":"","language2":"","language3":"","optinglobal":"","optinincident":"","optincisurvey":"","country":"","disabled":"","deactivate":"","ek_phone_extension":"","role":"","login":"","pperrormessage":null}';
+			  empty_contact=JSON.parse(empty_contact);
+			  this._ajaxResponse(empty_contact);  
+			  
+   },
 
     _disableEvents: function (evt, args) {
 
@@ -331,6 +346,7 @@ if(this._form !=null){
 
 
                 successHandler: function (response) {
+					
 
                     var responseText=response.responseText.replace('<rn:meta title="" template="kodak_b2b_template.php" />',"");
                     var resp = RightNow.JSON.parse(responseText);
@@ -649,25 +665,6 @@ if(this._form !=null){
 		   
 		   if(eo[0].url=="/cc/contact_custom/contact_update_submit"){
 			   
-			   
-			   //lets fire the validation request.
-			    this.error_field_exist=false;
-			    var eor = new RightNow.Event.EventObject();
-				 
-				eor.data.error_location="rn_"+this.instanceID+"_ErrorLocation";	
-				eor.data.coming_form="rn_"+this.instanceID+"_form";
-				RightNow.Event.fire("evt_formFieldValidateRequest", eor);
-				
-				//Stop the form to submit further.
-				if(this.error_field_exist){
-				  RightNow.Event.fire("evt_formValidateFailure", eor);
-				  return false;
-				}
-		
-			
-               //RightNow.Event.fire("evt_setHiddenField", eo);
-						
-						  //we have to do the validation as well here.
 							var fields=new Array('c_id','firstname','officephone','language1','optinglobal','country','rn_ListFailedOrgContacts','lastname','mobilephone','language2','optinincident','ek_phone_extension','emailaddress','faxnumber','language3','optincisurvey','role','disabled','login','selectedOrg','communication_optin_list','sesslang');
 							
 							var data=new Array();
@@ -897,12 +894,6 @@ if(this._form !=null){
 
 
     },
-
-
-_setValues_New:function(name,value){
-    if(document.getElementsByName(name)[0]!=null) 
-       document.getElementsByName(name)[0].value=value;
-},
     _setValues: function (name, value) {
 		
         for (var obj in this._form) {

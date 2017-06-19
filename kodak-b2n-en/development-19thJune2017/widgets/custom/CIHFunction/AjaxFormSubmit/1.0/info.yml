@@ -1,0 +1,29 @@
+version: "1.0"
+requires:
+  jsModule:
+  - standard
+  - mobile
+  yui:
+  - anim-scroll
+attributes:
+  ajax_method:
+    name: ajax_method
+    type: ajax
+    description: Override the submission controller ajax method
+    default: /cc/ajaxCustom/sendForm
+    required: false
+  disable_result_handler:
+    name: Disable Result Handler
+    type: boolean
+    description: Disable Result Handler
+    default: false
+    required: false
+info:
+  description: This widget displays an HTML submit button that will submit a form
+    when activated. This widget must be placed within a form--along with other input
+    widgets--that has a unique ID.
+extends:
+  widget: standard/input/FormSubmit
+  components:
+  - php
+  - js
